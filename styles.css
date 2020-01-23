@@ -345,7 +345,7 @@ a img{
   padding: 24px;
   text-align: left;
   /* color: rgb(150, 142, 142); */
-  color: blue;
+  color: #f3f3f3;
 }
 
   .android-wear-band-text p {
@@ -552,7 +552,7 @@ a img{
     font-size: 16px;
     margin: 0 16px;
     padding-top: 8px;
-    color: blue;
+    color: #f3f3f3;
   }
 
   .android-create-character {
