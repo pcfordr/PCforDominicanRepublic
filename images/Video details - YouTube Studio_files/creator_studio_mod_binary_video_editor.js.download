@@ -1,0 +1,978 @@
+(function(){var Hlc=function(a,b){return new Glc().setRectangle(a).setTimeMsec(b)},Ilc=function(a){var b=a.getTop()/16383,c=a.getLeft()/16383,e=a.getRight()/16383;
+a=a.getBottom()/16383;return new S9().setTop(b).setLeft(c).setRight(e).setBottom(a)},Jlc=function(a,b){return b.getTimeMsec()>=a.getTimeMsec()},Klc=function(a,b){if(0==a.length)return a.push(b),!0;
+var c=_g.bc(Jlc,b);c=_g.SPa(a,c);if(0<=c&&a[c].getTimeMsec()==b.getTimeMsec())return a[c]=b,!1;0<=c?a.splice(c,0,b):a.push(b);return!0},Llc=function(a){switch(a){case"PUBLIC":return"VIDEO_PRIVACY_PUBLIC";
+case"UNLISTED":return"VIDEO_PRIVACY_UNLISTED";case"PRIVATE":return"VIDEO_PRIVACY_PRIVATE";case"DRAFT":case"SPONSORS_ONLY":throw Error("Invalid visibility for a new video: "+a);default:return _g.na(a,void 0);}},Mlc=function(a){switch(a){case"VIDEO_PRIVACY_PUBLIC":return"PUBLIC";
+case"VIDEO_PRIVACY_UNLISTED":return"UNLISTED";case"VIDEO_PRIVACY_PRIVATE":return"PRIVATE";case"VIDEO_PRIVACY_UNKNOWN":throw Error("Invalid visibility for a new video: "+a);default:return _g.na(a,void 0);}},Nlc=function(a){return Object.assign(Object.assign({},a),{requestCheckpoint:null!==a.requestCheckpoint?a.requestCheckpoint.toObject():void 0,
+path:a.path.map(function(b){return b.toObject()})})},Slc=function(a){for(var b={requestCheckpoint:null,
+requestMinStartMsec:-1,requestMaxEndMsec:-1,path:[],startTerminated:!1,endTerminated:!1},c=0;a.byteLength>=c+4;){var e=c+4;c=new DataView(a.slice(c,e)).getUint32(0,!1);if(a.byteLength>=c){var h=a.slice(e,e+c),k=new _g.HVa(h);for(h=new Olc;k.nextField()&&!k.isEndGroup();)switch(k.getFieldNumber()){case 1:var l=new T9;k.readMessage(l,Plc);h.addRectangle(l);break;case 2:l=k.readInt32();h.setStartMsec(l);break;case 3:l=k.readInt32();h.setEndMsec(l);break;case 12:l=k.readInt32();h.setTrackingEndMsec(l);
+break;case 10:l=new U9;k.readMessage(l,Qlc);h.addTrackData(l);break;case 11:l=new V9;k.readMessage(l,Rlc);h.addTrackState(l);break;case 4:l=k.readEnum();h.setTrackingStatus(l);break;case 8:l=new V9;k.readMessage(l,Rlc);h.setStartState(l);break;case 9:l=new V9;k.readMessage(l,Rlc);h.setEndState(l);break;default:k.skipField();}k=b.path||[];if(h.hasStartMsec()&&h.hasEndMsec()&&0!=h.getRectangleList().length){var m=h.getStartMsec()||0,q=h.getEndMsec()||0;l=h.hasTrackingEndMsec()?h.getTrackingEndMsec():
+q;var t=m<=q;if(1==h.getRectangleList().length)Klc(k,Hlc(Ilc(h.getRectangleList()[0]),m));else{q=(q-m)/(h.getRectangleList().length-1);for(var u=_g.f(h.getRectangleList()),x=u.next();!x.done;x=u.next()){Klc(k,Hlc(Ilc(x.value),Math.round(m)));if(t&&m>=l||!t&&m<=l)break;m+=q}}1!=h.getTrackingStatus()&&(t?b.endTerminated=!0:b.startTerminated=!0)}c=e+c}else break}return Nlc(b)},Tlc=function(a){return a.videoEditorState.timelineHistory.present.editors.PRIVACY||void 0},W9=function(a){return(a=Tlc(a))?a.changedBlurRegions:
+{}},X9=function(a){return(a=Tlc(a))?a.changedFaces:void 0},Ulc=function(a){a=(a=a.videoEditorState.editorsUntrackedData.PRIVACY)?a:void 0;
+if(a)return a.selectedElementRegionId},Vlc=function(){return"This video can't be trimmed because it is too long."},Wlc=function(){return"This video can't be trimmed."},Xlc=function(a,b){if(void 0!==a)try{_g.yua(b);
+_g.zua(b);for(var c=[],e=_g.f(a),h=e.next();!h.done;h=e.next())c.push.apply(c,_g.g(_g.Aua(h.value,b)));a=[];for(var k=_g.f(c),l=k.next();!l.done;l=k.next()){var m=l.value;0<a.length&&a[a.length-1].end.millis===m.start.millis?a[a.length-1].end.millis=m.end.millis:a.push(m)}return{videoSegments:a}}catch(q){throw Error("Failed to convert trim edit to original timespace: "+q)}};var Y9=function(a){_g.Lw(this,a,0,-1,null,null)};
+_g.ev(Y9,_g.Iw);Y9.prototype.toObject=function(a){return Ylc(a,this)};
+var Ylc=function(a,b){var c={h00:_g.Sw(b,1,1),h01:_g.Sw(b,2,0),h02:_g.Sw(b,3,0),h10:_g.Sw(b,4,0),h11:_g.Sw(b,5,1),h12:_g.Sw(b,6,0),h20:_g.Sw(b,7,0),h21:_g.Sw(b,8,0)};a&&(c.$jspbMessageInstance=b);return c},Zlc=function(a,b){for(;b.nextField()&&!b.isEndGroup();)switch(b.getFieldNumber()){case 1:var c=b.readFloat();
+a.setH00(c);break;case 2:c=b.readFloat();a.setH01(c);break;case 3:c=b.readFloat();a.setH02(c);break;case 4:c=b.readFloat();a.setH10(c);break;case 5:c=b.readFloat();a.setH11(c);break;case 6:c=b.readFloat();a.setH12(c);break;case 7:c=b.readFloat();a.setH20(c);break;case 8:c=b.readFloat();a.setH21(c);break;default:b.skipField();}return a};
+Y9.prototype.serializeBinary=function(){var a=new _g.Fw;$lc(this,a);return a.getResultBuffer()};
+var $lc=function(a,b){var c=_g.V(a,1);null!=c&&b.writeFloat(1,c);c=_g.V(a,2);null!=c&&b.writeFloat(2,c);c=_g.V(a,3);null!=c&&b.writeFloat(3,c);c=_g.V(a,4);null!=c&&b.writeFloat(4,c);c=_g.V(a,5);null!=c&&b.writeFloat(5,c);c=_g.V(a,6);null!=c&&b.writeFloat(6,c);c=_g.V(a,7);null!=c&&b.writeFloat(7,c);c=_g.V(a,8);null!=c&&b.writeFloat(8,c)};
+_g.d=Y9.prototype;_g.d.getH00=function(){return _g.Sw(this,1,1)};
+_g.d.setH00=function(a){return _g.Tw(this,1,a)};
+_g.d.clearH00=function(){return _g.Tw(this,1,void 0)};
+_g.d.hasH00=function(){return null!=_g.V(this,1)};
+_g.d.getH01=function(){return _g.Sw(this,2,0)};
+_g.d.setH01=function(a){return _g.Tw(this,2,a)};
+_g.d.clearH01=function(){return _g.Tw(this,2,void 0)};
+_g.d.hasH01=function(){return null!=_g.V(this,2)};
+_g.d.getH02=function(){return _g.Sw(this,3,0)};
+_g.d.setH02=function(a){return _g.Tw(this,3,a)};
+_g.d.clearH02=function(){return _g.Tw(this,3,void 0)};
+_g.d.hasH02=function(){return null!=_g.V(this,3)};
+_g.d.getH10=function(){return _g.Sw(this,4,0)};
+_g.d.setH10=function(a){return _g.Tw(this,4,a)};
+_g.d.clearH10=function(){return _g.Tw(this,4,void 0)};
+_g.d.hasH10=function(){return null!=_g.V(this,4)};
+_g.d.getH11=function(){return _g.Sw(this,5,1)};
+_g.d.setH11=function(a){return _g.Tw(this,5,a)};
+_g.d.clearH11=function(){return _g.Tw(this,5,void 0)};
+_g.d.hasH11=function(){return null!=_g.V(this,5)};
+_g.d.getH12=function(){return _g.Sw(this,6,0)};
+_g.d.setH12=function(a){return _g.Tw(this,6,a)};
+_g.d.clearH12=function(){return _g.Tw(this,6,void 0)};
+_g.d.hasH12=function(){return null!=_g.V(this,6)};
+_g.d.getH20=function(){return _g.Sw(this,7,0)};
+_g.d.setH20=function(a){return _g.Tw(this,7,a)};
+_g.d.clearH20=function(){return _g.Tw(this,7,void 0)};
+_g.d.hasH20=function(){return null!=_g.V(this,7)};
+_g.d.getH21=function(){return _g.Sw(this,8,0)};
+_g.d.setH21=function(a){return _g.Tw(this,8,a)};
+_g.d.clearH21=function(){return _g.Tw(this,8,void 0)};
+_g.d.hasH21=function(){return null!=_g.V(this,8)};var Z9=function(a){_g.Lw(this,a,0,-1,null,null)};
+_g.ev(Z9,_g.Iw);Z9.prototype.toObject=function(a){return amc(a,this)};
+var amc=function(a,b){var c={data:b.getData_asB64()};a&&(c.$jspbMessageInstance=b);return c},bmc=function(a,b){for(;b.nextField()&&!b.isEndGroup();)switch(b.getFieldNumber()){case 1:var c=b.readBytes();
+a.setData(c);break;default:b.skipField();}return a};
+Z9.prototype.serializeBinary=function(){var a=new _g.Fw;cmc(this,a);return a.getResultBuffer()};
+var cmc=function(a,b){a=_g.V(a,1);null!=a&&b.writeBytes(1,a)};
+_g.d=Z9.prototype;_g.d.getData=function(){return _g.V(this,1)};
+_g.d.getData_asB64=function(){return _g.OVa(this.getData())};
+_g.d.getData_asU8=function(){return _g.PVa(this.getData())};
+_g.d.setData=function(a){return _g.Tw(this,1,a)};
+_g.d.clearData=function(){return _g.Tw(this,1,void 0)};
+_g.d.hasData=function(){return null!=_g.V(this,1)};var U9=function(a){_g.Lw(this,a,0,-1,null,null)};
+_g.ev(U9,_g.Iw);var $9=function(a){_g.Lw(this,a,0,-1,dmc,null)};
+_g.ev($9,_g.Iw);U9.prototype.toObject=function(a){return emc(a,this)};
+var emc=function(a,b){var c,e={frameFlags:_g.Qw(b,1,0),domainWidth:null==(c=_g.V(b,2))?void 0:c,domainHeight:null==(c=_g.V(b,3))?void 0:c,frameAspect:_g.Sw(b,6,1),backgroundModel:(c=b.getBackgroundModel())&&Ylc(a,c),motionData:(c=b.getMotionData())&&fmc(a,c),globalFeatureCount:null==(c=_g.V(b,7))?void 0:c,averageMotionMagnitude:null==(c=_g.Nw(b,8))?void 0:c};a&&(e.$jspbMessageInstance=b);return e},Qlc=function(a,b){for(;b.nextField()&&!b.isEndGroup();)switch(b.getFieldNumber()){case 1:var c=b.readInt32();
+a.setFrameFlags(c);break;case 2:c=b.readInt32();a.setDomainWidth(c);break;case 3:c=b.readInt32();a.setDomainHeight(c);break;case 6:c=b.readFloat();a.setFrameAspect(c);break;case 4:c=new Y9;b.readMessage(c,Zlc);a.setBackgroundModel(c);break;case 5:c=new $9;b.readMessage(c,gmc);a.setMotionData(c);break;case 7:c=b.readUint32();a.setGlobalFeatureCount(c);break;case 8:c=b.readFloat();a.setAverageMotionMagnitude(c);break;default:b.skipField();}return a};
+U9.prototype.serializeBinary=function(){var a=new _g.Fw;hmc(this,a);return a.getResultBuffer()};
+var hmc=function(a,b){var c=_g.V(a,1);null!=c&&b.writeInt32(1,c);c=_g.V(a,2);null!=c&&b.writeInt32(2,c);c=_g.V(a,3);null!=c&&b.writeInt32(3,c);c=_g.V(a,6);null!=c&&b.writeFloat(6,c);c=a.getBackgroundModel();null!=c&&b.writeMessage(4,c,$lc);c=a.getMotionData();null!=c&&b.writeMessage(5,c,imc);c=_g.V(a,7);null!=c&&b.writeUint32(7,c);c=_g.V(a,8);null!=c&&b.writeFloat(8,c)},dmc=[2,
+3,4,5,6];$9.prototype.toObject=function(a){return fmc(a,this)};
+var fmc=function(a,b){var c,e={numElements:null==(c=_g.V(b,1))?void 0:c,vectorDataList:null==(c=_g.Pw(b,2))?void 0:c,trackIdList:null==(c=_g.V(b,3))?void 0:c,rowIndicesList:null==(c=_g.V(b,4))?void 0:c,colStartsList:null==(c=_g.V(b,5))?void 0:c,featureDescriptorsList:_g.Mw(b.getFeatureDescriptorsList(),amc,a)};a&&(e.$jspbMessageInstance=b);return e},gmc=function(a,b){for(;b.nextField()&&!b.isEndGroup();)switch(b.getFieldNumber()){case 1:var c=b.readInt32();
+a.setNumElements(c);break;case 2:c=b.readPackedFloat();a.setVectorDataList(c);break;case 3:c=b.readPackedInt32();a.setTrackIdList(c);break;case 4:c=b.readPackedInt32();a.setRowIndicesList(c);break;case 5:c=b.readPackedInt32();a.setColStartsList(c);break;case 6:c=new Z9;b.readMessage(c,bmc);a.addFeatureDescriptors(c);break;default:b.skipField();}return a};
+$9.prototype.serializeBinary=function(){var a=new _g.Fw;imc(this,a);return a.getResultBuffer()};
+var imc=function(a,b){var c=_g.V(a,1);null!=c&&b.writeInt32(1,c);c=a.getVectorDataList();0<c.length&&b.writePackedFloat(2,c);c=a.getTrackIdList();0<c.length&&b.writePackedInt32(3,c);c=a.getRowIndicesList();0<c.length&&b.writePackedInt32(4,c);c=a.getColStartsList();0<c.length&&b.writePackedInt32(5,c);c=a.getFeatureDescriptorsList();0<c.length&&b.writeRepeatedMessage(6,c,cmc)};
+_g.d=$9.prototype;_g.d.getNumElements=function(){return _g.V(this,1)};
+_g.d.setNumElements=function(a){return _g.Tw(this,1,a)};
+_g.d.clearNumElements=function(){return _g.Tw(this,1,void 0)};
+_g.d.hasNumElements=function(){return null!=_g.V(this,1)};
+_g.d.getVectorDataList=function(){return _g.Pw(this,2)};
+_g.d.setVectorDataList=function(a){return _g.Tw(this,2,a||[])};
+_g.d.addVectorData=function(a,b){return _g.Uw(this,2,a,b)};
+_g.d.clearVectorDataList=function(){return this.setVectorDataList([])};
+_g.d.getTrackIdList=function(){return _g.V(this,3)};
+_g.d.setTrackIdList=function(a){return _g.Tw(this,3,a||[])};
+_g.d.addTrackId=function(a,b){return _g.Uw(this,3,a,b)};
+_g.d.clearTrackIdList=function(){return this.setTrackIdList([])};
+_g.d.getRowIndicesList=function(){return _g.V(this,4)};
+_g.d.setRowIndicesList=function(a){return _g.Tw(this,4,a||[])};
+_g.d.addRowIndices=function(a,b){return _g.Uw(this,4,a,b)};
+_g.d.clearRowIndicesList=function(){return this.setRowIndicesList([])};
+_g.d.getColStartsList=function(){return _g.V(this,5)};
+_g.d.setColStartsList=function(a){return _g.Tw(this,5,a||[])};
+_g.d.addColStarts=function(a,b){return _g.Uw(this,5,a,b)};
+_g.d.clearColStartsList=function(){return this.setColStartsList([])};
+_g.d.getFeatureDescriptorsList=function(){return _g.Xw(this,Z9,6)};
+_g.d.setFeatureDescriptorsList=function(a){return _g.Zw(this,6,a)};
+_g.d.addFeatureDescriptors=function(a,b){return _g.$w(this,6,a,Z9,b)};
+_g.d.clearFeatureDescriptorsList=function(){return this.setFeatureDescriptorsList([])};
+_g.d=U9.prototype;_g.d.getFrameFlags=function(){return _g.Qw(this,1,0)};
+_g.d.setFrameFlags=function(a){return _g.Tw(this,1,a)};
+_g.d.clearFrameFlags=function(){return _g.Tw(this,1,void 0)};
+_g.d.hasFrameFlags=function(){return null!=_g.V(this,1)};
+_g.d.getDomainWidth=function(){return _g.V(this,2)};
+_g.d.setDomainWidth=function(a){return _g.Tw(this,2,a)};
+_g.d.clearDomainWidth=function(){return _g.Tw(this,2,void 0)};
+_g.d.hasDomainWidth=function(){return null!=_g.V(this,2)};
+_g.d.getDomainHeight=function(){return _g.V(this,3)};
+_g.d.setDomainHeight=function(a){return _g.Tw(this,3,a)};
+_g.d.clearDomainHeight=function(){return _g.Tw(this,3,void 0)};
+_g.d.hasDomainHeight=function(){return null!=_g.V(this,3)};
+_g.d.getFrameAspect=function(){return _g.Sw(this,6,1)};
+_g.d.setFrameAspect=function(a){return _g.Tw(this,6,a)};
+_g.d.clearFrameAspect=function(){return _g.Tw(this,6,void 0)};
+_g.d.hasFrameAspect=function(){return null!=_g.V(this,6)};
+_g.d.getBackgroundModel=function(){return _g.Ww(this,Y9,4)};
+_g.d.setBackgroundModel=function(a){return _g.Yw(this,4,a)};
+_g.d.clearBackgroundModel=function(){return this.setBackgroundModel(void 0)};
+_g.d.hasBackgroundModel=function(){return null!=_g.V(this,4)};
+_g.d.getMotionData=function(){return _g.Ww(this,$9,5)};
+_g.d.setMotionData=function(a){return _g.Yw(this,5,a)};
+_g.d.clearMotionData=function(){return this.setMotionData(void 0)};
+_g.d.hasMotionData=function(){return null!=_g.V(this,5)};
+_g.d.getGlobalFeatureCount=function(){return _g.V(this,7)};
+_g.d.setGlobalFeatureCount=function(a){return _g.Tw(this,7,a)};
+_g.d.clearGlobalFeatureCount=function(){return _g.Tw(this,7,void 0)};
+_g.d.hasGlobalFeatureCount=function(){return null!=_g.V(this,7)};
+_g.d.getAverageMotionMagnitude=function(){return _g.Nw(this,8)};
+_g.d.setAverageMotionMagnitude=function(a){return _g.Tw(this,8,a)};
+_g.d.clearAverageMotionMagnitude=function(){return _g.Tw(this,8,void 0)};
+_g.d.hasAverageMotionMagnitude=function(){return null!=_g.V(this,8)};var a$=function(a){_g.Lw(this,a,0,-1,jmc,null)};
+_g.ev(a$,_g.Iw);var jmc=[1,2,3,4,5,6,7,8];a$.prototype.toObject=function(a){return kmc(a,this)};
+var kmc=function(a,b){var c,e={posXList:null==(c=_g.Pw(b,1))?void 0:c,posYList:null==(c=_g.Pw(b,2))?void 0:c,dxList:null==(c=_g.Pw(b,3))?void 0:c,dyList:null==(c=_g.Pw(b,4))?void 0:c,cameraDxList:null==(c=_g.Pw(b,5))?void 0:c,cameraDyList:null==(c=_g.Pw(b,6))?void 0:c,trackIdList:null==(c=_g.V(b,7))?void 0:c,inlierScoreList:null==(c=_g.Pw(b,8))?void 0:c};a&&(e.$jspbMessageInstance=b);return e},lmc=function(a,b){for(;b.nextField()&&!b.isEndGroup();)switch(b.getFieldNumber()){case 1:var c=b.readPackedFloat();
+a.setPosXList(c);break;case 2:c=b.readPackedFloat();a.setPosYList(c);break;case 3:c=b.readPackedFloat();a.setDxList(c);break;case 4:c=b.readPackedFloat();a.setDyList(c);break;case 5:c=b.readPackedFloat();a.setCameraDxList(c);break;case 6:c=b.readPackedFloat();a.setCameraDyList(c);break;case 7:c=b.readPackedInt32();a.setTrackIdList(c);break;case 8:c=b.readPackedFloat();a.setInlierScoreList(c);break;default:b.skipField();}return a};
+a$.prototype.serializeBinary=function(){var a=new _g.Fw;mmc(this,a);return a.getResultBuffer()};
+var mmc=function(a,b){var c=a.getPosXList();0<c.length&&b.writePackedFloat(1,c);c=a.getPosYList();0<c.length&&b.writePackedFloat(2,c);c=a.getDxList();0<c.length&&b.writePackedFloat(3,c);c=a.getDyList();0<c.length&&b.writePackedFloat(4,c);c=a.getCameraDxList();0<c.length&&b.writePackedFloat(5,c);c=a.getCameraDyList();0<c.length&&b.writePackedFloat(6,c);c=a.getTrackIdList();0<c.length&&b.writePackedInt32(7,c);c=a.getInlierScoreList();0<c.length&&b.writePackedFloat(8,c)};
+_g.d=a$.prototype;_g.d.getPosXList=function(){return _g.Pw(this,1)};
+_g.d.setPosXList=function(a){return _g.Tw(this,1,a||[])};
+_g.d.addPosX=function(a,b){return _g.Uw(this,1,a,b)};
+_g.d.clearPosXList=function(){return this.setPosXList([])};
+_g.d.getPosYList=function(){return _g.Pw(this,2)};
+_g.d.setPosYList=function(a){return _g.Tw(this,2,a||[])};
+_g.d.addPosY=function(a,b){return _g.Uw(this,2,a,b)};
+_g.d.clearPosYList=function(){return this.setPosYList([])};
+_g.d.getDxList=function(){return _g.Pw(this,3)};
+_g.d.setDxList=function(a){return _g.Tw(this,3,a||[])};
+_g.d.addDx=function(a,b){return _g.Uw(this,3,a,b)};
+_g.d.clearDxList=function(){return this.setDxList([])};
+_g.d.getDyList=function(){return _g.Pw(this,4)};
+_g.d.setDyList=function(a){return _g.Tw(this,4,a||[])};
+_g.d.addDy=function(a,b){return _g.Uw(this,4,a,b)};
+_g.d.clearDyList=function(){return this.setDyList([])};
+_g.d.getCameraDxList=function(){return _g.Pw(this,5)};
+_g.d.setCameraDxList=function(a){return _g.Tw(this,5,a||[])};
+_g.d.addCameraDx=function(a,b){return _g.Uw(this,5,a,b)};
+_g.d.clearCameraDxList=function(){return this.setCameraDxList([])};
+_g.d.getCameraDyList=function(){return _g.Pw(this,6)};
+_g.d.setCameraDyList=function(a){return _g.Tw(this,6,a||[])};
+_g.d.addCameraDy=function(a,b){return _g.Uw(this,6,a,b)};
+_g.d.clearCameraDyList=function(){return this.setCameraDyList([])};
+_g.d.getTrackIdList=function(){return _g.V(this,7)};
+_g.d.setTrackIdList=function(a){return _g.Tw(this,7,a||[])};
+_g.d.addTrackId=function(a,b){return _g.Uw(this,7,a,b)};
+_g.d.clearTrackIdList=function(){return this.setTrackIdList([])};
+_g.d.getInlierScoreList=function(){return _g.Pw(this,8)};
+_g.d.setInlierScoreList=function(a){return _g.Tw(this,8,a||[])};
+_g.d.addInlierScore=function(a,b){return _g.Uw(this,8,a,b)};
+_g.d.clearInlierScoreList=function(){return this.setInlierScoreList([])};var V9=function(a){_g.Lw(this,a,0,-1,nmc,null)};
+_g.ev(V9,_g.Iw);var b$=function(a){_g.Lw(this,a,0,-1,omc,null)};
+_g.ev(b$,_g.Iw);var nmc=[12,13,26,31,27,28,32];V9.prototype.toObject=function(a){return pmc(a,this)};
+var pmc=function(a,b){var c,e={posX:null==(c=_g.Nw(b,1))?void 0:c,posY:null==(c=_g.Nw(b,2))?void 0:c,width:null==(c=_g.Nw(b,3))?void 0:c,height:null==(c=_g.Nw(b,4))?void 0:c,scale:_g.Sw(b,5,1),rotation:_g.Sw(b,30,0),quad:(c=b.getQuad())&&qmc(a,c),aspectRatio:null==(c=_g.Nw(b,35))?void 0:c,requestGrouping:_g.Rw(b,37,!1),pnpHomography:(c=b.getPnpHomography())&&Ylc(a,c),dx:null==(c=_g.Nw(b,7))?void 0:c,dy:null==(c=_g.Nw(b,8))?void 0:c,kineticEnergy:null==(c=_g.Nw(b,17))?void 0:c,priorWeight:null==(c=
+_g.Nw(b,9))?void 0:c,trackStatus:_g.Qw(b,10,0),spatialPriorGridSize:_g.Qw(b,11,10),spatialPriorList:null==(c=_g.Pw(b,12))?void 0:c,spatialConfidenceList:null==(c=_g.Pw(b,13))?void 0:c,priorDiff:null==(c=_g.Nw(b,14))?void 0:c,motionDisparity:null==(c=_g.Nw(b,15))?void 0:c,backgroundDiscrimination:null==(c=_g.Nw(b,16))?void 0:c,inlierCenterX:null==(c=_g.Nw(b,18))?void 0:c,inlierCenterY:null==(c=_g.Nw(b,19))?void 0:c,inlierSum:null==(c=_g.Nw(b,24))?void 0:c,inlierRatio:null==(c=_g.Nw(b,25))?void 0:c,
+inlierWidth:null==(c=_g.Nw(b,22))?void 0:c,inlierHeight:null==(c=_g.Nw(b,23))?void 0:c,inlierIdsList:null==(c=_g.V(b,26))?void 0:c,inlierIdMatchPosList:null==(c=_g.V(b,31))?void 0:c,inlierLengthList:null==(c=_g.V(b,27))?void 0:c,outlierIdsList:null==(c=_g.V(b,28))?void 0:c,outlierIdMatchPosList:null==(c=_g.V(b,32))?void 0:c,trackingConfidence:null==(c=_g.Nw(b,33))?void 0:c,internal:(c=b.getInternal())&&kmc(a,c)};a&&(e.$jspbMessageInstance=b);return e},Rlc=function(a,b){for(;b.nextField()&&!b.isEndGroup();)switch(b.getFieldNumber()){case 1:var c=
+b.readFloat();
+a.setPosX(c);break;case 2:c=b.readFloat();a.setPosY(c);break;case 3:c=b.readFloat();a.setWidth(c);break;case 4:c=b.readFloat();a.setHeight(c);break;case 5:c=b.readFloat();a.setScale(c);break;case 30:c=b.readFloat();a.setRotation(c);break;case 34:c=new b$;b.readMessage(c,rmc);a.setQuad(c);break;case 35:c=b.readFloat();a.setAspectRatio(c);break;case 37:c=b.readBool();a.setRequestGrouping(c);break;case 36:c=new Y9;b.readMessage(c,Zlc);a.setPnpHomography(c);break;case 7:c=b.readFloat();a.setDx(c);break;
+case 8:c=b.readFloat();a.setDy(c);break;case 17:c=b.readFloat();a.setKineticEnergy(c);break;case 9:c=b.readFloat();a.setPriorWeight(c);break;case 10:c=b.readEnum();a.setTrackStatus(c);break;case 11:c=b.readInt32();a.setSpatialPriorGridSize(c);break;case 12:c=b.readPackedFloat();a.setSpatialPriorList(c);break;case 13:c=b.readPackedFloat();a.setSpatialConfidenceList(c);break;case 14:c=b.readFloat();a.setPriorDiff(c);break;case 15:c=b.readFloat();a.setMotionDisparity(c);break;case 16:c=b.readFloat();
+a.setBackgroundDiscrimination(c);break;case 18:c=b.readFloat();a.setInlierCenterX(c);break;case 19:c=b.readFloat();a.setInlierCenterY(c);break;case 24:c=b.readFloat();a.setInlierSum(c);break;case 25:c=b.readFloat();a.setInlierRatio(c);break;case 22:c=b.readFloat();a.setInlierWidth(c);break;case 23:c=b.readFloat();a.setInlierHeight(c);break;case 26:c=b.readPackedUint32();a.setInlierIdsList(c);break;case 31:c=b.readPackedUint32();a.setInlierIdMatchPosList(c);break;case 27:c=b.readPackedUint32();a.setInlierLengthList(c);
+break;case 28:c=b.readPackedUint32();a.setOutlierIdsList(c);break;case 32:c=b.readPackedUint32();a.setOutlierIdMatchPosList(c);break;case 33:c=b.readFloat();a.setTrackingConfidence(c);break;case 29:c=new a$;b.readMessage(c,lmc);a.setInternal(c);break;default:b.skipField();}return a};
+V9.prototype.serializeBinary=function(){var a=new _g.Fw;smc(this,a);return a.getResultBuffer()};
+var smc=function(a,b){var c=_g.V(a,1);null!=c&&b.writeFloat(1,c);c=_g.V(a,2);null!=c&&b.writeFloat(2,c);c=_g.V(a,3);null!=c&&b.writeFloat(3,c);c=_g.V(a,4);null!=c&&b.writeFloat(4,c);c=_g.V(a,5);null!=c&&b.writeFloat(5,c);c=_g.V(a,30);null!=c&&b.writeFloat(30,c);c=a.getQuad();null!=c&&b.writeMessage(34,c,tmc);c=_g.V(a,35);null!=c&&b.writeFloat(35,c);c=_g.V(a,37);null!=c&&b.writeBool(37,c);c=a.getPnpHomography();null!=c&&b.writeMessage(36,c,$lc);c=_g.V(a,7);null!=c&&b.writeFloat(7,c);c=_g.V(a,8);null!=
+c&&b.writeFloat(8,c);c=_g.V(a,17);null!=c&&b.writeFloat(17,c);c=_g.V(a,9);null!=c&&b.writeFloat(9,c);c=_g.V(a,10);null!=c&&b.writeEnum(10,c);c=_g.V(a,11);null!=c&&b.writeInt32(11,c);c=a.getSpatialPriorList();0<c.length&&b.writePackedFloat(12,c);c=a.getSpatialConfidenceList();0<c.length&&b.writePackedFloat(13,c);c=_g.V(a,14);null!=c&&b.writeFloat(14,c);c=_g.V(a,15);null!=c&&b.writeFloat(15,c);c=_g.V(a,16);null!=c&&b.writeFloat(16,c);c=_g.V(a,18);null!=c&&b.writeFloat(18,c);c=_g.V(a,19);null!=c&&b.writeFloat(19,
+c);c=_g.V(a,24);null!=c&&b.writeFloat(24,c);c=_g.V(a,25);null!=c&&b.writeFloat(25,c);c=_g.V(a,22);null!=c&&b.writeFloat(22,c);c=_g.V(a,23);null!=c&&b.writeFloat(23,c);c=a.getInlierIdsList();0<c.length&&b.writePackedUint32(26,c);c=a.getInlierIdMatchPosList();0<c.length&&b.writePackedUint32(31,c);c=a.getInlierLengthList();0<c.length&&b.writePackedUint32(27,c);c=a.getOutlierIdsList();0<c.length&&b.writePackedUint32(28,c);c=a.getOutlierIdMatchPosList();0<c.length&&b.writePackedUint32(32,c);c=_g.V(a,33);
+null!=c&&b.writeFloat(33,c);c=a.getInternal();null!=c&&b.writeMessage(29,c,mmc)},omc=[1];
+b$.prototype.toObject=function(a){return qmc(a,this)};
+var qmc=function(a,b){var c,e={verticesList:null==(c=_g.Pw(b,1))?void 0:c};a&&(e.$jspbMessageInstance=b);return e},rmc=function(a,b){for(;b.nextField()&&!b.isEndGroup();)switch(b.getFieldNumber()){case 1:var c=b.readFloat();
+a.addVertices(c);break;default:b.skipField();}return a};
+b$.prototype.serializeBinary=function(){var a=new _g.Fw;tmc(this,a);return a.getResultBuffer()};
+var tmc=function(a,b){a=a.getVerticesList();0<a.length&&b.writeRepeatedFloat(1,a)};
+b$.prototype.getVerticesList=function(){return _g.Pw(this,1)};
+b$.prototype.setVerticesList=function(a){return _g.Tw(this,1,a||[])};
+b$.prototype.addVertices=function(a,b){return _g.Uw(this,1,a,b)};
+b$.prototype.clearVerticesList=function(){return this.setVerticesList([])};
+_g.d=V9.prototype;_g.d.getPosX=function(){return _g.Nw(this,1)};
+_g.d.setPosX=function(a){return _g.Tw(this,1,a)};
+_g.d.clearPosX=function(){return _g.Tw(this,1,void 0)};
+_g.d.hasPosX=function(){return null!=_g.V(this,1)};
+_g.d.getPosY=function(){return _g.Nw(this,2)};
+_g.d.setPosY=function(a){return _g.Tw(this,2,a)};
+_g.d.clearPosY=function(){return _g.Tw(this,2,void 0)};
+_g.d.hasPosY=function(){return null!=_g.V(this,2)};
+_g.d.getWidth=function(){return _g.Nw(this,3)};
+_g.d.setWidth=function(a){return _g.Tw(this,3,a)};
+_g.d.clearWidth=function(){return _g.Tw(this,3,void 0)};
+_g.d.hasWidth=function(){return null!=_g.V(this,3)};
+_g.d.getHeight=function(){return _g.Nw(this,4)};
+_g.d.setHeight=function(a){return _g.Tw(this,4,a)};
+_g.d.clearHeight=function(){return _g.Tw(this,4,void 0)};
+_g.d.hasHeight=function(){return null!=_g.V(this,4)};
+_g.d.getScale=function(){return _g.Sw(this,5,1)};
+_g.d.setScale=function(a){return _g.Tw(this,5,a)};
+_g.d.clearScale=function(){return _g.Tw(this,5,void 0)};
+_g.d.hasScale=function(){return null!=_g.V(this,5)};
+_g.d.getRotation=function(){return _g.Sw(this,30,0)};
+_g.d.setRotation=function(a){return _g.Tw(this,30,a)};
+_g.d.clearRotation=function(){return _g.Tw(this,30,void 0)};
+_g.d.hasRotation=function(){return null!=_g.V(this,30)};
+_g.d.getQuad=function(){return _g.Ww(this,b$,34)};
+_g.d.setQuad=function(a){return _g.Yw(this,34,a)};
+_g.d.clearQuad=function(){return this.setQuad(void 0)};
+_g.d.hasQuad=function(){return null!=_g.V(this,34)};
+_g.d.getAspectRatio=function(){return _g.Nw(this,35)};
+_g.d.setAspectRatio=function(a){return _g.Tw(this,35,a)};
+_g.d.clearAspectRatio=function(){return _g.Tw(this,35,void 0)};
+_g.d.hasAspectRatio=function(){return null!=_g.V(this,35)};
+_g.d.getRequestGrouping=function(){return _g.Rw(this,37,!1)};
+_g.d.setRequestGrouping=function(a){return _g.Tw(this,37,a)};
+_g.d.clearRequestGrouping=function(){return _g.Tw(this,37,void 0)};
+_g.d.hasRequestGrouping=function(){return null!=_g.V(this,37)};
+_g.d.getPnpHomography=function(){return _g.Ww(this,Y9,36)};
+_g.d.setPnpHomography=function(a){return _g.Yw(this,36,a)};
+_g.d.clearPnpHomography=function(){return this.setPnpHomography(void 0)};
+_g.d.hasPnpHomography=function(){return null!=_g.V(this,36)};
+_g.d.getDx=function(){return _g.Nw(this,7)};
+_g.d.setDx=function(a){return _g.Tw(this,7,a)};
+_g.d.clearDx=function(){return _g.Tw(this,7,void 0)};
+_g.d.hasDx=function(){return null!=_g.V(this,7)};
+_g.d.getDy=function(){return _g.Nw(this,8)};
+_g.d.setDy=function(a){return _g.Tw(this,8,a)};
+_g.d.clearDy=function(){return _g.Tw(this,8,void 0)};
+_g.d.hasDy=function(){return null!=_g.V(this,8)};
+_g.d.getKineticEnergy=function(){return _g.Nw(this,17)};
+_g.d.setKineticEnergy=function(a){return _g.Tw(this,17,a)};
+_g.d.clearKineticEnergy=function(){return _g.Tw(this,17,void 0)};
+_g.d.hasKineticEnergy=function(){return null!=_g.V(this,17)};
+_g.d.getPriorWeight=function(){return _g.Nw(this,9)};
+_g.d.setPriorWeight=function(a){return _g.Tw(this,9,a)};
+_g.d.clearPriorWeight=function(){return _g.Tw(this,9,void 0)};
+_g.d.hasPriorWeight=function(){return null!=_g.V(this,9)};
+_g.d.getTrackStatus=function(){return _g.Qw(this,10,0)};
+_g.d.setTrackStatus=function(a){return _g.Tw(this,10,a)};
+_g.d.clearTrackStatus=function(){return _g.Tw(this,10,void 0)};
+_g.d.hasTrackStatus=function(){return null!=_g.V(this,10)};
+_g.d.getSpatialPriorGridSize=function(){return _g.Qw(this,11,10)};
+_g.d.setSpatialPriorGridSize=function(a){return _g.Tw(this,11,a)};
+_g.d.clearSpatialPriorGridSize=function(){return _g.Tw(this,11,void 0)};
+_g.d.hasSpatialPriorGridSize=function(){return null!=_g.V(this,11)};
+_g.d.getSpatialPriorList=function(){return _g.Pw(this,12)};
+_g.d.setSpatialPriorList=function(a){return _g.Tw(this,12,a||[])};
+_g.d.addSpatialPrior=function(a,b){return _g.Uw(this,12,a,b)};
+_g.d.clearSpatialPriorList=function(){return this.setSpatialPriorList([])};
+_g.d.getSpatialConfidenceList=function(){return _g.Pw(this,13)};
+_g.d.setSpatialConfidenceList=function(a){return _g.Tw(this,13,a||[])};
+_g.d.addSpatialConfidence=function(a,b){return _g.Uw(this,13,a,b)};
+_g.d.clearSpatialConfidenceList=function(){return this.setSpatialConfidenceList([])};
+_g.d.getPriorDiff=function(){return _g.Nw(this,14)};
+_g.d.setPriorDiff=function(a){return _g.Tw(this,14,a)};
+_g.d.clearPriorDiff=function(){return _g.Tw(this,14,void 0)};
+_g.d.hasPriorDiff=function(){return null!=_g.V(this,14)};
+_g.d.getMotionDisparity=function(){return _g.Nw(this,15)};
+_g.d.setMotionDisparity=function(a){return _g.Tw(this,15,a)};
+_g.d.clearMotionDisparity=function(){return _g.Tw(this,15,void 0)};
+_g.d.hasMotionDisparity=function(){return null!=_g.V(this,15)};
+_g.d.getBackgroundDiscrimination=function(){return _g.Nw(this,16)};
+_g.d.setBackgroundDiscrimination=function(a){return _g.Tw(this,16,a)};
+_g.d.clearBackgroundDiscrimination=function(){return _g.Tw(this,16,void 0)};
+_g.d.hasBackgroundDiscrimination=function(){return null!=_g.V(this,16)};
+_g.d.getInlierCenterX=function(){return _g.Nw(this,18)};
+_g.d.setInlierCenterX=function(a){return _g.Tw(this,18,a)};
+_g.d.clearInlierCenterX=function(){return _g.Tw(this,18,void 0)};
+_g.d.hasInlierCenterX=function(){return null!=_g.V(this,18)};
+_g.d.getInlierCenterY=function(){return _g.Nw(this,19)};
+_g.d.setInlierCenterY=function(a){return _g.Tw(this,19,a)};
+_g.d.clearInlierCenterY=function(){return _g.Tw(this,19,void 0)};
+_g.d.hasInlierCenterY=function(){return null!=_g.V(this,19)};
+_g.d.getInlierSum=function(){return _g.Nw(this,24)};
+_g.d.setInlierSum=function(a){return _g.Tw(this,24,a)};
+_g.d.clearInlierSum=function(){return _g.Tw(this,24,void 0)};
+_g.d.hasInlierSum=function(){return null!=_g.V(this,24)};
+_g.d.getInlierRatio=function(){return _g.Nw(this,25)};
+_g.d.setInlierRatio=function(a){return _g.Tw(this,25,a)};
+_g.d.clearInlierRatio=function(){return _g.Tw(this,25,void 0)};
+_g.d.hasInlierRatio=function(){return null!=_g.V(this,25)};
+_g.d.getInlierWidth=function(){return _g.Nw(this,22)};
+_g.d.setInlierWidth=function(a){return _g.Tw(this,22,a)};
+_g.d.clearInlierWidth=function(){return _g.Tw(this,22,void 0)};
+_g.d.hasInlierWidth=function(){return null!=_g.V(this,22)};
+_g.d.getInlierHeight=function(){return _g.Nw(this,23)};
+_g.d.setInlierHeight=function(a){return _g.Tw(this,23,a)};
+_g.d.clearInlierHeight=function(){return _g.Tw(this,23,void 0)};
+_g.d.hasInlierHeight=function(){return null!=_g.V(this,23)};
+_g.d.getInlierIdsList=function(){return _g.V(this,26)};
+_g.d.setInlierIdsList=function(a){return _g.Tw(this,26,a||[])};
+_g.d.addInlierIds=function(a,b){return _g.Uw(this,26,a,b)};
+_g.d.clearInlierIdsList=function(){return this.setInlierIdsList([])};
+_g.d.getInlierIdMatchPosList=function(){return _g.V(this,31)};
+_g.d.setInlierIdMatchPosList=function(a){return _g.Tw(this,31,a||[])};
+_g.d.addInlierIdMatchPos=function(a,b){return _g.Uw(this,31,a,b)};
+_g.d.clearInlierIdMatchPosList=function(){return this.setInlierIdMatchPosList([])};
+_g.d.getInlierLengthList=function(){return _g.V(this,27)};
+_g.d.setInlierLengthList=function(a){return _g.Tw(this,27,a||[])};
+_g.d.addInlierLength=function(a,b){return _g.Uw(this,27,a,b)};
+_g.d.clearInlierLengthList=function(){return this.setInlierLengthList([])};
+_g.d.getOutlierIdsList=function(){return _g.V(this,28)};
+_g.d.setOutlierIdsList=function(a){return _g.Tw(this,28,a||[])};
+_g.d.addOutlierIds=function(a,b){return _g.Uw(this,28,a,b)};
+_g.d.clearOutlierIdsList=function(){return this.setOutlierIdsList([])};
+_g.d.getOutlierIdMatchPosList=function(){return _g.V(this,32)};
+_g.d.setOutlierIdMatchPosList=function(a){return _g.Tw(this,32,a||[])};
+_g.d.addOutlierIdMatchPos=function(a,b){return _g.Uw(this,32,a,b)};
+_g.d.clearOutlierIdMatchPosList=function(){return this.setOutlierIdMatchPosList([])};
+_g.d.getTrackingConfidence=function(){return _g.Nw(this,33)};
+_g.d.setTrackingConfidence=function(a){return _g.Tw(this,33,a)};
+_g.d.clearTrackingConfidence=function(){return _g.Tw(this,33,void 0)};
+_g.d.hasTrackingConfidence=function(){return null!=_g.V(this,33)};
+_g.d.getInternal=function(){return _g.Ww(this,a$,29)};
+_g.d.setInternal=function(a){return _g.Yw(this,29,a)};
+_g.d.clearInternal=function(){return this.setInternal(void 0)};
+_g.d.hasInternal=function(){return null!=_g.V(this,29)};var S9=function(a){_g.Lw(this,a,0,-1,null,null)};
+_g.ev(S9,_g.Iw);S9.prototype.toObject=function(a){return umc(a,this)};
+var umc=function(a,b){var c,e={top:null==(c=_g.Nw(b,1))?void 0:c,left:null==(c=_g.Nw(b,2))?void 0:c,right:null==(c=_g.Nw(b,3))?void 0:c,bottom:null==(c=_g.Nw(b,4))?void 0:c};a&&(e.$jspbMessageInstance=b);return e};
+S9.prototype.serializeBinary=function(){var a=new _g.Fw;vmc(this,a);return a.getResultBuffer()};
+var vmc=function(a,b){var c=_g.V(a,1);null!=c&&b.writeDouble(1,c);c=_g.V(a,2);null!=c&&b.writeDouble(2,c);c=_g.V(a,3);null!=c&&b.writeDouble(3,c);c=_g.V(a,4);null!=c&&b.writeDouble(4,c)};
+_g.d=S9.prototype;_g.d.getTop=function(){return _g.Nw(this,1)};
+_g.d.setTop=function(a){return _g.Tw(this,1,a)};
+_g.d.clearTop=function(){return _g.Tw(this,1,void 0)};
+_g.d.hasTop=function(){return null!=_g.V(this,1)};
+_g.d.getLeft=function(){return _g.Nw(this,2)};
+_g.d.setLeft=function(a){return _g.Tw(this,2,a)};
+_g.d.clearLeft=function(){return _g.Tw(this,2,void 0)};
+_g.d.hasLeft=function(){return null!=_g.V(this,2)};
+_g.d.getRight=function(){return _g.Nw(this,3)};
+_g.d.setRight=function(a){return _g.Tw(this,3,a)};
+_g.d.clearRight=function(){return _g.Tw(this,3,void 0)};
+_g.d.hasRight=function(){return null!=_g.V(this,3)};
+_g.d.getBottom=function(){return _g.Nw(this,4)};
+_g.d.setBottom=function(a){return _g.Tw(this,4,a)};
+_g.d.clearBottom=function(){return _g.Tw(this,4,void 0)};
+_g.d.hasBottom=function(){return null!=_g.V(this,4)};var Glc=function(a){_g.Lw(this,a,0,-1,null,null)};
+_g.ev(Glc,_g.Iw);_g.d=Glc.prototype;_g.d.toObject=function(a){var b,c={rectangle:(b=this.getRectangle())&&umc(a,b),timeMsec:_g.Qw(this,2,0)};a&&(c.$jspbMessageInstance=this);return c};
+_g.d.serializeBinary=function(){var a=new _g.Fw;var b=this.getRectangle();null!=b&&a.writeMessage(1,b,vmc);b=_g.V(this,2);null!=b&&a.writeInt32(2,b);return a.getResultBuffer()};
+_g.d.getRectangle=function(){return _g.Ww(this,S9,1,1)};
+_g.d.setRectangle=function(a){return _g.Yw(this,1,a)};
+_g.d.clearRectangle=function(){return _g.Tw(this,1,void 0)};
+_g.d.hasRectangle=function(){return null!=_g.V(this,1)};
+_g.d.getTimeMsec=function(){return _g.Qw(this,2,0)};
+_g.d.setTimeMsec=function(a){return _g.Tw(this,2,a)};
+_g.d.clearTimeMsec=function(){return _g.Tw(this,2,void 0)};
+_g.d.hasTimeMsec=function(){return null!=_g.V(this,2)};var T9=function(a){_g.Lw(this,a,0,-1,null,null)};
+_g.ev(T9,_g.Iw);T9.prototype.toObject=function(a){return wmc(a,this)};
+var wmc=function(a,b){var c,e={top:null==(c=_g.V(b,1))?void 0:c,left:null==(c=_g.V(b,2))?void 0:c,right:null==(c=_g.V(b,3))?void 0:c,bottom:null==(c=_g.V(b,4))?void 0:c,padding:_g.Rw(b,5,!1)};a&&(e.$jspbMessageInstance=b);return e},Plc=function(a,b){for(;b.nextField()&&!b.isEndGroup();)switch(b.getFieldNumber()){case 1:var c=b.readUint32();
+a.setTop(c);break;case 2:c=b.readUint32();a.setLeft(c);break;case 3:c=b.readUint32();a.setRight(c);break;case 4:c=b.readUint32();a.setBottom(c);break;case 5:c=b.readBool();a.setPadding(c);break;default:b.skipField();}return a};
+T9.prototype.serializeBinary=function(){var a=new _g.Fw;xmc(this,a);return a.getResultBuffer()};
+var xmc=function(a,b){var c=_g.V(a,1);null!=c&&b.writeUint32(1,c);c=_g.V(a,2);null!=c&&b.writeUint32(2,c);c=_g.V(a,3);null!=c&&b.writeUint32(3,c);c=_g.V(a,4);null!=c&&b.writeUint32(4,c);c=_g.V(a,5);null!=c&&b.writeBool(5,c)};
+_g.d=T9.prototype;_g.d.getTop=function(){return _g.V(this,1)};
+_g.d.setTop=function(a){return _g.Tw(this,1,a)};
+_g.d.clearTop=function(){return _g.Tw(this,1,void 0)};
+_g.d.hasTop=function(){return null!=_g.V(this,1)};
+_g.d.getLeft=function(){return _g.V(this,2)};
+_g.d.setLeft=function(a){return _g.Tw(this,2,a)};
+_g.d.clearLeft=function(){return _g.Tw(this,2,void 0)};
+_g.d.hasLeft=function(){return null!=_g.V(this,2)};
+_g.d.getRight=function(){return _g.V(this,3)};
+_g.d.setRight=function(a){return _g.Tw(this,3,a)};
+_g.d.clearRight=function(){return _g.Tw(this,3,void 0)};
+_g.d.hasRight=function(){return null!=_g.V(this,3)};
+_g.d.getBottom=function(){return _g.V(this,4)};
+_g.d.setBottom=function(a){return _g.Tw(this,4,a)};
+_g.d.clearBottom=function(){return _g.Tw(this,4,void 0)};
+_g.d.hasBottom=function(){return null!=_g.V(this,4)};
+_g.d.getPadding=function(){return _g.Rw(this,5,!1)};
+_g.d.setPadding=function(a){return _g.Tw(this,5,a)};
+_g.d.clearPadding=function(){return _g.Tw(this,5,void 0)};
+_g.d.hasPadding=function(){return null!=_g.V(this,5)};var Olc=function(a){_g.Lw(this,a,0,-1,ymc,null)};
+_g.ev(Olc,_g.Iw);var ymc=[1,10,11];_g.d=Olc.prototype;
+_g.d.toObject=function(a){var b,c={rectangleList:_g.Mw(this.getRectangleList(),wmc,a),startMsec:null==(b=_g.V(this,2))?void 0:b,endMsec:null==(b=_g.V(this,3))?void 0:b,trackingEndMsec:null==(b=_g.V(this,12))?void 0:b,trackDataList:_g.Mw(this.getTrackDataList(),emc,a),trackStateList:_g.Mw(this.getTrackStateList(),pmc,a),trackingStatus:_g.Qw(this,4,1),startState:(b=this.getStartState())&&pmc(a,b),endState:(b=this.getEndState())&&pmc(a,b)};a&&(c.$jspbMessageInstance=this);return c};
+_g.d.serializeBinary=function(){var a=new _g.Fw;var b=this.getRectangleList();0<b.length&&a.writeRepeatedMessage(1,b,xmc);b=_g.V(this,2);null!=b&&a.writeInt32(2,b);b=_g.V(this,3);null!=b&&a.writeInt32(3,b);b=_g.V(this,12);null!=b&&a.writeInt32(12,b);b=this.getTrackDataList();0<b.length&&a.writeRepeatedMessage(10,b,hmc);b=this.getTrackStateList();0<b.length&&a.writeRepeatedMessage(11,b,smc);b=_g.V(this,4);null!=b&&a.writeEnum(4,b);b=this.getStartState();null!=b&&a.writeMessage(8,b,smc);b=this.getEndState();
+null!=b&&a.writeMessage(9,b,smc);return a.getResultBuffer()};
+_g.d.getRectangleList=function(){return _g.Xw(this,T9,1)};
+_g.d.setRectangleList=function(a){return _g.Zw(this,1,a)};
+_g.d.addRectangle=function(a,b){return _g.$w(this,1,a,T9,b)};
+_g.d.clearRectangleList=function(){return this.setRectangleList([])};
+_g.d.getStartMsec=function(){return _g.V(this,2)};
+_g.d.setStartMsec=function(a){return _g.Tw(this,2,a)};
+_g.d.clearStartMsec=function(){return _g.Tw(this,2,void 0)};
+_g.d.hasStartMsec=function(){return null!=_g.V(this,2)};
+_g.d.getEndMsec=function(){return _g.V(this,3)};
+_g.d.setEndMsec=function(a){return _g.Tw(this,3,a)};
+_g.d.clearEndMsec=function(){return _g.Tw(this,3,void 0)};
+_g.d.hasEndMsec=function(){return null!=_g.V(this,3)};
+_g.d.getTrackingEndMsec=function(){return _g.V(this,12)};
+_g.d.setTrackingEndMsec=function(a){return _g.Tw(this,12,a)};
+_g.d.clearTrackingEndMsec=function(){return _g.Tw(this,12,void 0)};
+_g.d.hasTrackingEndMsec=function(){return null!=_g.V(this,12)};
+_g.d.getTrackDataList=function(){return _g.Xw(this,U9,10)};
+_g.d.setTrackDataList=function(a){return _g.Zw(this,10,a)};
+_g.d.addTrackData=function(a,b){return _g.$w(this,10,a,U9,b)};
+_g.d.clearTrackDataList=function(){return this.setTrackDataList([])};
+_g.d.getTrackStateList=function(){return _g.Xw(this,V9,11)};
+_g.d.setTrackStateList=function(a){return _g.Zw(this,11,a)};
+_g.d.addTrackState=function(a,b){return _g.$w(this,11,a,V9,b)};
+_g.d.clearTrackStateList=function(){return this.setTrackStateList([])};
+_g.d.getTrackingStatus=function(){return _g.Qw(this,4,1)};
+_g.d.setTrackingStatus=function(a){return _g.Tw(this,4,a)};
+_g.d.clearTrackingStatus=function(){return _g.Tw(this,4,void 0)};
+_g.d.hasTrackingStatus=function(){return null!=_g.V(this,4)};
+_g.d.getStartState=function(){return _g.Ww(this,V9,8)};
+_g.d.setStartState=function(a){return _g.Yw(this,8,a)};
+_g.d.clearStartState=function(){return this.setStartState(void 0)};
+_g.d.hasStartState=function(){return null!=_g.V(this,8)};
+_g.d.getEndState=function(){return _g.Ww(this,V9,9)};
+_g.d.setEndState=function(a){return _g.Yw(this,9,a)};
+_g.d.clearEndState=function(){return this.setEndState(void 0)};
+_g.d.hasEndState=function(){return null!=_g.V(this,9)};var c$=function(){return _g.n.apply(this,arguments)||this};
+_g.J(c$,_g.n);c$.prototype.open=function(){this.dialog.open()};
+c$.prototype.exitDialogWithoutSaving=function(){this.dialog.close()};
+c$.prototype.revertVideo=function(){this.fire("revert-to-original-dialog-confirmed");this.dialog.close()};
+var zmc=c$;_g.X([_g.H("#dialog"),_g.Z("design:type",_g.jD)],zmc.prototype,"dialog",void 0);zmc=_g.X([_g.M({is:"ytve-revert-to-original-dialog",debounceEffects:!0})],zmc);var d$=function(a,b){_g.SC.call(this,a);this.originalValue=b};
+_g.J(d$,_g.SC);d$.prototype.update=function(a){return new d$(a,this.originalValue)};
+d$.prototype.isUpdated=function(){return this.originalValue!==this.value};var Amc=_g.fm(_g.sm),Bmc=function(){var a=_g.n.apply(this,arguments)||this;a.locked=!1;a.cancelLabel=(0,_g.ii.cancel)();a.destinationVideoTitleCharLimit=100;return a};
+_g.J(Bmc,_g.n);_g.d=Bmc.prototype;_g.d.open=function(){this.dialog.open()};
+_g.d.exitDialogWithoutSaving=function(){this.dialog.close()};
+_g.d.saveAsNewVideo=function(){var a=this;if(this.form){var b=function(){},c=function(){},e=new Promise(function(k,l){b=k;
+c=l}),h={title:this.form.title.value,
+visibility:this.form.visibility.value,deleteSourceVideo:this.form.deleteSourceVideo.value,successCallback:b,failureCallback:c};this.locked=!0;e.finally(function(){a.locked=!1;a.dialog.close()});
+this.fire("save-as-new-dialog-confirmed",h)}};
+_g.d.onDeleteSourceVideoCheckboxClicked=function(a){a=Polymer.dom(a).rootTarget;this.formProxy&&a&&(this.formProxy.deleteSourceVideo.value=a.checked)};
+_g.d.onVisibilityModelChange=function(a){this.formProxy&&(a=a.detail,_g.uEa(_g.wEa(a))&&(a=Llc(a.visibility),this.formProxy.visibility.value!==a&&(this.formProxy.visibility.value=a)))};
+_g.d.onFormModified=function(a){this.form&&(this.form=_g.Sp(a,this.form))};
+_g.U.Object.defineProperties(Bmc.prototype,{isSaveAsNewButtonEnabled:{configurable:!0,enumerable:!0,get:function(){return this.form?_g.Up(this.form)&&!this.locked:!1}},
+fetchedChannel:{configurable:!0,enumerable:!0,get:function(){if(this.channelId&&this.entityCache)return this.channelFetcher.getWithAutoFetch(this.entityCache,[this.channelId],Amc)[this.channelId]}},
+channel:{configurable:!0,enumerable:!0,get:function(){if(_g.S(this.fetchedChannel))return this.fetchedChannel.data}},
+isUnlistedVideoFeatureEnabled:{configurable:!0,enumerable:!0,get:function(){return this.channel?_g.um(this.channel,"unlistedVideo"):!1}},
+visibilitySelectConfig:{configurable:!0,enumerable:!0,get:function(){if(this.form)return{visibility:Mlc(this.form.visibility.value),unlistedFeatureEnabled:this.isUnlistedVideoFeatureEnabled,unlistedExpired:!1,scheduledPublishingEnabled:!1,scheduledPremiereVisible:!1,premiereReschedulingEnabled:!1,sponsorsOnlyVideoEnabled:!1,verbose:!1,hideSchedulePanel:!0,visibilityPreviouslySet:!1}}},
+formProxy:{configurable:!0,enumerable:!0,get:function(){if(this.form)return _g.Qp(this.form,this)}}});
+var e$=Bmc;e$.prototype.onFormModified=e$.prototype.onFormModified;_g.X([_g.L(),_g.Z("design:type",_g.vC)],e$.prototype,"channelFetcher",void 0);_g.X([_g.H("#dialog"),_g.Z("design:type",_g.jD)],e$.prototype,"dialog",void 0);_g.X([_g.O(_g.bk),_g.Z("design:type",Object)],e$.prototype,"entityCache",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],e$.prototype,"channelId",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],e$.prototype,"form",void 0);
+_g.X([_g.v(),_g.Z("design:type",Object)],e$.prototype,"locked",void 0);_g.X([_g.F("form","locked"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],e$.prototype,"isSaveAsNewButtonEnabled",null);_g.X([_g.F("channelId"," entityCache"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],e$.prototype,"fetchedChannel",null);_g.X([_g.F("fetchedChannel"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],e$.prototype,"channel",null);
+_g.X([_g.F("channel"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],e$.prototype,"isUnlistedVideoFeatureEnabled",null);_g.X([_g.F("form"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],e$.prototype,"visibilitySelectConfig",null);_g.X([_g.F("form"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],e$.prototype,"formProxy",null);
+_g.X([_g.B("form-modified"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[Object]),_g.Z("design:returntype",void 0)],e$.prototype,"onFormModified",null);e$=_g.X([_g.M({is:"ytve-save-as-dialog",debounceEffects:!0})],e$);var f$=function(){return _g.n.apply(this,arguments)||this};
+_g.J(f$,_g.n);f$.prototype.open=function(){this.dialog.open()};
+f$.prototype.close=function(){this.dialog.close()};
+f$.prototype.confirmSave=function(){this.fire("confirm-save")};
+var Cmc=f$;_g.X([_g.H("#dialog"),_g.Z("design:type",Object)],Cmc.prototype,"dialog",void 0);Cmc=_g.X([_g.M({is:"ytve-save-dialog"})],Cmc);var Dmc=function(){return _g.n.apply(this,arguments)||this};
+_g.J(Dmc,_g.n);_g.d=Dmc.prototype;_g.d.show=function(a){var b=this;this.info=a;this.classList.toggle("buttons","buttons"===a.type);this.classList.toggle("message","message"===a.type);this.classList.toggle("action","buttons"===a.type&&void 0!==a.actionButton);this.showFrame||(this.showFrame=window.requestAnimationFrame(function(){b.classList.add("show");b.showFrame=void 0}))};
+_g.d.hide=function(){this.showFrame&&(window.cancelAnimationFrame(this.showFrame),this.showFrame=void 0);this.classList.remove("show")};
+_g.d.onActionButton=function(){"buttons"===this.info.type&&this.info.actionButtonClick&&this.info.actionButtonClick()};
+_g.d.onLeftButton=function(){"buttons"===this.info.type&&this.info.leftButtonClick&&this.info.leftButtonClick()};
+_g.d.onRightButton=function(){"buttons"===this.info.type&&this.info.rightButtonClick&&this.info.rightButtonClick()};
+_g.U.Object.defineProperties(Dmc.prototype,{darkButtons:{configurable:!0,enumerable:!0,get:function(){return"DARK"!==this.theme||!document.documentElement.hasAttribute("dark")}},
+actionButton:{configurable:!0,enumerable:!0,get:function(){return"buttons"===this.info.type?this.info.actionButton:""}},
+leftButton:{configurable:!0,enumerable:!0,get:function(){return"buttons"===this.info.type?this.info.leftButton:""}},
+rightButton:{configurable:!0,enumerable:!0,get:function(){return"buttons"===this.info.type?this.info.rightButton:""}},
+message:{configurable:!0,enumerable:!0,get:function(){return"message"===this.info.type?this.info.message:""}},
+actionButtonEnabled:{configurable:!0,enumerable:!0,get:function(){return"buttons"===this.info.type&&void 0!==this.info.actionButtonClick}},
+rightButtonEnabled:{configurable:!0,enumerable:!0,get:function(){return"buttons"===this.info.type&&void 0!==this.info.rightButtonClick}}});
+var g$=Dmc;_g.X([_g.H("#toast"),_g.Z("design:type",HTMLDivElement)],g$.prototype,"toast",void 0);_g.X([_g.O(_g.Rj),_g.Z("design:type",String)],g$.prototype,"theme",void 0);_g.X([_g.F("theme"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],g$.prototype,"darkButtons",null);_g.X([_g.v(),_g.Z("design:type",Object)],g$.prototype,"info",void 0);_g.X([_g.F("info"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],g$.prototype,"actionButton",null);
+_g.X([_g.F("info"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],g$.prototype,"leftButton",null);_g.X([_g.F("info"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],g$.prototype,"rightButton",null);_g.X([_g.F("info"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],g$.prototype,"message",null);_g.X([_g.F("info"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],g$.prototype,"actionButtonEnabled",null);
+_g.X([_g.F("info"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],g$.prototype,"rightButtonEnabled",null);g$=_g.X([_g.M({is:"ytve-toast"})],g$);var Emc=function(){var a=_g.n.apply(this,arguments)||this;a.isAsyncLoading=!1;a.isMonitoringProcessing=!1;a.pluginOrder="TRIM VIDEO AUDIO AD_BREAKS PRIVACY ENDSCREEN INFO_CARDS PRIVACY_DEEP_LINK".split(" ");var b={};a.unprocessedLivestreamPluginConfiguration=(b.AD_BREAKS=1,b.AUDIO=1,b.CAPTIONS=1,b.ENDSCREEN=1,b.INFO_CARDS=1,b.PRIVACY=1,b.PRIVACY_DEEP_LINK=1,b.TRIM=2,b.VIDEO=2,b);a.isSaving=!1;a.isThisVideoPendingDeletion=!1;a.saveAsWithoutSourceDeletionToastConfig={text:"Video saved as new",button:{label:"Go to video",
+callback:function(){a.navigateToVideoList()}},
+durationMillis:5E3};a.saveAsWithSourceDeletionToastConfig={text:"Video saved as new",durationMillis:5E3};a.saveAsNewVideo=function(c){return _g.aa(a,void 0,void 0,function h(){var k=this,l,m,q,t,u;return _g.ba(h,function(x){switch(x.nextAddress){case 1:if(!k.videoId||!k.plugins)return x.return();l={};try{for(m=_g.f(k.plugins),q=m.next();!q.done;q=m.next())t=q.value,t.fillVideoEdit&&t.fillVideoEdit(l)}catch(z){return _g.rh(z),x.return()}u={sourceVideoId:k.videoId,videoEdit:l,deleteSourceVideo:c.detail.deleteSourceVideo,
+destinationVideoOptions:{title:c.detail.title,privacy:c.detail.visibility}};k.dispatch({type:"VIDEO_EDITOR_SAVE_AS_REQUESTED",payload:void 0});x.setCatchFinallyBlocks(2);return x.yield(k.videoEditorService.editVideoAsNew(u),4);case 4:k.dispatch({type:"VIDEO_EDITOR_SAVE_AS_SUCCEEDED",payload:{sourceVideoId:k.videoId,deleteSourceVideo:c.detail.deleteSourceVideo}});c.detail.successCallback();x.leaveTryBlock(3);break;case 2:return x.enterCatchBlock(),k.dispatch({type:"VIDEO_EDITOR_SAVE_AS_REJECTED",payload:void 0}),
+c.detail.failureCallback(),x.return();case 3:c.detail.deleteSourceVideo?(k.isThisVideoPendingDeletion=!0,k.navigateToVideoList(),k.toastManager.enqueue(k.saveAsWithSourceDeletionToastConfig)):k.toastManager.enqueue(k.saveAsWithoutSourceDeletionToastConfig),x.jumpToEnd();}})})};
+a.warmWelcomeShown=!1;a.TEST_ONLY={unprocessedLivestreamPluginConfiguration:a.unprocessedLivestreamPluginConfiguration,needsConfirmedExit:a.needsConfirmedExit,saveAsWithoutSourceDeletionToastConfig:a.saveAsWithoutSourceDeletionToastConfig,saveAsWithSourceDeletionToastConfig:a.saveAsWithSourceDeletionToastConfig};return a};
+_g.J(Emc,_g.n);_g.d=Emc.prototype;_g.d.ready=function(){this.initializeVideoEditor()};
+_g.d.attached=function(){this.mousePreventDefault.addTarget(this);this.setAsyncLoading(!0)};
+_g.d.detached=function(){this.isDebouncerActive("PROCESSING_CHECK")&&this.cancelDebouncer("PROCESSING_CHECK");this.mousePreventDefault.removeTarget(this);this.setAsyncLoading(!1)};
+_g.d.updateEditorLoadingState=function(){if(this.editorsUntrackedData&&this.video&&this.plugins){for(var a=_g.f(this.plugins),b=a.next();!b.done;b=a.next())if((b=this.editorsUntrackedData[b.value.pluginId])&&2>b.loadingState)return;this.makeVisible()}};
+_g.d.makeVisible=function(){if(!this.classList.contains("ready")){this.classList.add("ready");this.setAsyncLoading(!1);var a=_g.Rh();a&&a.blur()}};
+_g.d.setAsyncLoading=function(a){a!==this.isAsyncLoading&&(this.isAsyncLoading=a,this.dispatch(a?_g.Rn.editorAsyncStartupBegin():_g.Rn.editorAsyncStartupEnd()))};
+_g.d.initializeVideoEditor=function(){this.dispatch(_g.R6a())};
+_g.d.checkVideoProcessingStatus=function(){return _g.aa(this,void 0,void 0,function b(){var c=this,e;return _g.ba(b,function(h){if(1==h.nextAddress){if(!c.videoId)return h.return();if(c.isSaving)return c.startProcessingMonitor(!0),h.return();h.setCatchFinallyBlocks(2);return h.yield(c.videoEditorService.getVideoProcessingStatus(c.videoId),4)}if(2!=h.nextAddress){e=h.yieldResult;switch(e.videoProcessingStatus){case"VIDEO_PROCESSING_STATUS_READY":case"VIDEO_PROCESSING_STATUS_FAILED":return c.isMonitoringProcessing?
+c.dispatch(_g.Z6a(c.videoId)):c.dispatch(_g.U6a(!1)),h.return();case"VIDEO_PROCESSING_STATUS_PROCESSING":return c.dispatch(_g.U6a(!0)),c.startProcessingMonitor(!0),h.return();}return h.leaveTryBlock(0)}h.enterCatchBlock();h.jumpToEnd()})})};
+_g.d.onProcessingChange=function(){this.isProcessing?this.startProcessingMonitor():this.stopProcessingMonitor()};
+_g.d.startProcessingMonitor=function(a){if(!this.isMonitoringProcessing||(void 0===a?0:a))this.toast.show({type:"message",message:"Video is being processed. Please check back later."}),this.debounce("PROCESSING_CHECK",this.checkVideoProcessingStatus,3E3),this.isMonitoringProcessing=!0};
+_g.d.stopProcessingMonitor=function(){this.isMonitoringProcessing&&(this.toast.hide(),this.cancelDebouncer("PROCESSING_CHECK"),this.isMonitoringProcessing=!1)};
+_g.d.shouldLoadPlugin=function(a,b){return 2===a[b]};
+_g.d.setPlugins=function(){var a=this;if(void 0!==this.pluginsToLoad&&void 0===this.plugins){for(var b=[],c=_g.f(Object.entries(this.pluginsToLoad)),e=c.next();!e.done;e=c.next()){var h=_g.f(e.value);e=h.next().value;h=h.next().value;if(void 0===h||0===h)return;2===h&&b.push(e)}var k=this.queryPlugins||[];b.every(function(l){return!!k.find(function(m){return m.pluginId===l})})?this.plugins=k:requestAnimationFrame(function(){a.setPlugins()})}};
+_g.d.doSaveVideoEdits=function(){return _g.aa(this,void 0,void 0,function b(){var c=this,e,h,k,l,m,q;return _g.ba(b,function(t){switch(t.nextAddress){case 1:if(!c.videoId||!c.plugins)return t.return();e={};try{for(h=_g.f(c.plugins),k=h.next();!k.done;k=h.next())l=k.value,l.fillEditVideoRequest&&l.fillEditVideoRequest(e)}catch(u){return _g.rh(u),t.return()}c.isSaving=!0;c.dispatch(_g.X6a(c.videoId));t.setCatchFinallyBlocks(2);m=!_g.ih(Object.keys(e));if(!m){t.jumpTo(4);break}e.externalVideoId=c.videoId;
+return t.yield(c.videoEditorService.editVideo(e),5);case 5:q=t.yieldResult,"EDIT_EXECUTION_STATUS_DONE"===q.executionStatus?c.dispatch(_g.Z6a(c.videoId,e)):c.dispatch(_g.Y6a(c.videoId));case 4:t.leaveTryBlock(3);break;case 2:t.enterCatchBlock(),c.dispatch(_g.W6a(c.videoId));case 3:c.isSaving=!1,t.jumpToEnd();}})})};
+_g.d.openSaveAsDialog=function(){if(this.video){var a=_g.Hh(e$.prototype.is,this);a.addEventListener("save-as-new-dialog-confirmed",this.saveAsNewVideo);this.popupHostBehavior.hostPopup(a,"DARK_BACKDROP");a.channelId=this.video.channelId;var b=_g.dq("Copy of "+this.video.title,_g.Jbb);var c=new d$("VIDEO_PRIVACY_PRIVATE","VIDEO_PRIVACY_PRIVATE");b={title:b,visibility:c,deleteSourceVideo:_g.dq(!1)};a.form=b;a.open()}};
+_g.d.navigateToVideoList=function(){this.router.navigateToRoute("channel.videos.tab",{channelId:this.channelId,tab:"upload"})};
+_g.d.revertVideoEdits=function(){return _g.aa(this,void 0,void 0,function b(){var c=this;return _g.ba(b,function(e){switch(e.nextAddress){case 1:if(!c.videoId)return e.return();c.dispatch(_g.X6a(c.videoId));c.isSaving=!0;e.setCatchFinallyBlocks(2);return e.yield(c.videoEditorService.revertVideoEdits(c.videoId),4);case 4:c.dispatch(_g.Y6a(c.videoId));e.leaveTryBlock(3);break;case 2:e.enterCatchBlock(),c.dispatch(_g.W6a(c.videoId));case 3:c.isSaving=!1,e.jumpToEnd();}})})};
+_g.d.onFocusIn=function(){this.warmWelcomeShown&&this.warmWelcomeElement&&!this.warmWelcomeElement.contains(_g.Rh())&&this.warmWelcomeElement.focus()};
+_g.d.onFormUpdatedChange=function(){var a=this;void 0!==this.routeName&&_g.Gk(this.routeName)&&this.router.denyDeactivate(this.routeName,function(){return a.needsConfirmedExit()?(0,_g.ii.confirmDiscardChanges)():null},function(b,c){return a.onDeactivateDenial(b,c)})};
+_g.d.needsConfirmedExit=function(){return!this.isProcessing&&!!this.plugins&&this.plugins.some(function(a){return a.hasChanges})&&!this.isThisVideoPendingDeletion};
+_g.d.onDeactivateDenial=function(a,b){return _g.Gk(b.name)&&this.needsConfirmedExit()&&!confirm((0,_g.ii.confirmDiscardChanges)())?!1:(this.router.allowDeactivate(this.routeName||""),!0)};
+_g.d.onVideoChanged=function(){if(this.video){var a;if(a=_g.oq(this.video))(a=this.video)&&a.livestream&&a.livestream.broadcastId?(a=a.livestream.broadcastId.split("."),a=Number(a[1])):a=void 0,a=void 0!==a?1<a:!1;this.dispatch({type:"VIDEO_EDITOR_VIDEO_CHANGED",payload:{isPostLiveWithMultipleBroadcastVersions:a}})}};
+_g.U.Object.defineProperties(Emc.prototype,{videoId:{configurable:!0,enumerable:!0,get:function(){void 0===this.initializedVideoId&&(this.initializedVideoId=this.videoIdFromRoute);return this.initializedVideoId}},
+fetchedVideo:{configurable:!0,enumerable:!0,get:function(){if(!this.videoId)return _g.Lm;var a=this.videoFetcher.getWithAutoFetch(this.entityCache,this.videoId,_g.tdb);return this.lastFetchedPreservingVideo=_g.Rr(this.lastFetchedPreservingVideo,a)}},
+video:{configurable:!0,enumerable:!0,get:function(){return this.fetchedVideo?this.fetchedVideo.data:void 0}},
+channelId:{configurable:!0,enumerable:!0,get:function(){return this.video?this.video.channelId:void 0}},
+shouldLoadAdBreaksEditorPlugin:{configurable:!0,enumerable:!0,get:function(){return this.video?"eligible"===_g.$ta(this.video,void 0,void 0)?2:1:0}},
+pluginsToLoad:{configurable:!0,enumerable:!0,get:function(){if(this.video)return _g.oq(this.video)?this.unprocessedLivestreamPluginConfiguration:this.vodPluginConfiguration}},
+vodPluginConfiguration:{configurable:!0,enumerable:!0,get:function(){var a={};return a.AD_BREAKS=this.shouldLoadAdBreaksEditorPlugin,a.AUDIO=2,a.CAPTIONS=1,a.ENDSCREEN=2,a.INFO_CARDS=_g.I.VIDEO_EDITOR_INFO_CARD_EDITOR_ROLLOUT?2:1,a.PRIVACY=_g.I.VIDEO_EDITOR_PRIVACY_EDITOR_ROLLOUT?2:1,a.PRIVACY_DEEP_LINK=_g.I.VIDEO_EDITOR_PRIVACY_EDITOR_ROLLOUT?1:2,a.TRIM=2,a.VIDEO=2,a}}});
+var h$=Emc;h$.prototype.onVideoChanged=h$.prototype.onVideoChanged;h$.prototype.onFormUpdatedChange=h$.prototype.onFormUpdatedChange;h$.prototype.onFocusIn=h$.prototype.onFocusIn;h$.prototype.revertVideoEdits=h$.prototype.revertVideoEdits;h$.prototype.doSaveVideoEdits=h$.prototype.doSaveVideoEdits;h$.prototype.setPlugins=h$.prototype.setPlugins;h$.prototype.onProcessingChange=h$.prototype.onProcessingChange;h$.prototype.checkVideoProcessingStatus=h$.prototype.checkVideoProcessingStatus;
+h$.prototype.updateEditorLoadingState=h$.prototype.updateEditorLoadingState;_g.X([_g.L(_g.pA),_g.Z("design:type",Function)],h$.prototype,"dispatch",void 0);_g.X([_g.L(_g.FD),_g.Z("design:type",_g.GD)],h$.prototype,"mousePreventDefault",void 0);_g.X([_g.L(),_g.Z("design:type",_g.aD)],h$.prototype,"videoFetcher",void 0);_g.X([_g.L(),_g.Z("design:type",_g.$q)],h$.prototype,"videoEditorService",void 0);_g.X([_g.L(),_g.Z("design:type",_g.xo)],h$.prototype,"router",void 0);
+_g.X([_g.L(),_g.Z("design:type",_g.gD)],h$.prototype,"toastManager",void 0);_g.X([_g.r(),_g.Z("design:type",_g.ED)],h$.prototype,"popupHostBehavior",void 0);_g.X([_g.O(_g.bk),_g.Z("design:type",Object)],h$.prototype,"entityCache",void 0);_g.X([_g.O(_g.Tj),_g.Z("design:type",Object)],h$.prototype,"videoIdFromRoute",void 0);_g.X([_g.F("videoIdFromRoute"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],h$.prototype,"videoId",null);
+_g.X([_g.v(),_g.Z("design:type",Object)],h$.prototype,"lastFetchedPreservingVideo",void 0);_g.X([_g.F("entityCache","videoId"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],h$.prototype,"fetchedVideo",null);_g.X([_g.gi("fetchedVideo"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],h$.prototype,"video",null);_g.X([_g.F("video"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],h$.prototype,"channelId",null);
+_g.X([_g.O(_g.Iza),_g.Z("design:type",Object)],h$.prototype,"editorsUntrackedData",void 0);_g.X([_g.D("editorsUntrackedData","video","plugins"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],h$.prototype,"updateEditorLoadingState",null);_g.X([_g.H("#processing-toast"),_g.Z("design:type",g$)],h$.prototype,"toast",void 0);_g.X([_g.v({reflectToAttribute:!0}),_g.O(_g.Sq),_g.Z("design:type",Boolean)],h$.prototype,"isProcessing",void 0);
+_g.X([_g.D("videoId"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",Promise)],h$.prototype,"checkVideoProcessingStatus",null);_g.X([_g.D("isProcessing"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],h$.prototype,"onProcessingChange",null);_g.X([_g.v(),_g.Z("design:type",Array)],h$.prototype,"plugins",void 0);_g.X([_g.Ea(".plugin"),_g.Z("design:type",Array)],h$.prototype,"queryPlugins",void 0);
+_g.X([_g.v(),_g.Z("design:type",Array)],h$.prototype,"pluginOrder",void 0);_g.X([_g.F("video"),_g.Z("design:type",Number),_g.Z("design:paramtypes",[])],h$.prototype,"shouldLoadAdBreaksEditorPlugin",null);_g.X([_g.F("video","vodPluginConfiguration"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],h$.prototype,"pluginsToLoad",null);_g.X([_g.F("shouldLoadAdBreaksEditorPlugin"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],h$.prototype,"vodPluginConfiguration",null);
+_g.X([_g.D("pluginsToLoad"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],h$.prototype,"setPlugins",null);_g.X([_g.v(),_g.Z("design:type",Object)],h$.prototype,"isSaving",void 0);_g.X([_g.B("confirm-save"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",Promise)],h$.prototype,"doSaveVideoEdits",null);
+_g.X([_g.B("revert-to-original-dialog-confirmed"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",Promise)],h$.prototype,"revertVideoEdits",null);_g.X([_g.H("ytve-warm-welcome"),_g.Z("design:type",HTMLElement)],h$.prototype,"warmWelcomeElement",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],h$.prototype,"warmWelcomeShown",void 0);
+_g.X([_g.B("focusin"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],h$.prototype,"onFocusIn",null);_g.X([_g.O(_g.Qj),_g.Z("design:type",String)],h$.prototype,"routeName",void 0);_g.X([_g.D("routeName"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],h$.prototype,"onFormUpdatedChange",null);
+_g.X([_g.D("video"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],h$.prototype,"onVideoChanged",null);h$=_g.X([_g.M({is:"ytve-app",providers:_g.KD})],h$);var Fmc=function(a,b,c){_g.DC.call(this,"#VideoLastPublishedEdits",a,b);this.videoEditorService=c};
+_g.J(Fmc,_g.DC);Fmc.prototype.fetchData=function(a){return _g.aa(this,void 0,void 0,function c(){var e=this,h;return _g.ba(c,function(k){if(1==k.nextAddress)return k.yield(e.videoEditorService.getVideoLastPublishedEdits(a),2);h=k.yieldResult;return k.return(_g.Xg(a,h))})})};
+Fmc.ctorParameters=function(){return[{type:void 0,decorators:[{type:_g.sb,args:[_g.di]}]},{type:void 0,decorators:[{type:_g.sb,args:[_g.pA]}]},{type:_g.$q}]};_g.jm(_g.Bp,_g.aB);var Gmc=function(){return _g.Aa.apply(this,arguments)||this};
+_g.J(Gmc,_g.Aa);_g.U.Object.defineProperties(Gmc.prototype,{fetchedLastPublishedEdits:{configurable:!0,enumerable:!0,get:function(){if(this.publishedEditsVideoId&&this.publishedEditsEntityCache)return this.videoPublishedEditsDictFetcher.getWithAutoFetch(this.publishedEditsEntityCache,[this.publishedEditsVideoId])[this.publishedEditsVideoId]}},
+isTranscodeEdited:{configurable:!0,enumerable:!0,get:function(){if(this.publishedEditsVideo&&_g.oq(this.publishedEditsVideo))return!1;if(_g.S(this.fetchedLastPublishedEdits)&&void 0!==this.fetchedLastPublishedEdits.data.isOriginal)return!this.fetchedLastPublishedEdits.data.isOriginal}},
+timingDelta:{configurable:!0,enumerable:!0,get:function(){if(this.publishedEditsVideo&&_g.oq(this.publishedEditsVideo))return _g.Bua(void 0,this.publishedEditsVideo.videoDurationMs);if(_g.S(this.fetchedLastPublishedEdits)&&void 0!==this.fetchedLastPublishedEdits.data.originalVideoDurationMs)return _g.Bua(this.fetchedLastPublishedEdits.data.videoEdit,this.fetchedLastPublishedEdits.data.originalVideoDurationMs)}}});
+var i$=Gmc;_g.X([_g.L(),_g.Z("design:type",Fmc)],i$.prototype,"videoPublishedEditsDictFetcher",void 0);_g.X([_g.O(_g.bk),_g.Z("design:type",Object)],i$.prototype,"publishedEditsEntityCache",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],i$.prototype,"publishedEditsVideoId",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],i$.prototype,"publishedEditsVideo",void 0);
+_g.X([_g.F("publishedEditsEntityCache","publishedEditsVideoId"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],i$.prototype,"fetchedLastPublishedEdits",null);_g.X([_g.F("fetchedLastPublishedEdits","publishedEditsVideo"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],i$.prototype,"isTranscodeEdited",null);_g.X([_g.F("fetchedLastPublishedEdits","publishedEditsVideo"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],i$.prototype,"timingDelta",null);i$=_g.X([_g.Ca()],i$);var Hmc=function(){var a=_g.n.apply(this,arguments)||this;a.body=document.body;a.isSaving=!1;a.errorMessage="";a.hasChanges=!1;a.hasTranscodeEdits=!1;a.allPluginsValid=!1;a.updateState=function(){a.initializedPlugins&&(a.hasChanges=a.initializedPlugins.some(function(b){return b.hasChanges}),a.hasTranscodeEdits=a.initializedPlugins.some(function(b){return b.hasChanges&&!!b.fillVideoEdit}),a.allPluginsValid=a.initializedPlugins.every(function(b){return b.isValid}),a.updateErrorMessage())};
+a.save=function(){a.fire("confirm-save")};
+a.revertToOriginal=function(){a.fire("revert-to-original-dialog-confirmed")};
+return a};
+_g.J(Hmc,_g.n);_g.d=Hmc.prototype;_g.d.propagateVideoToBehaviors=function(){this.videoPublishedEditsProviderBehavior.publishedEditsVideoId=this.video?this.video.videoId:void 0;this.videoPublishedEditsProviderBehavior.publishedEditsVideo=this.video};
+_g.d.detached=function(){if(this.initializedPlugins)for(var a=_g.f(this.initializedPlugins),b=a.next();!b.done;b=a.next())b.value.removeEventListener("ytve-plugin-state-change-event",this.updateState)};
+_g.d.initPlugins=function(){if(this.plugins&&!this.initializedPlugins){this.initializedPlugins=this.plugins;for(var a=_g.f(this.initializedPlugins),b=a.next();!b.done;b=a.next())b.value.addEventListener("ytve-plugin-state-change-event",this.updateState);this.updateState()}};
+_g.d.updateErrorMessage=function(){var a=this,b=this.initializedPlugins?this.initializedPlugins.filter(function(e){return!_g.ih(e.errorMessages||[])}):[];
+if(_g.ih(b))this.errorMessage="";else{var c=b.find(function(e){return e.pluginId===a.activePluginId});
+this.errorMessage=c?c.errorMessages[0]:b[0].errorMessages[0]}};
+_g.d.undo=function(){this.isUndoButtonDisabled||this.dispatch({type:"UNDO",payload:void 0})};
+_g.d.redo=function(){this.isRedoButtonDisabled||this.dispatch({type:"REDO",payload:void 0})};
+_g.d.discardChanges=function(){this.isDiscardButtonDisabled||this.dispatch(_g.V6a())};
+_g.d.openSaveDialog=function(){if(this.canSaveEdits)if(this.hasTranscodeEdits){var a=_g.Hh(Cmc.prototype.is,this);a.addEventListener("confirm-save",this.save);this.popupHostBehavior.hostPopup(a,"DARK_BACKDROP");a.open()}else this.save()};
+_g.d.isSaveAsNewEnabled=function(){return(this.videoPublishedEditsProviderBehavior.isTranscodeEdited||this.hasTranscodeEdits)&&!this.isInModalEditor&&!this.isReadOnlyMode&&this.isVideoTranscodeEditable};
+_g.d.openSaveAsNewVideoDialog=function(){this.fire("open-save-as-dialog")};
+_g.d.isRevertToOriginalEnabled=function(){return!!this.videoPublishedEditsProviderBehavior.isTranscodeEdited&&!this.isInModalEditor&&!this.isReadOnlyMode&&this.isVideoTranscodeEditable};
+_g.d.openRevertToOriginalDialog=function(){var a=_g.Hh(zmc.prototype.is,this);a.addEventListener("revert-to-original-dialog-confirmed",this.revertToOriginal);this.popupHostBehavior.hostPopup(a,"DARK_BACKDROP");a.open()};
+_g.d.openMoreMenu=function(){var a=[];this.isUnprocessedPostLiveDVR||a.push({value:"SAVE_AS_NEW_VIDEO",text:"Save as new",disabled:!this.isSaveAsNewEnabled(),icon:"icons:add",tooltip:void 0,veType:84126});a.push({value:"REVERT_TO_ORIGINAL",text:"Revert to original",disabled:!this.isRevertToOriginalEnabled(),icon:"icons:undo",tooltip:void 0,veType:84127});a.push({value:"VIEW_KEYBOARD_SHORTCUTS",text:"Keyboard shortcuts",disabled:!1,icon:"icons:info-outline",tooltip:void 0});var b=_g.Hh(_g.pE.prototype.is,
+this);b.addEventListener("ytcp-text-menu-selected",this.onMenuItemSelected.bind(this));b.config={items:a,role:"menu",compact:!1,showIcons:!0};b.paperDialogPassThrough={positionTarget:this.moreMenuButton,verticalAlign:"top",verticalOffset:40,horizontalAlign:"right",restoreFocusOnClose:!0};this.popupHostBehavior.hostPopup(b,"TRANSPARENT_BACKDROP");_g.Ir(this.mouseHandler,b,function(){b.open()},function(){b.closeMenu()})};
+_g.d.onMenuItemSelected=function(a){switch(a.detail){case"SAVE_AS_NEW_VIDEO":this.openSaveAsNewVideoDialog();break;case"REVERT_TO_ORIGINAL":this.openRevertToOriginalDialog();break;case"VIEW_KEYBOARD_SHORTCUTS":this.onViewShortcuts();break;default:_g.na(a.detail,void 0);}};
+_g.d.onViewShortcuts=function(){var a=_g.Hh(_g.sR.prototype.is,this);this.popupHostBehavior.hostPopup(a,"DARK_BACKDROP");a.opened=!0};
+_g.d.controlKey=function(a){if(!this.isProcessing)switch(a.detail.keyboardEvent.key){case"?":case"/":this.onViewShortcuts(),a.detail.keyboardEvent.preventDefault();}};
+_g.d.undoKey=function(a){this.isProcessing||(this.undo(),a.detail.keyboardEvent.preventDefault())};
+_g.d.redoKey=function(a){this.isProcessing||(this.redo(),a.detail.keyboardEvent.preventDefault())};
+_g.U.Object.defineProperties(Hmc.prototype,{fakeDarkMode:{configurable:!0,enumerable:!0,get:function(){return"DARK"===this.theme&&document.documentElement.hasAttribute("ytve-dark")}},
+isReadOnlyMode:{configurable:!0,enumerable:!0,get:function(){return!this.permissions.canWriteChannel}},
+isInModalEditor:{configurable:!0,enumerable:!0,get:function(){return"TRIM"===this.activePluginId}},
+isRestrictedVideo:{configurable:!0,enumerable:!0,get:function(){return this.video?!this.video.meetsEditPreconditions:!0}},
+isVideoTranscodeEditable:{configurable:!0,enumerable:!0,get:function(){return this.video&&this.video.videoEditorProject&&void 0!==this.video.videoEditorProject.trimEligibility?!this.isRestrictedVideo&&"TRIM_ELIGIBILITY_ELIGIBLE"===this.video.videoEditorProject.trimEligibility:!1}},
+hasUndoableActions:{configurable:!0,enumerable:!0,get:function(){return!!this.timelineHistory&&0<this.timelineHistory.past.length&&!this.isSaving}},
+isUndoButtonDisabled:{configurable:!0,enumerable:!0,get:function(){return this.isReadOnlyMode||!this.hasUndoableActions}},
+hasRedoableActions:{configurable:!0,enumerable:!0,get:function(){return!!this.timelineHistory&&0<this.timelineHistory.future.length&&!this.isSaving}},
+isRedoButtonDisabled:{configurable:!0,enumerable:!0,get:function(){return this.isReadOnlyMode||!this.hasRedoableActions}},
+hasDiscardableActions:{configurable:!0,enumerable:!0,get:function(){var a;if(a=!!this.timelineHistory)a=this.timelineHistory,a=0<a.past.length&&_g.cC!==a.present;return a&&this.hasChanges&&!this.isInModalEditor&&!this.isSaving}},
+isDiscardButtonDisabled:{configurable:!0,enumerable:!0,get:function(){return this.isReadOnlyMode||!this.hasDiscardableActions}},
+isUnprocessedPostLiveDVR:{configurable:!0,enumerable:!0,get:function(){return this.video?_g.oq(this.video):!1}},
+canSaveEdits:{configurable:!0,enumerable:!0,get:function(){return this.hasChanges&&this.allPluginsValid&&!this.isInModalEditor&&!this.isSaving&&!this.isReadOnlyMode&&!this.isUnprocessedPostLiveDVR}},
+isSaveAsButtonEnabled:{configurable:!0,enumerable:!0,get:function(){return(this.videoPublishedEditsProviderBehavior.isTranscodeEdited||this.hasTranscodeEdits)&&!this.isInModalEditor&&!this.isReadOnlyMode&&this.isVideoTranscodeEditable}}});
+var j$=Hmc;j$.prototype.updateErrorMessage=j$.prototype.updateErrorMessage;j$.prototype.initPlugins=j$.prototype.initPlugins;j$.prototype.propagateVideoToBehaviors=j$.prototype.propagateVideoToBehaviors;_g.X([_g.L(_g.pA),_g.Z("design:type",Function)],j$.prototype,"dispatch",void 0);_g.X([_g.L(),_g.Z("design:type",_g.JD)],j$.prototype,"mouseHandler",void 0);_g.X([_g.r(),_g.Z("design:type",_g.eD)],j$.prototype,"permissions",void 0);
+_g.X([_g.r(),_g.Z("design:type",_g.ED)],j$.prototype,"popupHostBehavior",void 0);_g.X([_g.r(),_g.Z("design:type",i$)],j$.prototype,"videoPublishedEditsProviderBehavior",void 0);_g.X([_g.D("video"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],j$.prototype,"propagateVideoToBehaviors",null);_g.X([_g.O(_g.Zq),_g.Z("design:type",Object)],j$.prototype,"activePluginId",void 0);_g.X([_g.O(_g.Sq),_g.Z("design:type",Boolean)],j$.prototype,"isProcessing",void 0);
+_g.X([_g.O(_g.Nza),_g.Z("design:type",Object)],j$.prototype,"timelineHistory",void 0);_g.X([_g.O(_g.Rj),_g.Z("design:type",String)],j$.prototype,"theme",void 0);_g.X([_g.F("theme"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],j$.prototype,"fakeDarkMode",null);_g.X([_g.v(),_g.Z("design:type",Object)],j$.prototype,"body",void 0);_g.X([_g.v({reflectToAttribute:!0}),_g.Z("design:type",Object)],j$.prototype,"isSaving",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],j$.prototype,"video",void 0);
+_g.X([_g.v(),_g.Z("design:type",Array)],j$.prototype,"plugins",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],j$.prototype,"errorMessage",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],j$.prototype,"hasChanges",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],j$.prototype,"hasTranscodeEdits",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],j$.prototype,"allPluginsValid",void 0);
+_g.X([_g.F("canWriteChannel"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],j$.prototype,"isReadOnlyMode",null);_g.X([_g.D("plugins"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],j$.prototype,"initPlugins",null);_g.X([_g.D("activePluginId"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],j$.prototype,"updateErrorMessage",null);
+_g.X([_g.F("activePluginId"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],j$.prototype,"isInModalEditor",null);_g.X([_g.F("video"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],j$.prototype,"isRestrictedVideo",null);_g.X([_g.F("isRestrictedVideo","video"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],j$.prototype,"isVideoTranscodeEditable",null);
+_g.X([_g.F("timelineHistory","isSaving"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],j$.prototype,"hasUndoableActions",null);_g.X([_g.F("hasUndoableActions","isReadOnlyMode"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],j$.prototype,"isUndoButtonDisabled",null);_g.X([_g.F("timelineHistory","isSaving"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],j$.prototype,"hasRedoableActions",null);
+_g.X([_g.F("hasRedoableActions","isReadOnlyMode"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],j$.prototype,"isRedoButtonDisabled",null);_g.X([_g.F("timelineHistory","hasChanges","isInModalEditor","isSaving"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],j$.prototype,"hasDiscardableActions",null);_g.X([_g.F("hasDiscardableActions","isReadOnlyMode"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],j$.prototype,"isDiscardButtonDisabled",null);
+_g.X([_g.F("video"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],j$.prototype,"isUnprocessedPostLiveDVR",null);_g.X([_g.F("allPluginsValid","hasChanges","isInModalEditor","isReadOnlyMode","isSaving","isUnprocessedPostLiveDVR"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],j$.prototype,"canSaveEdits",null);
+_g.X([_g.F("hasTranscodeEdits","isInModalEditor","isReadOnlyMode","isTranscodeEdited","isVideoTranscodeEditable"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],j$.prototype,"isSaveAsButtonEnabled",null);_g.X([_g.H("#more-menu-button"),_g.Z("design:type",HTMLElement)],j$.prototype,"moreMenuButton",void 0);j$=_g.X([_g.M({is:"ytve-control-bar"})],j$);var k$=function(){var a=_g.n.apply(this,arguments)||this;a.shown=!1;return a};
+_g.J(k$,_g.n);k$.prototype.attached=function(){"CREATOR_WARM_WELCOME_STATE_NOT_SHOWN"===this.warmWelcomeState&&(this.shown=!0)};
+k$.prototype.onClose=function(){this.shown=!1;this.metadataService.updateCreatorSettings({update:{videoEditorSettings:{warmWelcomeScreenState:"CREATOR_WARM_WELCOME_STATE_SHOWN"}}})};
+_g.U.Object.defineProperties(k$.prototype,{illustrationUrl:{configurable:!0,enumerable:!0,get:function(){return"https://www.gstatic.com/youtube/img/creator/video_editor/"+("DARK"===this.theme?"video_editor_promo_dark.svg":"video_editor_promo_light.svg")}},
+fakeDarkMode:{configurable:!0,enumerable:!0,get:function(){return"DARK"===this.theme&&document.documentElement.hasAttribute("ytve-dark")}}});
+var l$=k$;_g.X([_g.L(),_g.Z("design:type",_g.ap)],l$.prototype,"metadataService",void 0);_g.X([_g.O(function(a){return(a=a.context.creatorSettings.videoEditorSettings)&&a.warmWelcomeScreenState||"CREATOR_WARM_WELCOME_STATE_UNKNOWN"}),
+_g.Z("design:type",String)],l$.prototype,"warmWelcomeState",void 0);_g.X([_g.O(_g.Rj),_g.Z("design:type",String)],l$.prototype,"theme",void 0);_g.X([_g.F("theme"),_g.Z("design:type",String),_g.Z("design:paramtypes",[])],l$.prototype,"illustrationUrl",null);_g.X([_g.F("theme"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],l$.prototype,"fakeDarkMode",null);_g.X([_g.v({notify:!0,reflectToAttribute:!0}),_g.Z("design:type",Object)],l$.prototype,"shown",void 0);
+l$=_g.X([_g.M({is:"ytve-warm-welcome"})],l$);var Imc=function(){var a=_g.n.apply(this,arguments)||this;a.pluginId="PRIVACY_DEEP_LINK";a.isReadonly=!1;return a};
+_g.J(Imc,_g.n);Imc.prototype.navigateToClassicPrivacyEditor=function(){if(this.videoId&&!this.isBlurButtonDisabled){var a=_g.ll(_g.uk.enhancements(this.videoId));window.open(a,"_blank")}};
+_g.U.Object.defineProperties(Imc.prototype,{fakeDarkMode:{configurable:!0,enumerable:!0,get:function(){return"DARK"===this.theme&&document.documentElement.hasAttribute("ytve-dark")}},
+isBlurButtonDisabled:{configurable:!0,enumerable:!0,get:function(){return"TRIM"===this.activePluginId||this.isReadonly||_g.mh()}}});
+var m$=Imc;_g.X([_g.O(_g.Zq),_g.Z("design:type",Object)],m$.prototype,"activePluginId",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],m$.prototype,"pluginId",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],m$.prototype,"videoId",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],m$.prototype,"isReadonly",void 0);_g.X([_g.O(_g.Rj),_g.Z("design:type",String)],m$.prototype,"theme",void 0);_g.X([_g.F("theme"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],m$.prototype,"fakeDarkMode",null);
+_g.X([_g.F("activePluginId","isReadonly"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],m$.prototype,"isBlurButtonDisabled",null);m$=_g.X([_g.M({is:"ytve-blur-deep-link-timeline",debounceEffects:!0})],m$);var n$=function(){var a=_g.n.apply(this,arguments)||this;a.pluginId="PRIVACY_DEEP_LINK";a.isReadonly=!1;a.hasChanges=!1;a.isValid=!0;a.previewConfig=_g.UB;return a};
+_g.J(n$,_g.n);n$.prototype.propagateVideoId=function(){this.timelineComponent&&(this.timelineComponent.videoId=this.videoId)};
+n$.prototype.propagateIsReadonly=function(){this.timelineComponent&&(this.timelineComponent.isReadonly=this.isReadonly)};
+n$.prototype.timeline=function(){return this.timelineComponent?this.timelineComponent:this.timelineComponent=_g.Hh(m$.prototype.is,this)};
+_g.U.Object.defineProperties(n$.prototype,{errorMessages:{configurable:!0,enumerable:!0,get:function(){return[]}}});
+var o$=n$;o$.prototype.propagateIsReadonly=o$.prototype.propagateIsReadonly;o$.prototype.propagateVideoId=o$.prototype.propagateVideoId;_g.X([_g.v(),_g.Z("design:type",m$)],o$.prototype,"timelineComponent",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],o$.prototype,"videoId",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],o$.prototype,"video",void 0);
+_g.X([_g.D("videoId","timelineComponent"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],o$.prototype,"propagateVideoId",null);_g.X([_g.v(),_g.Z("design:type",Object)],o$.prototype,"isReadonly",void 0);_g.X([_g.D("isReadonly","timelineComponent"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],o$.prototype,"propagateIsReadonly",null);o$=_g.X([_g.M({is:"ytve-blur-deep-link-plugin",debounceEffects:!0})],o$);var p$=function(a,b){this.dispatch=a;this.videoEditorService=b};
+p$.prototype.get=function(a,b){if(a)return b=_g.Kh(b),a.detectionsForFaceByRequest[b]};
+p$.prototype.fetch=function(a){return _g.aa(this,void 0,void 0,function c(){var e,h=this,k;return _g.ba(c,function(l){if(1==l.nextAddress)return e=_g.Kh(a),h.dispatch({type:"DETECTIONS_FOR_FACE_FETCH_START",payload:{request:e}}),l.setCatchFinallyBlocks(2),l.yield(h.videoEditorService.getDetectionsForFace(a),4);if(2!=l.nextAddress)return k=l.yieldResult,h.dispatch({type:"DETECTIONS_FOR_FACE_FETCH_COMPLETE",payload:{key:e,response:k}}),l.leaveTryBlock(0);l.enterCatchBlock();h.dispatch({type:"DETECTIONS_FOR_FACE_FETCH_ERROR",
+payload:{request:e}});l.jumpToEnd()})})};
+p$.prototype.getWithAutoFetch=function(a,b){(a=this.get(a,b))||this.fetch(b);return a||_g.Lm};
+p$.ctorParameters=function(){return[{type:void 0,decorators:[{type:_g.sb,args:[_g.pA]}]},{type:_g.$q}]};var q$=function(a,b){this.dispatch=a;this.videoEditorService=b};
+q$.prototype.get=function(a,b){if(a)return b=_g.Kh(b),a.motionTrackingDataByRequest[b]};
+q$.prototype.fetch=function(a,b){return _g.aa(this,void 0,void 0,function e(){var h,k=this,l,m,q,t;return _g.ba(e,function(u){switch(u.nextAddress){case 1:if(!a)return u.return();h=_g.Kh(b);k.dispatch({type:"MOTION_TRACKING_DATA_FETCH_START",payload:{request:h}});u.setCatchFinallyBlocks(2);return u.yield(k.videoEditorService.getMotionTrackUrl(b),4);case 4:l=u.yieldResult;m=l.url;if(!m)return k.dispatch(_g.b$a(h)),u.return();q=new _g.tF(m);return u.yield(q.track(),5);case 5:t=u.yieldResult;k.dispatch(_g.a$a(h,
+Slc(t)));u.leaveTryBlock(0);break;case 2:u.enterCatchBlock(),k.dispatch(_g.b$a(h)),u.jumpToEnd();}})})};
+q$.prototype.getWithAutoFetch=function(a,b){var c=this.get(a,b);c||this.fetch(a,b);return c||_g.Lm};
+q$.ctorParameters=function(){return[{type:void 0,decorators:[{type:_g.sb,args:[_g.pA]}]},{type:_g.$q}]};var Jmc=function(){var a=_g.n.apply(this,arguments)||this;a.typeGroupTrackName="track";a.typeGroupStaticName="static";return a};
+_g.J(Jmc,_g.n);_g.d=Jmc.prototype;_g.d.propagateVideoIdToBehaviors=function(){this.videoPublishedEditsProviderBehavior.publishedEditsVideoId=this.videoId};
+_g.d.propagateVideoToBehaviors=function(){this.videoPublishedEditsProviderBehavior.publishedEditsVideo=this.video};
+_g.d.deleteElement=function(){void 0!==this.selectedElementRegionId&&this.selectedBlurRegion&&this.dispatch({type:"PRIVACY_DELETE_REGION",payload:{regionId:this.selectedElementRegionId,blurRegion:this.selectedBlurRegion}})};
+_g.d.sendStartTimeUpdate=function(a){a.detail.value!==this.startTimeValue&&this.selectedElementRegionId&&this.selectedBlurRegion&&this.dispatch(_g.yab(this.selectedElementRegionId,this.selectedBlurRegion,a.detail.value,void 0))};
+_g.d.sendEndTimeUpdate=function(a){a.detail.value!==this.endTimeValue&&this.selectedElementRegionId&&this.selectedBlurRegion&&this.videoPublishedEditsProviderBehavior.timingDelta&&(a=Math.floor(Math.min(a.detail.value,_g.Oo(this.videoPublishedEditsProviderBehavior.timingDelta))),this.dispatch(_g.yab(this.selectedElementRegionId,this.selectedBlurRegion,void 0,a)))};
+_g.d.onRectangleTileClicked=function(){this.selectedElementRegionId&&this.selectedBlurRegion&&"BLUR_SHAPE_RECTANGLE"!==this.selectedRegionBlurShape&&this.dispatch(_g.zab(this.selectedElementRegionId,this.selectedBlurRegion,"BLUR_SHAPE_RECTANGLE"))};
+_g.d.onOvalTileClicked=function(){this.selectedElementRegionId&&this.selectedBlurRegion&&"BLUR_SHAPE_OVAL"!==this.selectedRegionBlurShape&&this.dispatch(_g.zab(this.selectedElementRegionId,this.selectedBlurRegion,"BLUR_SHAPE_OVAL"))};
+_g.d.onRegionBlurTypeChange=function(a){if(a.detail.selected!==this.typeGroupSelectedType)if(a.detail.selected===this.typeGroupTrackName)this.onTrackSelected();else if(a.detail.selected===this.typeGroupStaticName)this.onStaticSelected()};
+_g.d.onTrackSelected=function(){this.selectedElementRegionId&&this.selectedBlurRegion&&this.dispatch({type:"PRIVACY_REGION_TYPE_TRACK_SELECTED",payload:{regionId:this.selectedElementRegionId,blurRegion:this.selectedBlurRegion,timeMsec:this.playheadPositionMs}})};
+_g.d.onStaticSelected=function(){if(void 0!==this.video&&void 0!==this.selectedElementRegionId&&void 0!==this.selectedBlurRegionForRendering&&this.selectedBlurRegionForRendering.trackedBlurRegionForRendering&&this.selectedBlurRegion){var a=this.selectedBlurRegion.trackedRegionCheckpoints;if(this.selectedBlurRegionForRendering.trackedBlurRegionForRendering.isLoading){var b=_g.So(a.checkpoints,this.playheadPositionMs);-1<b&&this.dispatch(_g.Aab(this.selectedElementRegionId,this.selectedBlurRegion,this.playheadPositionMs,
+this.playheadPositionMs+.2*this.video.videoDurationMs,a.checkpoints[b].rectangle))}else b=this.selectedBlurRegionForRendering.trackedBlurRegionForRendering,a=_g.Oua(this.playheadPositionMs,a,b.allTrackingResults),this.dispatch(_g.Aab(this.selectedElementRegionId,this.selectedBlurRegion,b.start.millis,b.end.millis,a))}};
+_g.U.Object.defineProperties(Jmc.prototype,{videoId:{configurable:!0,enumerable:!0,get:function(){return this.video?this.video.videoId:void 0}},
+hasSelectedElement:{configurable:!0,enumerable:!0,get:function(){return void 0!==this.selectedBlurRegionForRendering}},
+selectedRegionBlurShape:{configurable:!0,enumerable:!0,get:function(){if(this.selectedBlurRegionForRendering)return this.selectedBlurRegionForRendering.blurShape}},
+isRegionLoading:{configurable:!0,enumerable:!0,get:function(){return!!(this.selectedBlurRegionForRendering&&this.selectedBlurRegionForRendering.trackedBlurRegionForRendering&&this.selectedBlurRegionForRendering.trackedBlurRegionForRendering.isLoading)}},
+showFramestamp:{configurable:!0,enumerable:!0,get:function(){return!(!this.video||this.isRegionLoading)}},
+selectedRegionBlurType:{configurable:!0,enumerable:!0,get:function(){return this.selectedBlurRegion?this.selectedBlurRegion.staticRegion?2:this.selectedBlurRegion.trackedRegionCheckpoints?void 0!==this.selectedBlurRegion.trackedRegionCheckpoints.faceId?1:2:0:0}},
+blurTypeText:{configurable:!0,enumerable:!0,get:function(){switch(this.selectedRegionBlurType){case 1:return"Face blur";case 2:return"Object blur";}}},
+isObjectBlur:{configurable:!0,enumerable:!0,get:function(){return 2===this.selectedRegionBlurType}},
+startTimeValue:{configurable:!0,enumerable:!0,get:function(){return this.selectedBlurRegionForRendering?this.selectedBlurRegionForRendering.staticBlurRegionForRendering?this.selectedBlurRegionForRendering.staticBlurRegionForRendering.start.millis:this.selectedBlurRegionForRendering.trackedBlurRegionForRendering&&this.selectedBlurRegionForRendering.trackedBlurRegionForRendering.start&&void 0!==this.selectedBlurRegionForRendering.trackedBlurRegionForRendering.start.millis?this.selectedBlurRegionForRendering.trackedBlurRegionForRendering.start.millis:
+NaN:NaN}},
+endTimeValue:{configurable:!0,enumerable:!0,get:function(){return this.selectedBlurRegionForRendering?this.selectedBlurRegionForRendering.staticBlurRegionForRendering?this.selectedBlurRegionForRendering.staticBlurRegionForRendering.end.millis:this.selectedBlurRegionForRendering.trackedBlurRegionForRendering&&this.selectedBlurRegionForRendering.trackedBlurRegionForRendering.end&&void 0!==this.selectedBlurRegionForRendering.trackedBlurRegionForRendering.end.millis?this.selectedBlurRegionForRendering.trackedBlurRegionForRendering.end.millis:
+NaN:NaN}},
+typeGroupSelectedType:{configurable:!0,enumerable:!0,get:function(){return!this.selectedBlurRegionForRendering||this.selectedBlurRegionForRendering.isStatic?this.typeGroupStaticName:this.typeGroupTrackName}},
+blurRegionsFromLastPublishedEdits:{configurable:!0,enumerable:!0,get:function(){return this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits&&void 0!==this.videoPublishedEditsProviderBehavior.timingDelta?_g.S(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits)?_g.Po(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits,this.videoPublishedEditsProviderBehavior.timingDelta):{}:{}}},
+blurRegionsFromNewlySelectedFace:{configurable:!0,enumerable:!0,get:function(){var a=this;if(this.videoId&&this.privacyChangedFacesSelector&&this.videoPublishedEditsProviderBehavior.timingDelta)return _g.Ro(this.videoId,this.privacyChangedFacesSelector,this.videoPublishedEditsProviderBehavior.timingDelta,function(b){return a.detectionsForFaceFetcher.getWithAutoFetch(a.videoPublishedEditsProviderBehavior.publishedEditsEntityCache,b)})}},
+allBlurRegions:{configurable:!0,enumerable:!0,get:function(){return _g.Qo(this.blurRegionsFromLastPublishedEdits,this.blurRegionsFromNewlySelectedFace,this.privacyChangedFacesSelector,this.changedBlurRegionsDict)}},
+blurRegionsForRenderingDict:{configurable:!0,enumerable:!0,get:function(){var a=this;if(!this.videoId||!this.videoPublishedEditsProviderBehavior.timingDelta||!this.video)return{};var b=_g.Yua(this.video,_g.Oo(this.videoPublishedEditsProviderBehavior.timingDelta));return _g.Kua(this.allBlurRegions,this.videoId,this.videoPublishedEditsProviderBehavior.timingDelta,function(c){return a.motionTrackingDataFetcher.getWithAutoFetch(a.videoPublishedEditsProviderBehavior.publishedEditsEntityCache,c)},b)}},
+selectedBlurRegionForRendering:{configurable:!0,enumerable:!0,get:function(){if(this.selectedElementRegionId)return this.blurRegionsForRenderingDict[this.selectedElementRegionId]}},
+selectedBlurRegion:{configurable:!0,enumerable:!0,get:function(){if(this.selectedElementRegionId)return this.allBlurRegions[this.selectedElementRegionId]}},
+fps:{configurable:!0,enumerable:!0,get:function(){return this.video?this.video.fps:30}}});
+var r$=Jmc;r$.prototype.propagateVideoToBehaviors=r$.prototype.propagateVideoToBehaviors;r$.prototype.propagateVideoIdToBehaviors=r$.prototype.propagateVideoIdToBehaviors;_g.X([_g.L(_g.pA),_g.Z("design:type",Function)],r$.prototype,"dispatch",void 0);_g.X([_g.L(),_g.Z("design:type",q$)],r$.prototype,"motionTrackingDataFetcher",void 0);_g.X([_g.L(),_g.Z("design:type",p$)],r$.prototype,"detectionsForFaceFetcher",void 0);
+_g.X([_g.r(),_g.Z("design:type",i$)],r$.prototype,"videoPublishedEditsProviderBehavior",void 0);_g.X([_g.H("#type-group"),_g.Z("design:type",Object)],r$.prototype,"typeRadioGroup",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],r$.prototype,"video",void 0);_g.X([_g.F("video"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],r$.prototype,"videoId",null);
+_g.X([_g.D("videoId"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],r$.prototype,"propagateVideoIdToBehaviors",null);_g.X([_g.D("video"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],r$.prototype,"propagateVideoToBehaviors",null);_g.X([_g.v(),_g.Z("design:type",Object)],r$.prototype,"typeGroupTrackName",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],r$.prototype,"typeGroupStaticName",void 0);
+_g.X([_g.O(W9),_g.Z("design:type",Object)],r$.prototype,"changedBlurRegionsDict",void 0);_g.X([_g.O(Ulc),_g.Z("design:type",Object)],r$.prototype,"selectedElementRegionId",void 0);_g.X([_g.O(_g.Yq),_g.Z("design:type",Number)],r$.prototype,"playheadPositionMs",void 0);_g.X([_g.F("selectedBlurRegionForRendering"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],r$.prototype,"hasSelectedElement",null);_g.X([_g.O(X9),_g.Z("design:type",Object)],r$.prototype,"privacyChangedFacesSelector",void 0);
+_g.X([_g.v({reflectToAttribute:!0}),_g.F("selectedBlurRegionForRendering"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],r$.prototype,"selectedRegionBlurShape",null);_g.X([_g.F("selectedBlurRegionForRendering"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],r$.prototype,"isRegionLoading",null);_g.X([_g.F("video","isRegionLoading"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],r$.prototype,"showFramestamp",null);
+_g.X([_g.F("selectedBlurRegion"),_g.Z("design:type",Number),_g.Z("design:paramtypes",[])],r$.prototype,"selectedRegionBlurType",null);_g.X([_g.F("selectedRegionBlurType"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],r$.prototype,"blurTypeText",null);_g.X([_g.F("selectedRegionBlurType"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],r$.prototype,"isObjectBlur",null);
+_g.X([_g.F("selectedBlurRegionForRendering"),_g.Z("design:type",Number),_g.Z("design:paramtypes",[])],r$.prototype,"startTimeValue",null);_g.X([_g.F("selectedBlurRegionForRendering"),_g.Z("design:type",Number),_g.Z("design:paramtypes",[])],r$.prototype,"endTimeValue",null);_g.X([_g.F("selectedBlurRegionForRendering"),_g.Z("design:type",String),_g.Z("design:paramtypes",[])],r$.prototype,"typeGroupSelectedType",null);
+_g.X([_g.F("fetchedLastPublishedEdits","timingDelta"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],r$.prototype,"blurRegionsFromLastPublishedEdits",null);_g.X([_g.F("privacyChangedFacesSelector","publishedEditsEntityCache","timingDelta"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],r$.prototype,"blurRegionsFromNewlySelectedFace",null);
+_g.X([_g.F("blurRegionsFromLastPublishedEdits","changedBlurRegionsDict","blurRegionsFromNewlySelectedFace","privacyChangedFacesSelector"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],r$.prototype,"allBlurRegions",null);_g.X([_g.F("allBlurRegions","publishedEditsEntityCache","timingDelta"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],r$.prototype,"blurRegionsForRenderingDict",null);
+_g.X([_g.F("blurRegionsForRenderingDict","selectedElementRegionId"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],r$.prototype,"selectedBlurRegionForRendering",null);_g.X([_g.F("allBlurRegions","selectedElementRegionId"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],r$.prototype,"selectedBlurRegion",null);_g.X([_g.F("video"),_g.Z("design:type",Number),_g.Z("design:paramtypes",[])],r$.prototype,"fps",null);r$=_g.X([_g.M({is:"ytve-blur-editor-options-panel"})],r$);var Kmc=function(){var a=_g.n.apply(this,arguments)||this;a.width=0;a.height=0;a.selected=!1;a.dragging=!1;a.visible=!1;return a};
+_g.J(Kmc,_g.n);_g.d=Kmc.prototype;_g.d.onShapeChanged=function(){this.blurShapeContainer.classList.toggle("oval","BLUR_SHAPE_OVAL"===this.shape)};
+_g.d.onSelectionChanged=function(){this.classList.toggle("selected",this.selected)};
+_g.d.onDraggingChanged=function(){this.classList.toggle("dragging",this.dragging)};
+_g.d.updateHoldersPosition=function(){this.dragTopHolder.style.left=this.dragBottomHolder.style.left=this.width/2+"px";this.dragLeftHolder.style.top=this.dragRightHolder.style.top=this.height/2+"px"};
+_g.d.setSize=function(a,b){this.width=a;this.height=b};
+_g.U.Object.defineProperties(Kmc.prototype,{surfaceDimension:{configurable:!0,enumerable:!0,get:function(){return"width: "+this.width+"px; height: "+this.height+"px"}}});
+var s$=Kmc;s$.prototype.updateHoldersPosition=s$.prototype.updateHoldersPosition;s$.prototype.onDraggingChanged=s$.prototype.onDraggingChanged;s$.prototype.onSelectionChanged=s$.prototype.onSelectionChanged;s$.prototype.onShapeChanged=s$.prototype.onShapeChanged;_g.X([_g.v(),_g.Z("design:type",Object)],s$.prototype,"width",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],s$.prototype,"height",void 0);_g.X([_g.v(),_g.Z("design:type",String)],s$.prototype,"regionId",void 0);
+_g.X([_g.v(),_g.Z("design:type",String)],s$.prototype,"shape",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],s$.prototype,"selected",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],s$.prototype,"dragging",void 0);_g.X([_g.v({reflectToAttribute:!0}),_g.Z("design:type",Object)],s$.prototype,"visible",void 0);_g.X([_g.H("#surface"),_g.Z("design:type",HTMLDivElement)],s$.prototype,"surface",void 0);
+_g.X([_g.H("#blur-shape-container"),_g.Z("design:type",HTMLDivElement)],s$.prototype,"blurShapeContainer",void 0);_g.X([_g.H("#drag-top"),_g.Z("design:type",HTMLDivElement)],s$.prototype,"dragTopHolder",void 0);_g.X([_g.H("#drag-bottom"),_g.Z("design:type",HTMLDivElement)],s$.prototype,"dragBottomHolder",void 0);_g.X([_g.H("#drag-left"),_g.Z("design:type",HTMLDivElement)],s$.prototype,"dragLeftHolder",void 0);
+_g.X([_g.H("#drag-right"),_g.Z("design:type",HTMLDivElement)],s$.prototype,"dragRightHolder",void 0);_g.X([_g.Ea(".edit-overlay .drag"),_g.Z("design:type",Array)],s$.prototype,"resizeHandles",void 0);_g.X([_g.D("shape"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],s$.prototype,"onShapeChanged",null);_g.X([_g.D("selected"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],s$.prototype,"onSelectionChanged",null);
+_g.X([_g.D("dragging"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],s$.prototype,"onDraggingChanged",null);_g.X([_g.D("height","width"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],s$.prototype,"updateHoldersPosition",null);_g.X([_g.F("height","width"),_g.Z("design:type",String),_g.Z("design:paramtypes",[])],s$.prototype,"surfaceDimension",null);
+s$=_g.X([_g.M({is:"ytve-blur-editor-preview-overlay-item",debounceEffects:!0})],s$);var Lmc={TOP_LEFT:"top-left",TOP_RIGHT:"top-right",BOTTOM_LEFT:"bottom-left",BOTTOM_RIGHT:"bottom-right",TOP:"top",LEFT:"left",RIGHT:"right",BOTTOM:"bottom"},Mmc=function(){var a=_g.n.apply(this,arguments)||this;a.width=0;a.height=0;a.resizedNonce=0;a.regionItemsDict={};return a};
+_g.J(Mmc,_g.n);_g.d=Mmc.prototype;_g.d.propagateVideoIdToBehaviors=function(){this.videoPublishedEditsProviderBehavior.publishedEditsVideoId=this.videoId};
+_g.d.propagateVideoToBehaviors=function(){this.videoPublishedEditsProviderBehavior.publishedEditsVideo=this.video};
+_g.d.attached=function(){var a=this;this.mouseHandler.listen(this,["down","track"],function(b){a.dragDrogEvents(b)})};
+_g.d.setSurfaceSize=function(){var a=this.overlayContainerSize;a&&(this.surface.style.left=a.left+"px",this.surface.style.width=a.width+"px",this.surface.style.top=a.top+"px",this.surface.style.height=a.height+"px")};
+_g.d.updateRegionShapes=function(){var a=this;this.overlayContainerSize&&this.overlayContainerSize.width&&this.blurRegionsForRenderingDict&&(_g.Qg(this.blurRegionsForRenderingDict,function(b){if(!a.regionItemsDict[b]){var c=_g.Hh(s$.prototype.is,a);a.surface.appendChild(c);a.mouseHandler.listen(c,["down","track"],function(e){a.handleItemMoveEvents(b,e)});
+a.mouseHandler.listenToAll(c.resizeHandles||[],["track"],function(e){a.handleItemResizeEvents(b,e)});
+a.maybeRenderOverlayItem(c,b,!1);a.regionItemsDict[b]=c}}),_g.Qg(this.regionItemsDict,function(b,c){a.blurRegionsForRenderingDict[b]||(c.remove(),delete a.regionItemsDict[b])}))};
+_g.d.rerenderRegionShapes=function(){var a=this;this.overlayContainerSize&&this.overlayContainerSize.width&&this.blurRegionsForRenderingDict&&_g.Qg(this.blurRegionsForRenderingDict,function(b){var c=a.regionItemsDict[b];c&&a.maybeRenderOverlayItem(c,b,a.selectedElementRegionId===b)})};
+_g.d.getRectangleForRendering=function(a){var b=this.blurRegionsForRenderingDict[a];if(b.isStatic)return(a=b.staticBlurRegionForRendering)?a.staticRegion:void 0;if(b.trackedBlurRegionForRendering)return b.trackedBlurRegionForRendering.isLoading?this.getRectangleForRenderingForLoadingTrackedRegion(a):_g.Oua(this.playheadPositionMs,this.allBlurRegions[a].trackedRegionCheckpoints,b.trackedBlurRegionForRendering.allTrackingResults)};
+_g.d.getRectangleForRenderingForLoadingTrackedRegion=function(a){a=this.allBlurRegions[a].trackedRegionCheckpoints.checkpoints;var b=_g.So(a,this.playheadPositionMs);if(-1<b&&Math.abs(this.playheadPositionMs-a[b].timestamp.millis)<=this.msPerFrame)return a[b].rectangle};
+_g.d.maybeRenderOverlayItem=function(a,b,c){var e=this.blurRegionsForRenderingDict[b];a.selected=c;a.shape=e.blurShape;if(e.isStatic){c=e.staticBlurRegionForRendering;if(!c)return;c=this.playheadPositionMs>=c.start.millis&&this.playheadPositionMs<=c.end.millis;a.visible=c;if(!c)return}else{if(!e.trackedBlurRegionForRendering)return;c=e.trackedBlurRegionForRendering;c=c.isLoading?void 0!==this.getRectangleForRenderingForLoadingTrackedRegion(b):this.playheadPositionMs>=c.start.millis&&this.playheadPositionMs<=
+c.end.millis;a.visible=c;if(!c)return}(b=this.getRectangleForRendering(b))&&this.setOverlayItemSizeAndPosition(a,b)};
+_g.d.setOverlayItemSizeAndPosition=function(a,b){this.overlayContainerSize&&(a.setSize((b.right-b.left)*this.overlayContainerSize.width,(b.bottom-b.top)*this.overlayContainerSize.height),a.style.left=b.left*this.overlayContainerSize.width+"px",a.style.top=b.top*this.overlayContainerSize.height+"px")};
+_g.d.dragDrogEvents=function(a){var b=this,c=function(e,h,k){var l=b.overlayContainerSize;return b.getValidatedRectangle({top:(0<k?e.startY:e.startY+k)/l.height,left:(0<h?e.startX:e.startX+h)/l.width,right:(0<h?e.startX+h:e.startX)/l.width,bottom:(0<k?e.startY+k:e.startY)/l.height},!1)};
+switch(a.state){case"down":case"start":this.draggingRegion&&(this.surface.removeChild(this.draggingRegion),this.draggingRegion=void 0);this.draggingRegion=_g.Hh(s$.prototype.is,this);this.draggingRegion.visible=!0;this.draggingRegion.dragging=!0;this.surface.appendChild(this.draggingRegion);c=this.surface.getBoundingClientRect();this.draggingStart={startX:a.x-c.left,startY:a.y-c.top};break;case"track":void 0!==a.dx&&void 0!==a.dy&&(a=c(this.draggingStart,a.dx,a.dy),this.setOverlayItemSizeAndPosition(this.draggingRegion,
+a));break;case"end":this.draggingRegion&&this.videoPublishedEditsProviderBehavior.timingDelta&&void 0!==a.dx&&void 0!==a.dy&&(a=c(this.draggingStart,a.dx,a.dy),c=Math.floor(Math.min(this.playheadPositionMs,_g.Oo(this.videoPublishedEditsProviderBehavior.timingDelta))),a={start:{millis:-1},end:{millis:-1},trackedRegionCheckpoints:{checkpoints:[{rectangle:a,timestamp:{millis:c}}]},blurShape:"BLUR_SHAPE_RECTANGLE"},this.surface.removeChild(this.draggingRegion),this.draggingRegion=void 0,this.dispatch(_g.xab(a)));}};
+_g.d.handleItemMoveEvents=function(a,b){var c=this;if(b.target&&this.overlayContainerSize){var e=b.target,h=function(k,l){var m=c.getRectangleForRendering(a),q=c.overlayContainerSize;return c.getValidatedRectangle({top:m.top+l/q.height,left:m.left+k/q.width,right:m.right+k/q.width,bottom:m.bottom+l/q.height},!0)};
+switch(b.state){case"down":case"start":this.makeSelected(a,b);e.classList.add("dragging");break;case"track":void 0!==b.dx&&void 0!==b.dy&&(b=h(b.dx,b.dy),this.setOverlayItemSizeAndPosition(e,b));break;case"end":void 0!==b.dx&&void 0!==b.dy&&(b=h(b.dx,b.dy),this.dispatch(_g.Cab(a,this.allBlurRegions[a],this.playheadPositionMs,b))),e.classList.remove("dragging");}}};
+_g.d.handleItemResizeEvents=function(a,b){if(b.target&&this.overlayContainerSize){var c=this.regionItemsDict[a],e=this.getRectangleForRendering(a),h=this.resizeHandle(b.target);switch(b.state){case"start":this.makeSelected(a,b);c.classList.add("dragging");break;case"track":void 0!==b.dx&&void 0!==b.dy&&b.target&&(a=this.getResizedRectangle(e,b.dx,b.dy,h),this.setOverlayItemSizeAndPosition(c,this.getValidatedRectangle(a,!1)));break;case"end":void 0!==b.dx&&void 0!==b.dy&&b.target&&(b=this.getResizedRectangle(e,
+b.dx,b.dy,h),this.dispatch(_g.Cab(a,this.allBlurRegions[a],this.playheadPositionMs,b))),c.classList.remove("dragging");}}};
+_g.d.resizeHandle=function(a){a=a.classList;for(var b=_g.f(Object.values(Lmc)),c=b.next();!c.done;c=b.next())if(c=c.value,a.contains(c))return c;throw Error("Unable to identify the current resize handle.")};
+_g.d.getResizedRectangle=function(a,b,c,e){var h=Object.assign({},a),k=a.top,l=a.left,m=a.right;a=a.bottom;var q=b/this.overlayContainerSize.width,t=q*(a-k)/(m-l);switch(e){case"top":h.top=k+c/this.overlayContainerSize.height;break;case"left":h.left=l+b/this.overlayContainerSize.width;break;case"right":h.right=m+b/this.overlayContainerSize.width;break;case"bottom":h.bottom=a+c/this.overlayContainerSize.height;break;case"top-left":h.top=k+t;h.left=l+q;break;case"top-right":h.top=k-t;h.right=
+m+q;break;case"bottom-left":h.bottom=a-t;h.left=l+q;break;case"bottom-right":h.bottom=a+t;h.right=m+q;break;default:return _g.na(e,void 0);}return this.getValidatedRectangle(h,!1)};
+_g.d.getValidatedRectangle=function(a,b){if(b){b=a.right-a.left;var c=a.bottom-a.top;return{top:_g.Vo(0,a.top,1-c),left:_g.Vo(0,a.left,1-b),right:_g.Vo(b,a.right,1),bottom:_g.Vo(c,a.bottom,1)}}return{top:_g.Vo(0,a.top,1),left:_g.Vo(0,a.left,1),right:_g.Vo(0,a.right,1),bottom:_g.Vo(0,a.bottom,1)}};
+_g.d.makeSelected=function(a,b){b.target.selected||this.dispatch(_g.Bab(a))};
+_g.U.Object.defineProperties(Mmc.prototype,{videoId:{configurable:!0,enumerable:!0,get:function(){return this.video?this.video.videoId:void 0}},
+videoSize:{configurable:!0,enumerable:!0,get:function(){return _g.Jr(this.video)}},
+msPerFrame:{configurable:!0,enumerable:!0,get:function(){if(this.video)return _g.Nj.toMillis()/this.video.fps}},
+videoAspectRatio:{configurable:!0,enumerable:!0,get:function(){return this.videoSize?this.videoSize.width/this.videoSize.height:1}},
+videoContentSize:{configurable:!0,enumerable:!0,get:function(){return _g.YAa(this.videoAspectRatio,this.width)}},
+overlayContainerSize:{configurable:!0,enumerable:!0,get:function(){if(this.videoContentSize&&!isNaN(this.videoContentSize.width)&&!isNaN(this.videoContentSize.height))return{left:(this.width-this.videoContentSize.width)/2,width:this.videoContentSize.width,top:(Math.round(this.width/_g.XAa)-this.videoContentSize.height)/2,height:this.videoContentSize.height}}},
+blurRegionsFromLastPublishedEdits:{configurable:!0,enumerable:!0,get:function(){return this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits&&!_g.Fm(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits)&&this.videoPublishedEditsProviderBehavior.timingDelta&&_g.S(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits)?_g.Po(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits,this.videoPublishedEditsProviderBehavior.timingDelta):{}}},
+blurRegionsFromNewlySelectedFace:{configurable:!0,enumerable:!0,get:function(){var a=this;if(this.videoId&&this.privacyChangedFacesSelector&&this.videoPublishedEditsProviderBehavior.timingDelta)return _g.Ro(this.videoId,this.privacyChangedFacesSelector,this.videoPublishedEditsProviderBehavior.timingDelta,function(b){return a.detectionsForFaceFetcher.getWithAutoFetch(a.videoPublishedEditsProviderBehavior.publishedEditsEntityCache,b)})}},
+allBlurRegions:{configurable:!0,enumerable:!0,get:function(){return _g.Qo(this.blurRegionsFromLastPublishedEdits,this.blurRegionsFromNewlySelectedFace,this.privacyChangedFacesSelector,this.changedBlurRegionsDict)}},
+blurRegionsForRenderingDict:{configurable:!0,enumerable:!0,get:function(){var a=this;if(!this.videoId||!this.videoPublishedEditsProviderBehavior.timingDelta||!this.video)return{};var b=_g.Yua(this.video,_g.Oo(this.videoPublishedEditsProviderBehavior.timingDelta));return _g.Kua(this.allBlurRegions,this.videoId,this.videoPublishedEditsProviderBehavior.timingDelta,function(c){return a.motionTrackingDataFetcher.getWithAutoFetch(a.videoPublishedEditsProviderBehavior.publishedEditsEntityCache,c)},b)}}});
+var t$=Mmc;t$.prototype.rerenderRegionShapes=t$.prototype.rerenderRegionShapes;t$.prototype.updateRegionShapes=t$.prototype.updateRegionShapes;t$.prototype.setSurfaceSize=t$.prototype.setSurfaceSize;t$.prototype.propagateVideoToBehaviors=t$.prototype.propagateVideoToBehaviors;t$.prototype.propagateVideoIdToBehaviors=t$.prototype.propagateVideoIdToBehaviors;_g.X([_g.v(),_g.Z("design:type",Object)],t$.prototype,"width",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],t$.prototype,"height",void 0);
+_g.X([_g.v(),_g.Z("design:type",Object)],t$.prototype,"resizedNonce",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],t$.prototype,"video",void 0);_g.X([_g.F("video"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],t$.prototype,"videoId",null);_g.X([_g.F("video"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],t$.prototype,"videoSize",null);
+_g.X([_g.D("videoId"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],t$.prototype,"propagateVideoIdToBehaviors",null);_g.X([_g.D("video"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],t$.prototype,"propagateVideoToBehaviors",null);_g.X([_g.v(),_g.Z("design:type",Object)],t$.prototype,"regionItemsDict",void 0);_g.X([_g.H("#surface"),_g.Z("design:type",HTMLDivElement)],t$.prototype,"surface",void 0);
+_g.X([_g.L(_g.pA),_g.Z("design:type",Function)],t$.prototype,"dispatch",void 0);_g.X([_g.L(),_g.Z("design:type",_g.JD)],t$.prototype,"mouseHandler",void 0);_g.X([_g.L(),_g.Z("design:type",q$)],t$.prototype,"motionTrackingDataFetcher",void 0);_g.X([_g.L(),_g.Z("design:type",p$)],t$.prototype,"detectionsForFaceFetcher",void 0);_g.X([_g.r(),_g.Z("design:type",i$)],t$.prototype,"videoPublishedEditsProviderBehavior",void 0);
+_g.X([_g.O(_g.Yq),_g.Z("design:type",Number)],t$.prototype,"playheadPositionMs",void 0);_g.X([_g.O(W9),_g.Z("design:type",Object)],t$.prototype,"changedBlurRegionsDict",void 0);_g.X([_g.O(X9),_g.Z("design:type",Object)],t$.prototype,"privacyChangedFacesSelector",void 0);_g.X([_g.O(Ulc),_g.Z("design:type",Object)],t$.prototype,"selectedElementRegionId",void 0);_g.X([_g.F("video"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],t$.prototype,"msPerFrame",null);
+_g.X([_g.F("resizedNonce","videoSize"),_g.Z("design:type",Number),_g.Z("design:paramtypes",[])],t$.prototype,"videoAspectRatio",null);_g.X([_g.F("videoAspectRatio","width"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],t$.prototype,"videoContentSize",null);_g.X([_g.F("videoContentSize","width"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],t$.prototype,"overlayContainerSize",null);
+_g.X([_g.D("overlayContainerSize"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],t$.prototype,"setSurfaceSize",null);_g.X([_g.F("fetchedLastPublishedEdits","timingDelta"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],t$.prototype,"blurRegionsFromLastPublishedEdits",null);
+_g.X([_g.F("privacyChangedFacesSelector","publishedEditsEntityCache","timingDelta"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],t$.prototype,"blurRegionsFromNewlySelectedFace",null);_g.X([_g.F("blurRegionsFromLastPublishedEdits","changedBlurRegionsDict","blurRegionsFromNewlySelectedFace","privacyChangedFacesSelector"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],t$.prototype,"allBlurRegions",null);
+_g.X([_g.F("allBlurRegions","publishedEditsEntityCache","timingDelta"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],t$.prototype,"blurRegionsForRenderingDict",null);_g.X([_g.D("blurRegionsForRenderingDict","overlayContainerSize"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],t$.prototype,"updateRegionShapes",null);
+_g.X([_g.D("blurRegionsForRenderingDict","resizedNonce","playheadPositionMs","selectedElementRegionId"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],t$.prototype,"rerenderRegionShapes",null);t$=_g.X([_g.M({is:"ytve-blur-editor-preview-overlay"})],t$);var u$=function(a,b){this.dispatch=a;this.videoEditorService=b};
+u$.prototype.get=function(a,b){if(a)return a.faceDetectionSummaryById[b]};
+u$.prototype.fetch=function(a){return _g.aa(this,void 0,void 0,function c(){var e=this,h,k;return _g.ba(c,function(l){if(1==l.nextAddress)return e.dispatch({type:"FACE_DETECTION_SUMMARY_FETCH_START",payload:{externalVideoId:a}}),l.setCatchFinallyBlocks(2),l.yield(e.videoEditorService.getFaceDetectionSummary(a),4);if(2!=l.nextAddress)return h=l.yieldResult,e.dispatch({type:"FACE_DETECTION_SUMMARY_FETCH_COMPLETE",payload:{externalVideoId:a,response:h}}),l.leaveTryBlock(0);k=l.enterCatchBlock();e.dispatch({type:"FACE_DETECTION_SUMMARY_FETCH_ERROR",
+payload:{externalVideoId:a}});_g.rh(k);throw k})})};
+u$.prototype.getWithAutoFetch=function(a,b){(a=this.get(a,b))||_g.Zo(this.fetch(b));return a||_g.Lm};
+u$.ctorParameters=function(){return[{type:void 0,decorators:[{type:_g.sb,args:[_g.pA]}]},{type:_g.$q}]};var v$=function(a,b,c){var e=this;this.select=a;this.taskScheduler=b;this.faceDetectionSummaryFetcher=c;this.pollingCallback=function(){return _g.aa(e,void 0,void 0,function k(){var l=this,m,q;return _g.ba(k,function(t){if(1==t.nextAddress)return t.yield(l.faceDetectionSummaryFetcher.fetch(l.videoId),2);if((m=l.faceDetectionSummaryFetcher.get(l.select(_g.bk),l.videoId))&&_g.Em(m))throw q=Error("Face detection status polling failed"),_g.sh(q),q;m&&_g.S(m)&&!m.data.detectionInProgress&&l.stop();t.jumpToEnd()})})}};
+v$.prototype.start=function(a,b){this.stop();this.videoId=a;this.taskHandler=this.taskScheduler.schedule.apply(this.taskScheduler,[this.pollingCallback].concat(_g.g(b)))};
+v$.prototype.stop=function(){this.taskHandler&&(this.taskHandler.cancel(),this.videoId=this.taskHandler=void 0)};
+v$.prototype.setVideoIdForTesting=function(a){this.videoId=a};
+_g.U.Object.defineProperties(v$.prototype,{isPollingActive:{configurable:!0,enumerable:!0,get:function(){return void 0!==this.taskHandler}}});
+v$.ctorParameters=function(){return[{type:void 0,decorators:[{type:_g.sb,args:[_g.di]}]},{type:_g.lB},{type:u$}]};var w$=function(a,b,c){_g.NG.call(this,a,c);this.originalValue=b};
+_g.J(w$,_g.NG);w$.prototype.update=function(a){return new w$(a,this.originalValue)};
+w$.prototype.isUpdated=function(){return!_g.dh(this.originalValue.stillIds,this.value.stillIds)};
+var Nmc=function(){};
+Nmc.prototype.validate=function(a){return 1>a.stillIds.length?{message:"At least one face must be selected"}:null};var Omc=[].concat(_g.g(_g.gQa(10).map(function(a){return _g.Fi(Math.pow(2,a+2))}))),Pmc=function(){var a=_g.n.apply(this,arguments)||this;
+a.faceIds=[];a.isSelectAllChecked=!1;a.faceDataDetectionRequested=!1;a.faceDetectionStatusPollingDelayMs=5E3;a.noMatchIllustrationUrl=_g.iE.noMatchIllustrationUrl;return a};
+_g.J(Pmc,_g.n);_g.d=Pmc.prototype;_g.d.open=function(){this.dialog.open()};
+_g.d.onApply=function(){this.formProxy&&(this.fire("face-selection-dialog-confirm",this.formProxy.faceSelectionFormField.value.stillIds),this.dialog.close())};
+_g.d.onDiscardChanges=function(){this.dialog.close()};
+_g.d.updateSelectAllCheckboxState=function(){this.faces&&this.formProxy&&(this.isSelectAllChecked=this.formProxy.faceSelectionFormField.value.stillIds.length===this.faces.length)};
+_g.d.updateFieldValue=function(){if(this.faces&&this.formProxy){var a=[];if(this.isSelectAllChecked)for(var b=0;b<this.faces.length;b++)a.push(this.faces[b].faceId);else if(this.formProxy.faceSelectionFormField.value.stillIds.length<this.faces.length)return;this.formProxy.faceSelectionFormField.value={stillIds:a}}};
+_g.d.pollForFaceDetectionStatus=function(){_g.S(this.faceDetectionSummary)&&(this.faceDetectionSummary.data.detectionInProgress?this.faceDetectionStatusService.isPollingActive||this.faceDetectionStatusService.start(this.videoId,Omc):this.faceDetectionStatusService.isPollingActive&&this.faceDetectionStatusService.stop())};
+_g.d.retryFetch=function(){this.videoId&&this.faceDetectionSummaryFetcher.fetch(this.videoId)};
+_g.d.requestFaceDataDetection=function(){return _g.aa(this,void 0,void 0,function b(){var c=this,e,h;return _g.ba(b,function(k){if(1==k.nextAddress){e=c;if(!c.videoId||c.faceDataDetectionRequested)return k.return();k.setCatchFinallyBlocks(2);return k.yield(c.videoEditorService.detectFaceData(c.videoId),4)}if(2!=k.nextAddress)return Qmc(function(){e.faceDataDetectionRequested=!0},c.faceDetectionStatusPollingDelayMs),k.leaveTryBlock(0);
+h=k.enterCatchBlock();"ALREADY_EXISTS"===h.error.status&&(c.faceDataDetectionRequested=!0);k.jumpToEnd()})})};
+_g.d.updateForm=function(){var a={stillIds:this.faceIds};this.form={faceSelectionFormField:new w$(a,a,[new Nmc])}};
+_g.d.onFormModified=function(a){this.form&&(this.form=_g.Sp(a,this.form))};
+_g.U.Object.defineProperties(Pmc.prototype,{isApplyEnabled:{configurable:!0,enumerable:!0,get:function(){return this.form?_g.Vp(this.form):!1}},
+hasFaces:{configurable:!0,enumerable:!0,get:function(){return void 0!==this.faces&&0<this.faces.length}},
+stills:{configurable:!0,enumerable:!0,get:function(){return this.faces?this.faces.map(function(a){return{id:a.faceId,images:(a.thumbnail.thumbnails||[]).map(function(b){return{url:b.url,height:b.height,width:b.width}})}}):[]}},
+faces:{configurable:!0,enumerable:!0,get:function(){if(_g.S(this.fetchedFaces))return this.fetchedFaces.data.summary?this.fetchedFaces.data.summary.faces:[]}},
+fetchedFaces:{configurable:!0,enumerable:!0,get:function(){return _g.S(this.faceDetectionSummary)&&this.faceDetectionSummary.data.detectionInProgress?_g.Lm:this.faceDetectionSummary}},
+detectionCompletionFractionMessage:{configurable:!0,enumerable:!0,get:function(){return _g.S(this.faceDetectionSummary)&&this.faceDetectionSummary.data.detectionInProgress&&void 0!==this.faceDetectionSummary.data.completionFraction?_g.Kl(this.faceDetectionSummary.data.completionFraction):this.detectionCompletionFractionMessage||_g.Kl(0)}},
+faceDetectionSummary:{configurable:!0,enumerable:!0,get:function(){return this.entityCache&&this.videoId&&this.faceDataDetectionRequested?this.faceDetectionSummaryFetcher.getWithAutoFetch(this.entityCache,this.videoId):_g.Lm}},
+formProxy:{configurable:!0,enumerable:!0,get:function(){if(this.form)return _g.Qp(this.form,this)}}});
+var x$=Pmc;x$.prototype.onFormModified=x$.prototype.onFormModified;x$.prototype.updateForm=x$.prototype.updateForm;x$.prototype.requestFaceDataDetection=x$.prototype.requestFaceDataDetection;x$.prototype.pollForFaceDetectionStatus=x$.prototype.pollForFaceDetectionStatus;x$.prototype.updateFieldValue=x$.prototype.updateFieldValue;x$.prototype.updateSelectAllCheckboxState=x$.prototype.updateSelectAllCheckboxState;_g.X([_g.L(),_g.Z("design:type",v$)],x$.prototype,"faceDetectionStatusService",void 0);
+_g.X([_g.L(),_g.Z("design:type",u$)],x$.prototype,"faceDetectionSummaryFetcher",void 0);_g.X([_g.L(),_g.Z("design:type",_g.$q)],x$.prototype,"videoEditorService",void 0);_g.X([_g.O(_g.bk),_g.Z("design:type",Object)],x$.prototype,"entityCache",void 0);_g.X([_g.H("#dialog"),_g.Z("design:type",_g.jD)],x$.prototype,"dialog",void 0);_g.X([_g.H("#select-all-checkbox"),_g.Z("design:type",Object)],x$.prototype,"selectAllCheckbox",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],x$.prototype,"videoId",void 0);
+_g.X([_g.v(),_g.Z("design:type",Array)],x$.prototype,"faceIds",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],x$.prototype,"isSelectAllChecked",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],x$.prototype,"faceDataDetectionRequested",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],x$.prototype,"faceDetectionStatusPollingDelayMs",void 0);_g.X([_g.r(),_g.Z("design:type",_g.jA)],x$.prototype,"fetchedHelpers",void 0);
+_g.X([_g.F("form"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],x$.prototype,"isApplyEnabled",null);_g.X([_g.D("faces","formProxy"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],x$.prototype,"updateSelectAllCheckboxState",null);_g.X([_g.F("faces"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],x$.prototype,"hasFaces",null);
+_g.X([_g.D("isSelectAllChecked"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],x$.prototype,"updateFieldValue",null);_g.X([_g.F("faces"),_g.Z("design:type",Array),_g.Z("design:paramtypes",[])],x$.prototype,"stills",null);_g.X([_g.F("fetchedFaces"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],x$.prototype,"faces",null);_g.X([_g.F("faceDetectionSummary"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],x$.prototype,"fetchedFaces",null);
+_g.X([_g.D("faceDetectionSummary"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],x$.prototype,"pollForFaceDetectionStatus",null);_g.X([_g.F("faceDetectionSummary"),_g.Z("design:type",String),_g.Z("design:paramtypes",[])],x$.prototype,"detectionCompletionFractionMessage",null);_g.X([_g.F("entityCache","videoId","faceDataDetectionRequested"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],x$.prototype,"faceDetectionSummary",null);
+_g.X([_g.D("videoId"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",Promise)],x$.prototype,"requestFaceDataDetection",null);_g.X([_g.D("faceIds"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],x$.prototype,"updateForm",null);_g.X([_g.F("form"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],x$.prototype,"formProxy",null);
+_g.X([_g.B("form-modified"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[Object]),_g.Z("design:returntype",void 0)],x$.prototype,"onFormModified",null);x$=_g.X([_g.M({is:"ytve-face-selection-dialog",debounceEffects:!0})],x$);var Qmc=setTimeout.bind(window);var Rmc=function(){return _g.n.apply(this,arguments)||this};
+_g.J(Rmc,_g.n);_g.d=Rmc.prototype;_g.d.propagateVideoIdToBehaviors=function(){this.videoPublishedEditsProviderBehavior.publishedEditsVideoId=this.videoId};
+_g.d.propagateVideoToBehaviors=function(){this.videoPublishedEditsProviderBehavior.publishedEditsVideo=this.video};
+_g.d.open=function(a,b,c){a={positionTarget:a,noOverlap:!1,horizontalAlign:"auto",verticalAlign:"auto",restoreFocusOnClose:!0};b&&(a.horizontalOffset=b);c&&(a.verticalOffset=c);this.blurTypeMenu.setConfig({items:[{text:"Face blur",value:"face_blur"},{text:"Object blur",value:"object_blur"}],role:"menu",compact:!0,showIcons:!1},a);this.blurTypeMenu.open()};
+_g.d.onMenuItemSelected=function(a){a=a.detail;switch(a){case"face_blur":this.openFaceSelectionDialog();break;case"object_blur":this.onSelectObjectBlur();break;default:_g.na(a,void 0);}this.fire("blur-menu-item-clicked")};
+_g.d.openFaceSelectionDialog=function(){var a=this,b=_g.Hh(x$.prototype.is,this);b.videoId=this.videoId;b.faceIds=this.allSelectedFaceIds;b.addEventListener("face-selection-dialog-confirm",function(c){a.setFaceSelection(c)});
+this.popupHostBehavior.hostPopup(b,"DARK_BACKDROP");b.open()};
+_g.d.setFaceSelection=function(a){var b=this;if(this.isFaceSelectionDialogConfirmEvent(a)){var c=a.detail;a=c.filter(function(h){return!b.allSelectedFaceIds.includes(h)});
+var e=this.allSelectedFaceIds.filter(function(h){return!c.includes(h)});
+(a.length||e.length)&&this.dispatch({type:"PRIVACY_SELECTED_FACES_UPDATED",payload:{addedFaceIds:a,deletedFaceIds:e}})}};
+_g.d.onSelectObjectBlur=function(){if(this.videoPublishedEditsProviderBehavior.timingDelta){var a=.4+Math.random()/10,b=.4+Math.random()/10,c=b+.2,e=a+.2,h=Math.floor(Math.min(this.playheadPositionMs,_g.Oo(this.videoPublishedEditsProviderBehavior.timingDelta)));this.dispatch(_g.xab({start:{millis:-1},end:{millis:-1},trackedRegionCheckpoints:{checkpoints:[{rectangle:{top:a,left:b,right:c,bottom:e},timestamp:{millis:h}}]},blurShape:"BLUR_SHAPE_RECTANGLE"}))}};
+_g.d.isFaceSelectionDialogConfirmEvent=function(a){return a.detail};
+_g.U.Object.defineProperties(Rmc.prototype,{videoId:{configurable:!0,enumerable:!0,get:function(){return this.video?this.video.videoId:void 0}},
+blurRegionsFromLastPublishedEdits:{configurable:!0,enumerable:!0,get:function(){return this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits&&!_g.Fm(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits)&&this.videoPublishedEditsProviderBehavior.timingDelta&&_g.S(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits)?_g.Po(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits,this.videoPublishedEditsProviderBehavior.timingDelta):{}}},
+blurRegionsFromNewlySelectedFace:{configurable:!0,enumerable:!0,get:function(){var a=this;if(this.videoId&&this.privacyChangedFacesSelector&&this.videoPublishedEditsProviderBehavior.timingDelta)return _g.Ro(this.videoId,this.privacyChangedFacesSelector,this.videoPublishedEditsProviderBehavior.timingDelta,function(b){return a.detectionsForFaceFetcher.getWithAutoFetch(a.videoPublishedEditsProviderBehavior.publishedEditsEntityCache,b)})}},
+allBlurRegions:{configurable:!0,enumerable:!0,get:function(){return _g.Qo(this.blurRegionsFromLastPublishedEdits,this.blurRegionsFromNewlySelectedFace,this.privacyChangedFacesSelector,this.changedBlurRegionsDict)}},
+allSelectedFaceIds:{configurable:!0,enumerable:!0,get:function(){return this.allBlurRegions?_g.Gua(this.allBlurRegions):[]}}});
+var y$=Rmc;y$.prototype.propagateVideoToBehaviors=y$.prototype.propagateVideoToBehaviors;y$.prototype.propagateVideoIdToBehaviors=y$.prototype.propagateVideoIdToBehaviors;_g.X([_g.L(_g.pA),_g.Z("design:type",Function)],y$.prototype,"dispatch",void 0);_g.X([_g.H("#blur-type-menu"),_g.Z("design:type",_g.pE)],y$.prototype,"blurTypeMenu",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],y$.prototype,"video",void 0);
+_g.X([_g.F("video"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],y$.prototype,"videoId",null);_g.X([_g.D("videoId"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],y$.prototype,"propagateVideoIdToBehaviors",null);_g.X([_g.D("video"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],y$.prototype,"propagateVideoToBehaviors",null);
+_g.X([_g.r(),_g.Z("design:type",_g.ED)],y$.prototype,"popupHostBehavior",void 0);_g.X([_g.r(),_g.Z("design:type",i$)],y$.prototype,"videoPublishedEditsProviderBehavior",void 0);_g.X([_g.L(),_g.Z("design:type",p$)],y$.prototype,"detectionsForFaceFetcher",void 0);_g.X([_g.O(W9),_g.Z("design:type",Object)],y$.prototype,"changedBlurRegionsDict",void 0);_g.X([_g.O(X9),_g.Z("design:type",Object)],y$.prototype,"privacyChangedFacesSelector",void 0);
+_g.X([_g.O(_g.Yq),_g.Z("design:type",Number)],y$.prototype,"playheadPositionMs",void 0);_g.X([_g.F("fetchedLastPublishedEdits","timingDelta"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],y$.prototype,"blurRegionsFromLastPublishedEdits",null);_g.X([_g.F("privacyChangedFacesSelector","publishedEditsEntityCache","timingDelta"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],y$.prototype,"blurRegionsFromNewlySelectedFace",null);
+_g.X([_g.F("blurRegionsFromLastPublishedEdits","changedBlurRegionsDict","blurRegionsFromNewlySelectedFace","privacyChangedFacesSelector"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],y$.prototype,"allBlurRegions",null);_g.X([_g.F("allBlurRegions"),_g.Z("design:type",Array),_g.Z("design:paramtypes",[])],y$.prototype,"allSelectedFaceIds",null);y$=_g.X([_g.M({is:"ytve-blur-elements-menu"})],y$);var z$=function(){var a=_g.n.apply(this,arguments)||this;a.type="privacy-row";a.positionMs=0;a.index=-1;a.markerType="";a.isTrackedRegion=!1;a.row=0;return a};
+_g.J(z$,_g.n);z$.prototype.setSizeableWidth=function(a){this.style.width=a+"px";this.marginPx=a};
+z$.prototype.onMarkerType=function(){this.markerType&&this.classList.add(this.markerType)};
+_g.U.Object.defineProperties(z$.prototype,{horizontalOrder:{configurable:!0,enumerable:!0,get:function(){switch(this.markerType){case"privacy-left":return 0;case"privacy-center":return 1;case"privacy-right":return 2;default:return 0;}}},
+isNotTabbable:{configurable:!0,enumerable:!0,get:function(){return"privacy-left"===this.markerType||"privacy-right"===this.markerType}},
+hoverCursor:{configurable:!0,enumerable:!0,get:function(){return"privacy-center"===this.markerType?this.isTrackedRegion?"crosshair":"move":"ew-resize"}},
+element:{configurable:!0,enumerable:!0,get:function(){return this}}});
+var A$=z$;A$.prototype.onMarkerType=A$.prototype.onMarkerType;_g.X([_g.v(),_g.Z("design:type",String)],A$.prototype,"type",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],A$.prototype,"positionMs",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],A$.prototype,"index",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],A$.prototype,"marginPx",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],A$.prototype,"markerType",void 0);
+_g.X([_g.v({reflectToAttribute:!0}),_g.Z("design:type",Object)],A$.prototype,"isTrackedRegion",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],A$.prototype,"row",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],A$.prototype,"regionId",void 0);_g.X([_g.v(),_g.Z("design:type",Number)],A$.prototype,"minimumMs",void 0);_g.X([_g.v(),_g.Z("design:type",Number)],A$.prototype,"maximumMs",void 0);
+_g.X([_g.F("markerType"),_g.Z("design:type",Number),_g.Z("design:paramtypes",[])],A$.prototype,"horizontalOrder",null);_g.X([_g.D("markerType"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],A$.prototype,"onMarkerType",null);A$=_g.X([_g.M({is:"ytve-blur-row-marker",debounceEffects:!0})],A$);var Smc=function(){var a=_g.n.apply(this,arguments)||this;a.row=0;a.isTrackedRegion=!1;a.selected=!1;a.inError=!1;return a};
+_g.J(Smc,_g.n);_g.d=Smc.prototype;_g.d.toggleSelected=function(){this.classList.toggle("selected",this.selected);this.leftMarker.classList.toggle("element-selected",this.selected);this.centerMarker.classList.toggle("element-selected",this.selected);this.rightMarker.classList.toggle("element-selected",this.selected)};
+_g.d.attached=function(){this.leftMarker.markerType="privacy-left";this.centerMarker.markerType="privacy-center";this.rightMarker.markerType="privacy-right"};
+_g.d.setMarkersRow=function(){this.leftMarker.row=this.centerMarker.row=this.rightMarker.row=this.row};
+_g.d.setMarkersAttribute=function(){this.centerMarker.isTrackedRegion=this.isTrackedRegion};
+_g.d.showMarkers=function(a){a=void 0===a?!1:a;this.leftMarker.style.visibility=a?"visible":"hidden";this.centerMarker.style.visibility=a?"visible":"hidden";this.rightMarker.style.visibility=a?"visible":"hidden"};
+_g.d.moveElement=function(a,b){this.element.style.left=Math.floor(a)+"px";this.element.style.width=b+"px"};
+_g.d.showRow=function(){this.classList.add("visible")};
+_g.d.addFocusedClass=function(){this.classList.add("focused")};
+_g.d.removeFocusedClass=function(){this.classList.remove("focused")};
+_g.d.addHoveredClass=function(){this.classList.add("hovered")};
+_g.d.removeHoveredClass=function(){this.classList.remove("hovered")};
+var B$=Smc;B$.prototype.setMarkersAttribute=B$.prototype.setMarkersAttribute;B$.prototype.setMarkersRow=B$.prototype.setMarkersRow;B$.prototype.toggleSelected=B$.prototype.toggleSelected;_g.X([_g.v(),_g.Z("design:type",Object)],B$.prototype,"row",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],B$.prototype,"regionId",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],B$.prototype,"isTrackedRegion",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],B$.prototype,"selected",void 0);
+_g.X([_g.v({reflectToAttribute:!0}),_g.Z("design:type",Object)],B$.prototype,"inError",void 0);_g.X([_g.H("#element-body"),_g.Z("design:type",HTMLDivElement)],B$.prototype,"element",void 0);_g.X([_g.H("#markers"),_g.Z("design:type",HTMLDivElement)],B$.prototype,"markers",void 0);_g.X([_g.H("#left-marker"),_g.Z("design:type",A$)],B$.prototype,"leftMarker",void 0);_g.X([_g.H("#center-marker"),_g.Z("design:type",A$)],B$.prototype,"centerMarker",void 0);
+_g.X([_g.H("#right-marker"),_g.Z("design:type",A$)],B$.prototype,"rightMarker",void 0);_g.X([_g.D("selected"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],B$.prototype,"toggleSelected",null);_g.X([_g.D("row"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],B$.prototype,"setMarkersRow",null);
+_g.X([_g.D("isTrackedRegion"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],B$.prototype,"setMarkersAttribute",null);B$=_g.X([_g.M({is:"ytve-blur-row-element"})],B$);var Tmc=function(){var a=_g.n.apply(this,arguments)||this;a.row=0;a.url="";return a};
+_g.J(Tmc,_g.n);_g.d=Tmc.prototype;_g.d.attached=function(){this.classList.add("unlocked")};
+_g.d.setAvatarVisibility=function(){this.face.classList.toggle("visible",""!==this.url);this.object.classList.toggle("visible",""===this.url)};
+_g.d.createRowElement=function(a,b,c,e,h){h=void 0===h?!1:h;var k=_g.Hh(B$.prototype.is,this);this.element.appendChild(k);k.row=this.row;k.isTrackedRegion=h;k.element.classList.toggle("loading",e);k.showMarkers(!e);k.leftMarker.maximumMs=k.centerMarker.maximumMs=k.rightMarker.maximumMs=a.maximumMs;this.moveRowElement(a,k,b,c);this.classList.add("iconVisible");return k};
+_g.d.moveRowElement=function(a,b,c,e){var h=a.positionMsToPx(0),k=a.positionMsToPx(c)-h;a=a.sizeMsToPx(e-c);b.markers.style.transform="translateX("+-h+"px)";b.leftMarker.positionMs=c;b.centerMarker.positionMs=c;b.centerMarker.setSizeableWidth(a);b.rightMarker.positionMs=e;b.moveElement(k,a)};
+_g.d.createCheckpoint=function(a,b){var c=document.createElement("div");c.style.left=Math.floor(a.positionMsToPx(b)-a.positionMsToPx(0))+"px";Object.assign(c.style,{bottom:0,position:"absolute",height:"6px",width:"2px",backgroundColor:"var(--ytcp-white-4)",zIndex:"var(--ytve-privacy-checkpoint-z-index)"});this.element.appendChild(c)};
+_g.d.clearAllRowElements=function(){for(;this.element.firstChild;)this.element.removeChild(this.element.firstChild);this.classList.remove("iconVisible")};
+_g.d.lockHovering=function(){this.classList.remove("unlocked")};
+_g.d.unlockHovering=function(){this.classList.add("unlocked")};
+var C$=Tmc;C$.prototype.setAvatarVisibility=C$.prototype.setAvatarVisibility;_g.X([_g.v({reflectToAttribute:!0}),_g.Z("design:type",Object)],C$.prototype,"row",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],C$.prototype,"url",void 0);_g.X([_g.H("#object"),_g.Z("design:type",HTMLElement)],C$.prototype,"object",void 0);_g.X([_g.H("#face"),_g.Z("design:type",HTMLElement)],C$.prototype,"face",void 0);_g.X([_g.H("#element"),_g.Z("design:type",HTMLDivElement)],C$.prototype,"element",void 0);
+_g.X([_g.D("url"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],C$.prototype,"setAvatarVisibility",null);C$=_g.X([_g.M({is:"ytve-blur-row"})],C$);var Umc=function(){var a=_g.n.apply(this,arguments)||this;a.pluginId="PRIVACY";a.faceDataDetectionRequested=!1;a.faceDetectionStatusPollingDelayMs=5E3;a.markerEvent=function(b){a.onMarkerEvent(b)};
+a.expandedRows=[];a.allPrivacyRowElements={};a.inMarkerMoveEvent=!1;a.wasPrivacyReadyStateDispatched=!1;a.TEST_ONLY={updateRowIcon:a.updateRowIcon,createRowElementForTrackedRegion:a.createRowElementForTrackedRegion};return a};
+_g.J(Umc,_g.n);_g.d=Umc.prototype;_g.d.propagateVideoIdToBehaviors=function(){this.videoPublishedEditsProviderBehavior.publishedEditsVideoId=this.videoId};
+_g.d.propagateVideoToBehaviors=function(){this.videoPublishedEditsProviderBehavior.publishedEditsVideo=this.video};
+_g.d.fetchPrecacheUrl=function(){return _g.aa(this,void 0,void 0,function b(){var c=this,e;return _g.ba(b,function(h){switch(h.nextAddress){case 1:if(!c.videoId)return c.precacheUrl=void 0,h.return();h.setCatchFinallyBlocks(2);return h.yield(c.videoEditorService.getMotionTrackPrecacheUrl(c.videoId),4);case 4:e=h.yieldResult;h.leaveTryBlock(3);break;case 2:h.enterCatchBlock(),_g.rh(Error("Failed to fetch precache url."));case 3:c.precacheUrl=e&&e.url?e.url:void 0,h.jumpToEnd();}})})};
+_g.d.getPreviewServer=function(a){return new _g.tF(a)};
+_g.d.precache=function(){this.precacheUrl&&this.getPreviewServer(this.precacheUrl).precacheMotionTrackingData()};
+_g.d.onTimelinePrivacyButtonTap=function(){var a=this;this.isExpanded?this.dispatch(_g.wab()):(this.addEventListener("blur-menu-item-clicked",function(){a.dispatch(_g.vab())}),this.elementsMenu.open(this.expandButton))};
+_g.d.openAddBlurMenu=function(){var a=this.elementsMenu,b=this.addBlurButton;a&&b&&a.open(b)};
+_g.d.onCollapse=function(){this.dispatch(_g.wab())};
+_g.d.onExpand=function(){this.dispatch(_g.vab())};
+_g.d.attached=function(){this.markersHandler.onMarkerEvent.addListener(this.markerEvent);this.updateHeight()};
+_g.d.detached=function(){this.markersHandler.onMarkerEvent.removeListener(this.markerEvent)};
+_g.d.maybeUpdatePrivacyEditorLoadingState=function(){this.wasPrivacyReadyStateDispatched||void 0===this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits||_g.Fm(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits)||(_g.S(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits)?this.dispatch(_g.eB("PRIVACY",3)):_g.Em(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits)&&this.dispatch(_g.eB("PRIVACY",1)),this.wasPrivacyReadyStateDispatched=!0)};
+_g.d.requestFaceDataDetection=function(){return _g.aa(this,void 0,void 0,function b(){var c=this,e,h;return _g.ba(b,function(k){if(1==k.nextAddress){e=c;if(!c.videoId||c.faceDataDetectionRequested)return k.return();k.setCatchFinallyBlocks(2);return k.yield(c.videoEditorService.detectFaceData(c.videoId),4)}if(2!=k.nextAddress)return setTimeout(function(){e.faceDataDetectionRequested=!0},c.faceDetectionStatusPollingDelayMs),k.leaveTryBlock(0);
+h=k.enterCatchBlock();"ALREADY_EXISTS"===h.error.status&&(c.faceDataDetectionRequested=!0);k.jumpToEnd()})})};
+_g.d.renderRows=function(){if(this.surface&&this.projection&&void 0!==this.numRows&&this.isAttached){this.createRows();var a=12;if(this.isExpanded){this.inMarkerMoveEvent||this.markersHandler.unsetMarkersOfType("privacy-row");for(var b=_g.f(this.expandedRows),c=b.next();!c.done;c=b.next())c=c.value,this.renderRowPosition(this.projection,c,a),this.renderRowElements(c),a+=28,c.classList.add("fade-in"),c.classList.add("visible");this.collapsedRow.classList.remove("fade-in");this.collapsedRow.classList.remove("visible")}else{b=
+_g.f(this.expandedRows);for(c=b.next();!c.done;c=b.next())c=c.value,c.classList.remove("fade-in"),c.classList.remove("visible"),c.clearAllRowElements();this.isEmpty?(this.collapsedRow.classList.remove("fade-in"),this.collapsedRow.classList.remove("visible")):(this.renderCollapsedRow(),this.renderRowPosition(this.projection,this.collapsedRow,a),this.collapsedRow.classList.add("fade-in"),this.collapsedRow.classList.add("visible"))}}};
+_g.d.renderCollapsedRow=function(){if(this.projection){this.collapsedRow||this.createCollapsedRow();var a=_g.Qua(this.blurRegionsForRenderingDict),b=[];a=_g.f(a);for(var c=a.next();!c.done;c=a.next())c=c.value,c=this.collapsedRow.createRowElement(this.projection,c.startMs,c.endMs,!1),b.push(c.leftMarker,c.centerMarker,c.rightMarker);this.projection&&this.markersHandler.addMarkersOfType("privacy-row",b,this.projection)}};
+_g.d.createRows=function(){var a=this;if(this.surface&&void 0!==this.numRows){this.collapsedRow?this.collapsedRow.clearAllRowElements():this.createCollapsedRow();for(var b=this.expandedRows.length;b>this.numRows;b--){var c=this.expandedRows.pop();this.surface.removeChild(c)}b={};for(b.$jscomp$loop$prop$i$16978$17303=this.expandedRows.length;b.$jscomp$loop$prop$i$16978$17303<this.numRows;b={$jscomp$loop$prop$i$16978$17303:b.$jscomp$loop$prop$i$16978$17303},b.$jscomp$loop$prop$i$16978$17303++)c=_g.Hh(C$.prototype.is,
+this),c.row=b.$jscomp$loop$prop$i$16978$17303+1,c.classList.add("expanded"),c.addEventListener("click",function(e){return function(h){a.handleRowEvents(e.$jscomp$loop$prop$i$16978$17303,h)}}(b)),this.expandedRows.push(c),this.surface.appendChild(c)}};
+_g.d.createCollapsedRow=function(){var a=this;this.surface&&(this.collapsedRow=_g.Hh(C$.prototype.is,this),this.collapsedRow.addEventListener("click",function(b){a.collapsedRowEventListener(b)}),this.collapsedRow.classList.add("collapsed"),this.collapsedRow.row=0,this.surface.appendChild(this.collapsedRow))};
+_g.d.renderRowElements=function(a){if(this.projection){a.clearAllRowElements();var b=_g.Lua(this.blurRegionsForRenderingDict,a.row);if(b){var c=[];b=_g.f(b);for(var e=b.next();!e.done;e=b.next()){e=this.createRowElements(a,e.value);if(!e)return;if(this.selectedElementRegionId&&e.regionId===this.selectedElementRegionId){e.selected=!0;var h=this.allBlurRegions[e.regionId].trackedRegionCheckpoints;if(h&&h.checkpoints){h=_g.f(h.checkpoints);for(var k=h.next();!k.done;k=h.next())a.createCheckpoint(this.projection,
+k.value.timestamp.millis)}}else e.selected=!1;this.inMarkerMoveEvent||c.push(e.leftMarker,e.centerMarker,e.rightMarker)}this.markersHandler.addMarkersOfType("privacy-row",c,this.projection)}}};
+_g.d.createRowElements=function(a,b){if(this.projection){if(b.isStatic){var c=b.staticBlurRegionForRendering;if(!c)return;c=a.createRowElement(this.projection,c.start.millis,c.end.millis,!1)}else{c=b.trackedBlurRegionForRendering;if(!c)return;c=this.createRowElementForTrackedRegion(a,c,this.projection,this.playheadPositionMs);var e=this.allBlurRegions[b.regionId];_g.Rua(e)||(c.inError=!0);this.updateRowIcon(a,this.facesUrlMap,e.trackedRegionCheckpoints.faceId)}this.allPrivacyRowElements[b.regionId]=
+c;c.regionId=b.regionId;return c}};
+_g.d.createRowElementForTrackedRegion=function(a,b,c,e){return b.isLoading?(b=c.maximumMs,a.createRowElement(c,Math.min(e,.9*b),Math.min(e+b/10,b),!0,!0)):a.createRowElement(c,b.start.millis,b.end.millis,!1,!0)};
+_g.d.updateRowIcon=function(a,b,c){void 0!==c?b&&b.has(c)?a.url=b.get(c):a.classList.remove("iconVisible"):a.url=""};
+_g.d.renderRowPosition=function(a,b,c){a=this.msToPx(a,0,this.maximumMs);var e=a.widthPx;b.style.left=a.leftPx+"px";b.style.top=c+"px";b.style.width=e+"px"};
+_g.d.msToPx=function(a,b,c){return{leftPx:Math.floor(a.positionMsToPx(b)),widthPx:Math.floor(a.positionMsToPx(c))-Math.floor(a.positionMsToPx(b))}};
+_g.d.collapsedRowEventListener=function(){this.isExpanded||this.dispatch(_g.vab())};
+_g.d.handleRowEvents=function(a,b){switch(b.type){case"click":this.elementsMenu&&this.projection&&_g.ih(this.blurRegionsForRenderingDict)&&this.elementsMenu.open(document.body,b.pageX,b.pageY);}};
+_g.d.onMarkerEvent=function(a){if(this.projection&&this.videoPublishedEditsProviderBehavior.timingDelta){var b=a.marker,c=b.regionId;if(void 0!==c){var e=this.blurRegionsForRenderingDict[c];if(e){var h=void 0;if(e.isStatic){var k=e.staticBlurRegionForRendering.start.millis;h=e.staticBlurRegionForRendering.end.millis}else if(!e.trackedBlurRegionForRendering.isLoading){if("privacy-center"===b.markerType&&("moved"===a.event||"dropped"===a.event)){this.inMarkerMoveEvent=!1;return}k=e.trackedBlurRegionForRendering.start.millis;
+h=e.trackedBlurRegionForRendering.end.millis}if(void 0!==k&&void 0!==h){switch(b.markerType){case"privacy-left":k=b.positionMs;break;case"privacy-right":h=b.positionMs;break;default:e=b.positionMs-k,k+=e,h+=e;}switch(a.event){case"selected":case"picked":this.inMarkerMoveEvent=!0;this.selectedElementRegionId!==b.regionId&&(this.inMarkerMoveEvent=!1,this.dispatch(_g.Bab(c)));break;case"moved":this.expandedRows[b.row-1].moveRowElement(this.projection,this.allPrivacyRowElements[c],k,h);break;case"dropped":this.inMarkerMoveEvent=
+!1;"privacy-left"===b.markerType&&(h=void 0);"privacy-right"===b.markerType&&(k=void 0);void 0!==h&&(h=Math.floor(Math.min(h,_g.Oo(this.videoPublishedEditsProviderBehavior.timingDelta))));this.dispatch(_g.yab(c,this.allBlurRegions[c],k,h));break;case"cancelled":this.inMarkerMoveEvent=!1;}}}}}};
+_g.d.updateHeight=function(){if(this.content){var a=this.isExpanded,b=this.numRows;this.content.style.height=((void 0===a?0:a)?Math.max(108,24*b+4*b+24):48)+"px"}};
+_g.U.Object.defineProperties(Umc.prototype,{fakeDarkMode:{configurable:!0,enumerable:!0,get:function(){return"DARK"===this.theme&&document.documentElement.hasAttribute("ytve-dark")}},
+isAddElementButtonDisabled:{configurable:!0,enumerable:!0,get:function(){return"TRIM"===this.activePluginId}},
+projection:{configurable:!0,enumerable:!0,get:function(){if(this.select&&this.video)return this.select(_g.Xq,this.video.videoDurationMs)}},
+isExpanded:{configurable:!0,enumerable:!0,get:function(){return this.select?this.select(_g.Tq,"PRIVACY"):!1}},
+numRows:{configurable:!0,enumerable:!0,get:function(){var a=1;_g.Qg(this.blurRegionsForRenderingDict,function(b,c){a=Math.max(a,c.rowIndex)});
+return a}},
+maximumMs:{configurable:!0,enumerable:!0,get:function(){return this.projection?this.projection.maximumMs:0}},
+isEmpty:{configurable:!0,enumerable:!0,get:function(){return!this.blurRegionsForRenderingDict||_g.ih(this.blurRegionsForRenderingDict)}},
+showExpandPrivacyButton:{configurable:!0,enumerable:!0,get:function(){return!this.isExpanded&&this.isEmpty}},
+blurRegionsFromLastPublishedEdits:{configurable:!0,enumerable:!0,get:function(){return this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits&&!_g.Fm(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits)&&this.videoPublishedEditsProviderBehavior.timingDelta?_g.S(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits)?_g.Po(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits,this.videoPublishedEditsProviderBehavior.timingDelta):{}:{}}},
+blurRegionsFromNewlySelectedFace:{configurable:!0,enumerable:!0,get:function(){var a=this;if(this.videoId&&this.privacyChangedFacesSelector&&this.videoPublishedEditsProviderBehavior.timingDelta)return _g.Ro(this.videoId,this.privacyChangedFacesSelector,this.videoPublishedEditsProviderBehavior.timingDelta,function(b){return a.detectionsForFaceFetcher.getWithAutoFetch(a.videoPublishedEditsProviderBehavior.publishedEditsEntityCache,b)})}},
+allBlurRegions:{configurable:!0,enumerable:!0,get:function(){return _g.Qo(this.blurRegionsFromLastPublishedEdits,this.blurRegionsFromNewlySelectedFace,this.privacyChangedFacesSelector,this.changedBlurRegionsDict)}},
+blurRegionsForRenderingDict:{configurable:!0,enumerable:!0,get:function(){var a=this;if(void 0===this.allBlurRegions||!this.videoId||!this.videoPublishedEditsProviderBehavior.timingDelta||!this.video)return{};var b=_g.Yua(this.video,_g.Oo(this.videoPublishedEditsProviderBehavior.timingDelta));return _g.Kua(this.allBlurRegions,this.videoId,this.videoPublishedEditsProviderBehavior.timingDelta,function(c){return a.motionTrackingDataFetcher.getWithAutoFetch(a.videoPublishedEditsProviderBehavior.publishedEditsEntityCache,
+c)},b)}},
+faceDetectionSummary:{configurable:!0,enumerable:!0,get:function(){return this.videoPublishedEditsProviderBehavior.publishedEditsEntityCache&&this.videoId&&this.faceDataDetectionRequested?this.faceDetectionSummaryFetcher.getWithAutoFetch(this.videoPublishedEditsProviderBehavior.publishedEditsEntityCache,this.videoId):_g.Lm}},
+fetchedFaces:{configurable:!0,enumerable:!0,get:function(){return _g.S(this.faceDetectionSummary)&&this.faceDetectionSummary.data.detectionInProgress?_g.Lm:this.faceDetectionSummary}},
+facesUrlMap:{configurable:!0,enumerable:!0,get:function(){if(_g.S(this.fetchedFaces)&&this.fetchedFaces.data.summary&&this.fetchedFaces.data.summary.faces){for(var a=new Map,b=_g.f(this.fetchedFaces.data.summary.faces),c=b.next();!c.done;c=b.next())c=c.value,c.thumbnail&&c.thumbnail.thumbnails&&a.set(c.faceId,c.thumbnail.thumbnails[0].url);return a}}}});
+var D$=Umc;D$.prototype.updateHeight=D$.prototype.updateHeight;D$.prototype.renderRows=D$.prototype.renderRows;D$.prototype.requestFaceDataDetection=D$.prototype.requestFaceDataDetection;D$.prototype.maybeUpdatePrivacyEditorLoadingState=D$.prototype.maybeUpdatePrivacyEditorLoadingState;D$.prototype.onExpand=D$.prototype.onExpand;D$.prototype.onCollapse=D$.prototype.onCollapse;D$.prototype.precache=D$.prototype.precache;D$.prototype.fetchPrecacheUrl=D$.prototype.fetchPrecacheUrl;
+D$.prototype.propagateVideoToBehaviors=D$.prototype.propagateVideoToBehaviors;D$.prototype.propagateVideoIdToBehaviors=D$.prototype.propagateVideoIdToBehaviors;_g.X([_g.L(_g.pA),_g.Z("design:type",Function)],D$.prototype,"dispatch",void 0);_g.X([_g.L(),_g.Z("design:type",p$)],D$.prototype,"detectionsForFaceFetcher",void 0);_g.X([_g.L(),_g.Z("design:type",u$)],D$.prototype,"faceDetectionSummaryFetcher",void 0);_g.X([_g.L(),_g.Z("design:type",_g.$q)],D$.prototype,"videoEditorService",void 0);
+_g.X([_g.L(),_g.Z("design:type",q$)],D$.prototype,"motionTrackingDataFetcher",void 0);_g.X([_g.L(),_g.Z("design:type",_g.ID)],D$.prototype,"markersHandler",void 0);_g.X([_g.r(),_g.Z("design:type",i$)],D$.prototype,"videoPublishedEditsProviderBehavior",void 0);_g.X([_g.fi(),_g.Z("design:type",Function)],D$.prototype,"select",void 0);_g.X([_g.O(_g.Rj),_g.Z("design:type",String)],D$.prototype,"theme",void 0);
+_g.X([_g.F("theme"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],D$.prototype,"fakeDarkMode",null);_g.X([_g.v(),_g.Z("design:type",Object)],D$.prototype,"pluginId",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],D$.prototype,"faceDataDetectionRequested",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],D$.prototype,"faceDetectionStatusPollingDelayMs",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],D$.prototype,"videoId",void 0);
+_g.X([_g.v(),_g.Z("design:type",Object)],D$.prototype,"video",void 0);_g.X([_g.D("videoId"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],D$.prototype,"propagateVideoIdToBehaviors",null);_g.X([_g.D("video"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],D$.prototype,"propagateVideoToBehaviors",null);_g.X([_g.H("#add-blur-button"),_g.Z("design:type",_g.hE)],D$.prototype,"addBlurButton",void 0);
+_g.X([_g.H("#blur-timeline-content"),_g.Z("design:type",HTMLDivElement)],D$.prototype,"content",void 0);_g.X([_g.H("#decorations"),_g.Z("design:type",HTMLDivElement)],D$.prototype,"decorations",void 0);_g.X([_g.H("#surface"),_g.Z("design:type",HTMLDivElement)],D$.prototype,"surface",void 0);_g.X([_g.H("ytve-blur-elements-menu"),_g.Z("design:type",y$)],D$.prototype,"elementsMenu",void 0);_g.X([_g.H("#expand-privacy-editor-button"),_g.Z("design:type",_g.hE)],D$.prototype,"expandButton",void 0);
+_g.X([_g.O(_g.Zq),_g.Z("design:type",Object)],D$.prototype,"activePluginId",void 0);_g.X([_g.O(_g.Yq),_g.Z("design:type",Number)],D$.prototype,"playheadPositionMs",void 0);_g.X([_g.O(W9),_g.Z("design:type",Object)],D$.prototype,"changedBlurRegionsDict",void 0);_g.X([_g.O(Ulc),_g.Z("design:type",Object)],D$.prototype,"selectedElementRegionId",void 0);_g.X([_g.O(X9),_g.Z("design:type",Object)],D$.prototype,"privacyChangedFacesSelector",void 0);
+_g.X([_g.F("activePluginId"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],D$.prototype,"isAddElementButtonDisabled",null);_g.X([_g.v(),_g.Z("design:type",Object)],D$.prototype,"precacheUrl",void 0);_g.X([_g.D("videoId"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",Promise)],D$.prototype,"fetchPrecacheUrl",null);
+_g.X([_g.D("precacheUrl"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],D$.prototype,"precache",null);_g.X([_g.F("select","video"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],D$.prototype,"projection",null);_g.X([_g.F("select"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],D$.prototype,"isExpanded",null);
+_g.X([_g.B("ytve-timeline-base-collapse"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],D$.prototype,"onCollapse",null);_g.X([_g.B("ytve-timeline-base-expand"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],D$.prototype,"onExpand",null);_g.X([_g.O(Tlc),_g.Z("design:type",Object)],D$.prototype,"editor",void 0);
+_g.X([_g.F("blurRegionsForRenderingDict"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],D$.prototype,"numRows",null);_g.X([_g.F("blurRegionsForRenderingDict"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],D$.prototype,"isEmpty",null);_g.X([_g.F("isEmpty","isExpanded"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],D$.prototype,"showExpandPrivacyButton",null);
+_g.X([_g.D("fetchedLastPublishedEdits"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],D$.prototype,"maybeUpdatePrivacyEditorLoadingState",null);_g.X([_g.F("fetchedLastPublishedEdits","timingDelta"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],D$.prototype,"blurRegionsFromLastPublishedEdits",null);
+_g.X([_g.F("privacyChangedFacesSelector","publishedEditsEntityCache","timingDelta"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],D$.prototype,"blurRegionsFromNewlySelectedFace",null);_g.X([_g.F("blurRegionsFromLastPublishedEdits","changedBlurRegionsDict","blurRegionsFromNewlySelectedFace","privacyChangedFacesSelector"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],D$.prototype,"allBlurRegions",null);
+_g.X([_g.F("allBlurRegions","publishedEditsEntityCache","timingDelta","video","videoId"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],D$.prototype,"blurRegionsForRenderingDict",null);_g.X([_g.D("videoId"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",Promise)],D$.prototype,"requestFaceDataDetection",null);
+_g.X([_g.F("publishedEditsEntityCache","videoId","faceDataDetectionRequested"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],D$.prototype,"faceDetectionSummary",null);_g.X([_g.F("faceDetectionSummary"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],D$.prototype,"fetchedFaces",null);_g.X([_g.F("fetchedFaces"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],D$.prototype,"facesUrlMap",null);
+_g.X([_g.D("isEmpty","isExpanded","projection","selectedElementRegionId","blurRegionsForRenderingDict","isAttached"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],D$.prototype,"renderRows",null);_g.X([_g.D("isExpanded","numRows"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],D$.prototype,"updateHeight",null);D$=_g.X([_g.M({is:"ytve-blur-editor-timeline"})],D$);var Vmc=function(){var a=_g.n.apply(this,arguments)||this;a.stills=[];a.isMultiPick=!1;a.disabled=!1;a.disableShimmer=!1;return a};
+_g.J(Vmc,_g.n);Vmc.prototype.selectStill=function(a){if(this.isMultiPick){var b=this.field.value.stillIds.slice(0),c=this.field.value.stillIds.findIndex(function(e){return e===a.detail.stillId});
+-1===c?b.push(a.detail.stillId):b.splice(c,1);this.field.value=Object.assign({},this.field.value,{stillIds:b})}else this.field.value=Object.assign({},this.field.value,{stillIds:[a.detail.stillId]})};
+_g.U.Object.defineProperties(Vmc.prototype,{ariaDisabled:{configurable:!0,enumerable:!0,get:function(){return this.disabled.toString()}}});
+var E$=Vmc;_g.X([_g.v(),_g.Z("design:type",_g.NG)],E$.prototype,"field",void 0);_g.X([_g.v(),_g.Z("design:type",Array)],E$.prototype,"stills",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],E$.prototype,"isMultiPick",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],E$.prototype,"disabled",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],E$.prototype,"disableShimmer",void 0);_g.X([_g.F("disabled"),_g.Z("design:type",String),_g.Z("design:paramtypes",[])],E$.prototype,"ariaDisabled",null);
+E$=_g.X([_g.M({is:"ytcp-still-cells",debounceEffects:!0})],E$);var F$=function(a,b){this.dispatch=a;this.videoEditorService=b};
+F$.prototype.get=function(a,b){if(a)return b=_g.Kh(b),a.videoPreviewUrlByRequest[b]};
+F$.prototype.fetch=function(a,b){return _g.aa(this,void 0,void 0,function e(){var h,k=this,l,m;return _g.ba(e,function(q){if(1==q.nextAddress){if(!a)return q.return();h=_g.Kh(b);k.dispatch({type:"VIDEO_PREVIEW_URL_FETCH_START",payload:{request:h}});q.setCatchFinallyBlocks(2);return q.yield(k.videoEditorService.getVideoEditorPreviewUrl(b),4)}if(2!=q.nextAddress){l=q.yieldResult;if(m=l.playerPreviewUrl)k.dispatch({type:"VIDEO_PREVIEW_URL_FETCH_COMPLETE",payload:{request:h,response:l}});else return k.dispatch(_g.d$a(h)),
+q.return();return q.leaveTryBlock(0)}q.enterCatchBlock();k.dispatch(_g.d$a(h));q.jumpToEnd()})})};
+F$.prototype.getWithAutoFetch=function(a,b){var c=this.get(a,b);c||this.fetch(a,b);return c||_g.Lm};
+F$.ctorParameters=function(){return[{type:void 0,decorators:[{type:_g.sb,args:[_g.pA]}]},{type:_g.$q}]};var Wmc=function(){var a=_g.n.apply(this,arguments)||this;a.pluginId="PRIVACY";a.isReadonly=!1;return a};
+_g.J(Wmc,_g.n);_g.d=Wmc.prototype;_g.d.propagateVideoIdToBehaviors=function(){this.videoPublishedEditsProviderBehavior.publishedEditsVideoId=this.videoId};
+_g.d.propagateVideoToBehaviors=function(){this.videoPublishedEditsProviderBehavior.publishedEditsVideo=this.video};
+_g.d.propagateVideoId=function(){this.timelineComponent&&(this.timelineComponent.videoId=this.videoId)};
+_g.d.propagateVideo=function(){this.timelineComponent&&this.timelineComponent.video!==this.video&&(this.timelineComponent.video=this.video);this.detailsComponent&&this.detailsComponent.video!==this.video&&(this.detailsComponent.video=this.video);this.previewComponent&&this.previewComponent.video!==this.video&&(this.previewComponent.video=this.video)};
+_g.d.fireStateChangedEvent=function(){this.fire("ytve-plugin-state-change-event")};
+_g.d.fillEditVideoRequest=function(a){var b={};this.fillVideoEdit(b);_g.ih(Object.keys(b))||(a.videoEdit=Object.assign(Object.assign({},a.videoEdit),b))};
+_g.d.fillVideoEdit=function(a){var b=this;if(!this.videoPublishedEditsProviderBehavior.timingDelta||!this.isValid)throw Error("Could not construct blur edit.");this.hasChanges&&(a.blurEdit={edit:{blurRegions:_g.Sg(this.allBlurRegions,function(c,e){c=b.videoPublishedEditsProviderBehavior.timingDelta;var h={start:_g.Xua(e.start,c),end:_g.Xua(e.end,c),blurShape:e.blurShape};e.staticRegion&&(h.staticRegion=e.staticRegion);e.trackedRegionCheckpoints&&(h.trackedRegionCheckpoints=_g.Wua(e.trackedRegionCheckpoints,
+c));return h})}})};
+_g.d.detailsPanel=function(){return this.detailsComponent?this.detailsComponent:this.detailsComponent=_g.Hh(r$.prototype.is,this)};
+_g.d.previewOverlay=function(){return this.previewComponent?this.previewComponent:this.previewComponent=_g.Hh(t$.prototype.is,this)};
+_g.d.timeline=function(){return this.timelineComponent?this.timelineComponent:this.timelineComponent=_g.Hh(D$.prototype.is,this)};
+_g.U.Object.defineProperties(Wmc.prototype,{liveTrimmer:{configurable:!0,enumerable:!0,get:function(){if(this.select&&this.video)return this.select(_g.Vq,{videoDurationMs:this.video.videoDurationMs,videoFps:this.video.fps})}},
+blurRegionsFromLastPublishedEdits:{configurable:!0,enumerable:!0,get:function(){return _g.S(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits)&&this.videoPublishedEditsProviderBehavior.timingDelta?_g.Po(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits,this.videoPublishedEditsProviderBehavior.timingDelta):{}}},
+blurRegionsFromNewlySelectedFace:{configurable:!0,enumerable:!0,get:function(){var a=this;if(this.videoId&&this.privacyChangedFaces&&this.videoPublishedEditsProviderBehavior.timingDelta)return _g.Ro(this.videoId,this.privacyChangedFaces,this.videoPublishedEditsProviderBehavior.timingDelta,function(b){return a.detectionsForFaceFetcher.getWithAutoFetch(a.entityCache,b)})}},
+allBlurRegions:{configurable:!0,enumerable:!0,get:function(){return _g.Qo(this.blurRegionsFromLastPublishedEdits,this.blurRegionsFromNewlySelectedFace,this.privacyChangedFaces,this.privacyEditorChangedBlurRegions)}},
+playerPreviewUrl:{configurable:!0,enumerable:!0,get:function(){if(this.videoPublishedEditsProviderBehavior.publishedEditsEntityCache&&_g.S(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits)&&!_g.ih(this.blurRegionsFromLastPublishedEdits||{})){var a=Object.assign({},this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits.data.videoEdit);a.blurEdit={};a=this.videoPreviewUrlFetcher.getWithAutoFetch(this.videoPublishedEditsProviderBehavior.publishedEditsEntityCache,{encryptedVideoId:this.videoId,
+videoEdit:a});return _g.S(a)?a.data.playerPreviewUrl||"":""}return""}},
+errorMessages:{configurable:!0,enumerable:!0,get:function(){if(!this.liveTrimmer)return[];var a=_g.Tua(this.allBlurRegions,this.liveTrimmer.getTrimEdit());return a?[a]:[]}},
+hasChanges:{configurable:!0,enumerable:!0,get:function(){var a=void 0!==this.privacyEditorChangedBlurRegions&&0<_g.fh(this.privacyEditorChangedBlurRegions).length,b=void 0!==this.privacyChangedFaces&&0<_g.fh(this.privacyChangedFaces).length;return a||b}},
+isValid:{configurable:!0,enumerable:!0,get:function(){return!!this.liveTrimmer&&!!this.videoPublishedEditsProviderBehavior.timingDelta&&_g.S(this.videoPublishedEditsProviderBehavior.fetchedLastPublishedEdits)&&_g.ih(this.errorMessages)}},
+previewConfig:{configurable:!0,enumerable:!0,get:function(){return this.playerPreviewUrl?{source:1,url:this.playerPreviewUrl}:_g.UB}}});
+var G$=Wmc;G$.prototype.fireStateChangedEvent=G$.prototype.fireStateChangedEvent;G$.prototype.propagateVideo=G$.prototype.propagateVideo;G$.prototype.propagateVideoId=G$.prototype.propagateVideoId;G$.prototype.propagateVideoToBehaviors=G$.prototype.propagateVideoToBehaviors;G$.prototype.propagateVideoIdToBehaviors=G$.prototype.propagateVideoIdToBehaviors;_g.X([_g.L(),_g.Z("design:type",p$)],G$.prototype,"detectionsForFaceFetcher",void 0);
+_g.X([_g.L(),_g.Z("design:type",F$)],G$.prototype,"videoPreviewUrlFetcher",void 0);_g.X([_g.r(),_g.Z("design:type",i$)],G$.prototype,"videoPublishedEditsProviderBehavior",void 0);_g.X([_g.D("videoId"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],G$.prototype,"propagateVideoIdToBehaviors",null);_g.X([_g.D("video"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],G$.prototype,"propagateVideoToBehaviors",null);
+_g.X([_g.fi(),_g.Z("design:type",Function)],G$.prototype,"select",void 0);_g.X([_g.O(_g.bk),_g.Z("design:type",Object)],G$.prototype,"entityCache",void 0);_g.X([_g.O(W9),_g.Z("design:type",Object)],G$.prototype,"privacyEditorChangedBlurRegions",void 0);_g.X([_g.O(X9),_g.Z("design:type",Object)],G$.prototype,"privacyChangedFaces",void 0);_g.X([_g.v(),_g.Z("design:type",D$)],G$.prototype,"timelineComponent",void 0);_g.X([_g.v(),_g.Z("design:type",r$)],G$.prototype,"detailsComponent",void 0);
+_g.X([_g.v(),_g.Z("design:type",t$)],G$.prototype,"previewComponent",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],G$.prototype,"videoId",void 0);_g.X([_g.D("timelineComponent","videoId"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],G$.prototype,"propagateVideoId",null);_g.X([_g.v(),_g.Z("design:type",Object)],G$.prototype,"video",void 0);
+_g.X([_g.D("detailsComponent","previewComponent","timelineComponent","video"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],G$.prototype,"propagateVideo",null);_g.X([_g.v(),_g.Z("design:type",Object)],G$.prototype,"isReadonly",void 0);_g.X([_g.F("select","video"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],G$.prototype,"liveTrimmer",null);
+_g.X([_g.F("fetchedLastPublishedEdits","timingDelta"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],G$.prototype,"blurRegionsFromLastPublishedEdits",null);_g.X([_g.F("entityCache","privacyChangedFaces","timingDelta"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],G$.prototype,"blurRegionsFromNewlySelectedFace",null);
+_g.X([_g.F("blurRegionsFromLastPublishedEdits","privacyEditorChangedBlurRegions","blurRegionsFromNewlySelectedFace","privacyChangedFaces"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],G$.prototype,"allBlurRegions",null);_g.X([_g.F("blurRegionsFromLastPublishedEdits","fetchedLastPublishedEdits","publishedEditsEntityCache"),_g.Z("design:type",String),_g.Z("design:paramtypes",[])],G$.prototype,"playerPreviewUrl",null);
+_g.X([_g.F("allBlurRegions","liveTrimmer"),_g.Z("design:type",Array),_g.Z("design:paramtypes",[])],G$.prototype,"errorMessages",null);_g.X([_g.F("privacyEditorChangedBlurRegions","privacyChangedFaces"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],G$.prototype,"hasChanges",null);_g.X([_g.F("errorMessages"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],G$.prototype,"isValid",null);
+_g.X([_g.F("playerPreviewUrl"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],G$.prototype,"previewConfig",null);_g.X([_g.D("errorMessages","hasChanges","isValid","previewConfig"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],G$.prototype,"fireStateChangedEvent",null);G$=_g.X([_g.M({is:"ytve-blur-editor-plugin",debounceEffects:!0})],G$);var Xmc=function(){this.blueBarStyle={position:"absolute",pointerEvents:"none",zIndex:"60",borderBottom:"2px solid var(--ytve-trim-marker-color)",borderTop:"2px solid var(--ytve-trim-marker-color)",top:"40px",bottom:"0",boxSizing:"border-box"};this.shadesStyle={position:"absolute",pointerEvents:"none",zIndex:"60",backgroundColor:"var(--ytve-trim-shade-color)",top:"41px",bottom:"1px",boxSizing:"border-box"}};
+_g.d=Xmc.prototype;_g.d.adjustCursor=function(a){var b="e-resize";a=_g.f(a);for(var c=a.next();!c.done;c=a.next())c.value.markerType=b,b="e-resize"===b?"w-resize":"e-resize"};
+_g.d.adjustDeleteButtons=function(a,b,c,e,h){var k=new H$(a.surface,"ytve-trim-deleter",["deleters","inactive"],!0),l=[];if(0<c.length&&h&&e){var m=e.edgeMs,q=m.left;m=m.right;for(var t={$jscomp$loop$prop$i$17307:1};t.$jscomp$loop$prop$i$17307<c.length-1;t={$jscomp$loop$prop$button$17305:t.$jscomp$loop$prop$button$17305,$jscomp$loop$prop$marker$17306:t.$jscomp$loop$prop$marker$17306,$jscomp$loop$prop$i$17307:t.$jscomp$loop$prop$i$17307},t.$jscomp$loop$prop$i$17307+=2){var u=_g.Uo(q,c[t.$jscomp$loop$prop$i$17307],
+m),x=_g.Uo(q,c[t.$jscomp$loop$prop$i$17307+1],m);x>u&&(u=(u+x)/2,t.$jscomp$loop$prop$button$17305=k.getElement(),t.$jscomp$loop$prop$button$17305.tabIndex=-1,t.$jscomp$loop$prop$button$17305.classList.add("visible"),t.$jscomp$loop$prop$marker$17306=t.$jscomp$loop$prop$button$17305,b.unlisten(t.$jscomp$loop$prop$button$17305),b.listen(t.$jscomp$loop$prop$button$17305,["down","key-tap"],function(z){return function(){z.$jscomp$loop$prop$button$17305.classList.remove("inactive");z.$jscomp$loop$prop$button$17305.classList.add("active");
+z.$jscomp$loop$prop$button$17305.tabIndex=-1;setTimeout(function(){z.$jscomp$loop$prop$button$17305.classList.add("inactive");z.$jscomp$loop$prop$button$17305.classList.remove("active");z.$jscomp$loop$prop$button$17305.classList.remove("visible")},150);
+b.unlisten(z.$jscomp$loop$prop$button$17305);a.removeMarkersOfTypeAt("trim-deleter",z.$jscomp$loop$prop$marker$17306.index,1);h(z.$jscomp$loop$prop$i$17307,2)}}(t)),t.$jscomp$loop$prop$marker$17306.positionMs=u,l.push(t.$jscomp$loop$prop$marker$17306))}}a.setMarkersOfType("trim-deleter",l,e);
+k.handleRemaining(function(z){z.classList.remove("visible");z.tabIndex=-1;b.unlisten(z)})};
+_g.d.adjustBlueBars=function(a,b,c){a=new H$(a.surface,"div",["blue-bars"]);if(c&&0<b.length){var e=c.edgeMs,h=e.left;e=e.right;b=this.getAllMarkers(b,c);for(var k=1;k<b.length-1;k+=2){var l=_g.Uo(h,b[k],e),m=_g.Uo(h,b[k+1],e);m>l&&(l=c.positionMsToPx(l),a.getElement(this.blueBarStyle,{opacity:"1",left:Math.floor(l)+"px",width:Math.ceil(c.positionMsToPx(m)-l)+"px"}))}}a.hideRemaining()};
+_g.d.adjustEditorsShades=function(a,b,c,e){e=void 0===e?!1:e;a=new H$(a.surface,"div",["shades"]);var h=c.edgeMs,k=h.left;h=h.right;b=this.getAllMarkers(b,c);if(0<b.length)for(var l=0;l<b.length;l+=2){var m=_g.Uo(k,b[l],h),q=_g.Uo(k,b[l+1],h);if(q>m){m=c.positionMsToPx(m);var t=e?"1px solid rgba(255,255,255,.25)":"unset";a.getElement(this.shadesStyle,{opacity:"1",left:Math.floor(m)+"px",width:Math.ceil(c.positionMsToPx(q)-m)+"px",borderLeft:t,borderRight:t})}}a.hideRemaining()};
+_g.d.getAllMarkers=function(a,b){var c=[];if(0<a.length){c.push(0);a=_g.f(a);for(var e=a.next();!e.done;e=a.next())c.push(e.value);c.push(b.maximumMs);c.sort(function(h,k){return h<k?-1:h>k?1:0})}return c};
+var H$=function(a,b,c,e){this.holder=a;this.tag=b;this.classNames=c;this.isPolymer=void 0===e?!1:e;this.elementUseIndex=0;this.existingElements=Polymer.dom(a.root).querySelectorAll("."+c.join("."))};
+H$.prototype.getElement=function(a,b,c){a=void 0===a?{}:a;b=void 0===b?{}:b;c=void 0===c?function(){}:c;
+if(this.elementUseIndex<this.existingElements.length)var e=this.existingElements[this.elementUseIndex++];else{e=this.isPolymer?_g.Hh(this.tag,this.holder):document.createElement(this.tag);for(var h=_g.f(this.classNames),k=h.next();!k.done;k=h.next())e.classList.add(k.value);Object.assign(e.style,a);Polymer.dom(this.holder.root).appendChild(e);c(e)}Object.assign(e.style,b);return e};
+H$.prototype.hideRemaining=function(){this.handleRemaining(function(a){a.style.opacity="0"})};
+H$.prototype.handleRemaining=function(a){for(;this.elementUseIndex<this.existingElements.length;){var b=this.existingElements[this.elementUseIndex++];a(b)}};_g.jm(_g.mp,_g.aB);var Ymc=_g.Ei(15);var Zmc=function(){var a=_g.n.apply(this,arguments)||this;a.isDisabled=!1;a.markersEvent=function(b){a.onMarkersEvent(b)};
+a.markerEvent=function(b){a.onMarkerEvent(b)};
+a.trimEditorLoadingStateUpdated=!1;return a};
+_g.J(Zmc,_g.n);_g.d=Zmc.prototype;_g.d.updateTrimEditorLoadingState=function(){this.trimEditorLoadingStateUpdated||(this.trimEditorLoadingStateUpdated=!0,this.dispatch(_g.eB("TRIM",3)))};
+_g.d.attached=function(){this.decorationHandler=new Xmc;this.markersHandler.onMarkersEvent.addListener(this.markersEvent);this.markersHandler.onMarkerEvent.addListener(this.markerEvent);this.updateTrimEditorLoadingState()};
+_g.d.detached=function(){this.markersHandler.onMarkerEvent.removeListener(this.markerEvent);this.markersHandler.onMarkersEvent.removeListener(this.markersEvent)};
+_g.d.trim=function(){var a=_g.Jr(this.video);!this.trimDisabled&&this.projection&&this.video&&a&&(this.dispatch(_g.S6a(0,this.video.fps,this.video.videoDurationMs,a.height,a.width)),this.liveTrimmer&&0<this.liveTrimmer.markersMs.length?this.dispatch(_g.Mab(this.liveTrimmer.markersMs)):this.dispatch(_g.Mab([0,this.projection.maximumMs])))};
+_g.d.updateToast=function(){var a=this;if(this.timeline&&this.liveTrimmer&&this.toast)if("TRIM"!==this.timeline.activePluginId)this.toast.hide();else{var b=1<=this.liveTrimmer.sortedTrimmedIntervals.length;this.toast.show({type:"buttons",actionButton:"Split",actionButtonClick:this.canSplitHere(this.playheadPositionMs)?function(){a.projection&&a.markersHandler.addMarkersOfType("trim",[a.createMarker(a.playheadPositionMs),a.createMarker(a.playheadPositionMs)],a.projection,1)}:void 0,
+leftButton:this.trimChanged?"Clear All":"Cancel",leftButtonClick:function(){a.dispatch(_g.Mab([]))},
+rightButton:"Preview",rightButtonClick:b?function(){a.dispatch({type:"EDITOR_PUSH_IDLE",payload:{}})}:void 0})}};
+_g.d.onShadeUpdateRequired=function(){this.onMarkersMoved()};
+_g.d.canSplitHere=function(a){for(var b=this.markersHandler.getMarkersMsOfType("trim"),c=0;c<b.length;c+=2)if(a>b[c]&&a<b[c+1])return!0;return!1};
+_g.d.onTimelineChange=function(){var a=this;if(void 0!==this.timeline&&void 0!==this.projection){if("TRIM"===this.timeline.activePluginId){var b=this.timeline.editors.TRIM;if(b&&0<b.markersMs.length){b=b.markersMs;var c=this.markersHandler.getMarkersMsOfType("trim");if(b.length===c.length&&b.every(function(e,h){return Math.floor(e)===Math.floor(c[h])}))return;
+b=b.map(function(e){return a.createMarker(e)});
+this.markersHandler.setMarkersOfType("trim",b,this.projection);return}}this.markersHandler.unsetMarkersOfType("trim")}};
+_g.d.createMarker=function(a){var b=_g.Hh(_g.GF.prototype.is,this.markersHandler.surface);b.type="trim";b.positionMs=a;b.element.tabIndex=0;b.element.setAttribute("aria-live","polite");Polymer.dom(this.markersHandler.surface.root).appendChild(b.element);return b};
+_g.d.onUpdateAriaLabels=function(){for(var a=this.markersHandler.getTimelineMarkersOfType("trim"),b=0;b<a.length;b+=2)this.setMarkerAriaLabel(a[b],"End trim marker"),this.setMarkerAriaLabel(a[b+1],"Start trim marker")};
+_g.d.setMarkerAriaLabel=function(a,b){if(this.video&&this.video.fps&&this.frameStampParts){var c=_g.Hr(_g.ND(a.positionMs,this.video.fps),this.frameStampParts);b=b+" "+c}a.element.setAttribute("aria-label",b)};
+_g.d.onMarkerEvent=function(a){if("trim"===a.marker.type)switch(a.event){case"moved":this.onUpdateSelectedPosition(a.marker.positionMs);this.onMarkersMoved();break;case"dropped":this.onMarkersChanged();break;case"selected":this.onUpdateSelectedPosition(a.marker.positionMs);break;case"unselected":this.onUpdateSelectedPosition(void 0);break;case"removed":a.marker.element.remove();}};
+_g.d.onMarkersEvent=function(a){if("trim"===a.type||"all"===a.type)switch(a.event){case"unset":case"set":case"scrolled":this.onMarkersMoved();break;case"added":case"removed":this.onMarkersMoved(),this.onMarkersChanged();}};
+_g.d.onUpdateSelectedPosition=function(a){this.video&&this.dispatch({type:"SET_SELECTED_MARKER",payload:{type:"trim",positionMs:a,videoDurationMs:this.video.videoDurationMs}})};
+_g.d.onMarkersMoved=function(){var a=this;if(this.timelineEditors&&this.projection&&this.timeline&&this.markersHandler.isAttached&&this.decorationHandler&&void 0!==this.editorsUntrackedData&&this.liveTrimmer){if("TRIM"!==this.timeline.activePluginId&&this.liveTrimmer)this.decorationHandler.adjustEditorsShades(this.markersHandler,this.liveTrimmer.markersMs,this.projection,!0),this.decorationHandler.adjustBlueBars(this.markersHandler,[]),this.decorationHandler.adjustDeleteButtons(this.markersHandler,
+this.mouseHandler,[],this.projection);else{var b=this.markersHandler.getMarkersMsOfType("trim");this.decorationHandler.adjustEditorsShades(this.markersHandler,b,this.projection);this.decorationHandler.adjustBlueBars(this.markersHandler,b,this.projection);this.decorationHandler.adjustDeleteButtons(this.markersHandler,this.mouseHandler,b,this.projection,function(c,e){a.markersHandler.removeMarkersOfTypeAt("trim",c,e)});
+b=this.markersHandler.getTimelineMarkersOfType("trim");this.decorationHandler.adjustCursor(b)}this.updateToast()}};
+_g.d.onMarkersChanged=function(){var a=this.markersHandler.getMarkersMsOfType("trim");a.length&&this.dispatch(_g.Mab(a))};
+_g.U.Object.defineProperties(Zmc.prototype,{fakeDarkMode:{configurable:!0,enumerable:!0,get:function(){return"DARK"===this.theme&&document.documentElement.hasAttribute("ytve-dark")}},
+videoId:{configurable:!0,enumerable:!0,get:function(){return this.video?this.video.videoId:void 0}},
+channelId:{configurable:!0,enumerable:!0,get:function(){return this.video?this.video.channelId:void 0}},
+liveTrimmer:{configurable:!0,enumerable:!0,get:function(){if(this.select&&this.video)return this.select(_g.Vq,{videoDurationMs:this.video.videoDurationMs,videoFps:this.video.fps})}},
+projection:{configurable:!0,enumerable:!0,get:function(){if(this.select&&this.video)return this.select(_g.Xq,this.video.videoDurationMs)}},
+trimChanged:{configurable:!0,enumerable:!0,get:function(){return this.select&&this.video?this.select(_g.Hza,this.video.videoDurationMs):!1}},
+isRestrictedVideo:{configurable:!0,enumerable:!0,get:function(){return this.video?!this.video.meetsEditPreconditions:!0}},
+trimEligibility:{configurable:!0,enumerable:!0,get:function(){return this.video&&this.video.videoEditorProject&&void 0!==this.video.videoEditorProject.trimEligibility?this.video.videoEditorProject.trimEligibility:"TRIM_ELIGIBILITY_UNKNOWN"}},
+fetchedChannelFeatures:{configurable:!0,enumerable:!0,get:function(){return this.entityCache&&this.channelId?this.channelFetcher.getWithAutoFetch(this.entityCache,this.channelId,_g.tm()):_g.Lm}},
+videoEnhanceRestriction:{configurable:!0,enumerable:!0,get:function(){return _g.S(this.fetchedChannelFeatures)&&this.video?!_g.um(this.fetchedChannelFeatures.data,"unlimitedVideoLengthFeature")&&this.video.videoDurationMs>Ymc.toMillis()?"VIDEO_TOO_LONG":"NO_RESTRICTION":"ENHANCE_RESTRICTION_REASON_UNKNOWN"}},
+trimDisabled:{configurable:!0,enumerable:!0,get:function(){return void 0===this.timeline||this.isDisabled||"NO_RESTRICTION"!==this.videoEnhanceRestriction?!0:"TRIM"===this.timeline.activePluginId||this.isRestrictedVideo||"TRIM_ELIGIBILITY_ELIGIBLE"!==this.trimEligibility}},
+trimDisabledToastMessage:{configurable:!0,enumerable:!0,get:function(){if(this.isDisabled||!this.videoEnhanceRestriction)return Wlc();if("NO_RESTRICTION"!==this.videoEnhanceRestriction)switch(this.videoEnhanceRestriction){case"VIDEO_TOO_LONG":return Vlc();case"ENHANCE_RESTRICTION_REASON_UNKNOWN":return Wlc();default:_g.na(this.videoEnhanceRestriction,"Can't produce message for "+this.videoEnhanceRestriction);}if(this.isRestrictedVideo)return"This video can't be trimmed because it is restricted.";
+switch(this.trimEligibility){case"TRIM_ELIGIBILITY_ELIGIBLE":return"";case"TRIM_ELIGIBILITY_TOO_MANY_VIEWS":return"This video can't be trimmed because it has over 100,000 views.";case"TRIM_ELIGIBILITY_DURATION_TOO_LONG":return Vlc();case"TRIM_ELIGIBILITY_DURATION_TOO_SHORT":return"This video can't be trimmed because it is too short.";case"TRIM_ELIGIBILITY_SLOMO_TOO_LONG":return"This video can't be trimmed because it contains unsupported effects.";case"TRIM_ELIGIBILITY_DISPUTED_CLAIM":return"This video can't be trimmed because it contains a disputed claim.";
+case"TRIM_ELIGIBILITY_THIRD_PARTY_CONTENT":case"TRIM_ELIGIBILITY_UNKNOWN":case void 0:return Wlc();default:return _g.na(this.trimEligibility,"Can't produce message for "+this.trimEligibility);}}},
+buttonLabel:{configurable:!0,enumerable:!0,get:function(){return this.trimChanged?"Edit Trim":"Trim"}},
+frameStampParts:{configurable:!0,enumerable:!0,get:function(){if(this.video&&this.video.fps)return _g.Gr(_g.ND(this.video.videoDurationMs,this.video.fps))}}});
+var I$=Zmc;I$.prototype.onUpdateAriaLabels=I$.prototype.onUpdateAriaLabels;I$.prototype.onTimelineChange=I$.prototype.onTimelineChange;I$.prototype.onShadeUpdateRequired=I$.prototype.onShadeUpdateRequired;I$.prototype.updateToast=I$.prototype.updateToast;_g.X([_g.L(_g.pA),_g.Z("design:type",Function)],I$.prototype,"dispatch",void 0);_g.X([_g.L(),_g.Z("design:type",_g.wC)],I$.prototype,"channelFetcher",void 0);_g.X([_g.L(),_g.Z("design:type",_g.ID)],I$.prototype,"markersHandler",void 0);
+_g.X([_g.L(),_g.Z("design:type",_g.JD)],I$.prototype,"mouseHandler",void 0);_g.X([_g.H("ytve-toast"),_g.Z("design:type",g$)],I$.prototype,"toast",void 0);_g.X([_g.fi(),_g.Z("design:type",Function)],I$.prototype,"select",void 0);_g.X([_g.O(_g.Yq),_g.Z("design:type",Number)],I$.prototype,"playheadPositionMs",void 0);_g.X([_g.O(_g.Oza),_g.Z("design:type",Object)],I$.prototype,"timeline",void 0);_g.X([_g.O(_g.Mza),_g.Z("design:type",Object)],I$.prototype,"timelineEditors",void 0);
+_g.X([_g.O(_g.Iza),_g.Z("design:type",Object)],I$.prototype,"editorsUntrackedData",void 0);_g.X([_g.O(_g.Lza),_g.Z("design:type",Object)],I$.prototype,"selectedMarker",void 0);_g.X([_g.O(_g.bk),_g.Z("design:type",Object)],I$.prototype,"entityCache",void 0);_g.X([_g.O(_g.Rj),_g.Z("design:type",String)],I$.prototype,"theme",void 0);_g.X([_g.F("theme"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],I$.prototype,"fakeDarkMode",null);
+_g.X([_g.v(),_g.Z("design:type",Object)],I$.prototype,"isDisabled",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],I$.prototype,"video",void 0);_g.X([_g.F("video"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],I$.prototype,"videoId",null);_g.X([_g.F("video"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],I$.prototype,"channelId",null);_g.X([_g.F("select","video"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],I$.prototype,"liveTrimmer",null);
+_g.X([_g.F("select","video"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],I$.prototype,"projection",null);_g.X([_g.F("select","video"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],I$.prototype,"trimChanged",null);_g.X([_g.F("video"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],I$.prototype,"isRestrictedVideo",null);_g.X([_g.F("video"),_g.Z("design:type",String),_g.Z("design:paramtypes",[])],I$.prototype,"trimEligibility",null);
+_g.X([_g.F("entityCache","channelId"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],I$.prototype,"fetchedChannelFeatures",null);_g.X([_g.F("fetchedChannelFeatures","video"),_g.Z("design:type",String),_g.Z("design:paramtypes",[])],I$.prototype,"videoEnhanceRestriction",null);_g.X([_g.F("timeline","isDisabled","isRestrictedVideo","trimEligibility","videoEnhanceRestriction"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],I$.prototype,"trimDisabled",null);
+_g.X([_g.F("isDisabled","isRestrictedVideo","trimEligibility","videoEnhanceRestriction"),_g.Z("design:type",String),_g.Z("design:paramtypes",[])],I$.prototype,"trimDisabledToastMessage",null);_g.X([_g.D("timeline","liveTrimmer","playheadPositionMs","selectedMarker"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],I$.prototype,"updateToast",null);
+_g.X([_g.F("trimChanged"),_g.Z("design:type",String),_g.Z("design:paramtypes",[])],I$.prototype,"buttonLabel",null);_g.X([_g.D("liveTrimmer","projection","timeline","editorsUntrackedData"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],I$.prototype,"onShadeUpdateRequired",null);_g.X([_g.D("timeline"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],I$.prototype,"onTimelineChange",null);
+_g.X([_g.D("timeline","playheadPositionMs","selectedMarker"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],I$.prototype,"onUpdateAriaLabels",null);_g.X([_g.F("video"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],I$.prototype,"frameStampParts",null);I$=_g.X([_g.M({is:"ytve-trim-editor"})],I$);var $mc=function(){var a=_g.n.apply(this,arguments)||this;a.pluginId="TRIM";a.isReadonly=!1;a.previewConfig=_g.UB;return a};
+_g.J($mc,_g.n);_g.d=$mc.prototype;_g.d.propagateVideo=function(){this.toolbarComponent&&this.toolbarComponent.video!==this.video&&(this.toolbarComponent.video=this.video);this.videoPublishedEditsProviderBehavior.publishedEditsVideo=this.video};
+_g.d.propagateVideoIdToBehaviors=function(){this.videoPublishedEditsProviderBehavior.publishedEditsVideoId=this.videoId};
+_g.d.propagateIsDisabled=function(){this.toolbarComponent&&(this.toolbarComponent.isDisabled=this.isDisabled)};
+_g.d.fireStateChangedEvent=function(){this.fire("ytve-plugin-state-change-event")};
+_g.d.videoExceedsMaxSegmentsCount=function(a,b){return void 0===a||void 0===b?!1:(a=Xlc(a.getTrimEdit(),b))&&a.videoSegments?50<a.videoSegments.length:!1};
+_g.d.fillEditVideoRequest=function(a){var b={};this.fillVideoEdit(b);_g.ih(Object.keys(b))||(a.videoEdit=Object.assign(Object.assign({},a.videoEdit),b))};
+_g.d.fillVideoEdit=function(a){if(!this.liveTrimmer||!this.videoPublishedEditsProviderBehavior.timingDelta||!this.isValid)throw Error("Could not construct video edit request.");var b=Xlc(this.liveTrimmer.getTrimEdit(),this.videoPublishedEditsProviderBehavior.timingDelta);b&&(a.trimEdit=b)};
+_g.d.toolbarControls=function(){return this.toolbarComponent?this.toolbarComponent:this.toolbarComponent=_g.Hh(I$.prototype.is,this)};
+_g.U.Object.defineProperties($mc.prototype,{isDisabled:{configurable:!0,enumerable:!0,get:function(){return!this.permissions.canWriteChannel||this.isReadonly}},
+liveTrimmer:{configurable:!0,enumerable:!0,get:function(){if(this.select&&this.video)return this.select(_g.Vq,{videoDurationMs:this.video.videoDurationMs,videoFps:this.video.fps})}},
+errorMessages:{configurable:!0,enumerable:!0,get:function(){var a=[];(this.liveTrimmer?this.liveTrimmer.trimmedVideoDurationMs||0:0)<_g.Nj.toMillis()&&a.push("Video will be too short");this.videoExceedsMaxSegmentsCount(this.liveTrimmer,this.videoPublishedEditsProviderBehavior.timingDelta)&&a.push("Video is split into too many segments");return a}},
+hasChanges:{configurable:!0,enumerable:!0,get:function(){return this.select&&this.video?this.select(_g.Hza,this.video.videoDurationMs):!1}},
+isValid:{configurable:!0,enumerable:!0,get:function(){return!!this.liveTrimmer&&!!this.videoPublishedEditsProviderBehavior.timingDelta&&_g.ih(this.errorMessages)}}});
+var J$=$mc;J$.prototype.fireStateChangedEvent=J$.prototype.fireStateChangedEvent;J$.prototype.propagateIsDisabled=J$.prototype.propagateIsDisabled;J$.prototype.propagateVideoIdToBehaviors=J$.prototype.propagateVideoIdToBehaviors;J$.prototype.propagateVideo=J$.prototype.propagateVideo;_g.X([_g.r(),_g.Z("design:type",_g.eD)],J$.prototype,"permissions",void 0);_g.X([_g.r(),_g.Z("design:type",i$)],J$.prototype,"videoPublishedEditsProviderBehavior",void 0);
+_g.X([_g.fi(),_g.Z("design:type",Function)],J$.prototype,"select",void 0);_g.X([_g.v(),_g.Z("design:type",I$)],J$.prototype,"toolbarComponent",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],J$.prototype,"videoId",void 0);_g.X([_g.v(),_g.Z("design:type",Object)],J$.prototype,"video",void 0);_g.X([_g.D("video","toolbarComponent"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],J$.prototype,"propagateVideo",null);
+_g.X([_g.D("videoId"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],J$.prototype,"propagateVideoIdToBehaviors",null);_g.X([_g.v(),_g.Z("design:type",Object)],J$.prototype,"isReadonly",void 0);_g.X([_g.F("canWriteChannel","isReadonly"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],J$.prototype,"isDisabled",null);
+_g.X([_g.D("isDisabled"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],J$.prototype,"propagateIsDisabled",null);_g.X([_g.F("select","video"),_g.Z("design:type",Object),_g.Z("design:paramtypes",[])],J$.prototype,"liveTrimmer",null);_g.X([_g.F("liveTrimmer","timingDelta"),_g.Z("design:type",Array),_g.Z("design:paramtypes",[])],J$.prototype,"errorMessages",null);
+_g.X([_g.F("select","video"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],J$.prototype,"hasChanges",null);_g.X([_g.F("errorMessages","liveTrimmer","timingDelta"),_g.Z("design:type",Boolean),_g.Z("design:paramtypes",[])],J$.prototype,"isValid",null);_g.X([_g.D("errorMessages","hasChanges","isValid"),_g.Z("design:type",Function),_g.Z("design:paramtypes",[]),_g.Z("design:returntype",void 0)],J$.prototype,"fireStateChangedEvent",null);
+J$=_g.X([_g.M({is:"ytve-trim-editor-plugin",debounceEffects:!0})],J$)})();
